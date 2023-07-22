@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../model/club.dart';
@@ -19,66 +21,104 @@ class ClubTile extends StatefulWidget {
 
 class _ClubTileState extends State<ClubTile> {
   bool _isHovering = false;
+  final formater = DateFormat('dd.MM.yyyy');
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.ease,
-        width: min(1000, widget.width) * (_isHovering ? 1.1 : 1),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 8,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => setState(() => _isHovering = true),
-          onExit: (_) => setState(() => _isHovering = false),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: _isHovering ? widget.club.color.withAlpha(50) : Colors.transparent,
-            ),
-            child: ListTile(
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+      double tileHeight = constraints.maxWidth > 600 ? 100 : 60;
+      double nameFontSize = constraints.maxWidth > 600 ? 24 : 16;
+      double infoFontSize = constraints.maxWidth > 600 ? 14 : 12;
+      return Center(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.ease,
+          width: min(1000, widget.width) * (_isHovering ? 1.1 : 1),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 8,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (_) => setState(() => _isHovering = true),
+            onExit: (_) => setState(() => _isHovering = false),
+            child: GestureDetector(
               onTap: () => context.read<CustomRouterDelegate>().goToClub({"name": widget.club.name}),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              hoverColor: Colors.transparent,
-              leading: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
-                child: Image.network(
-                  widget.club.imageName,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
-                  fit: BoxFit.fill,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: _isHovering ? widget.club.color.withAlpha(50) : Colors.transparent,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: CachedNetworkImage(
+                        imageUrl: widget.club.imageName,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        fit: BoxFit.fill,
+                        height: tileHeight,
+                        width: tileHeight,
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: SizedBox(
+                          height: tileHeight,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.club.name,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: nameFontSize,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                widget.club.location,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: infoFontSize),
+                              ),
+                              const Expanded(child: SizedBox()),
+                              Text(
+                                "Last review: ${formater.format(widget.club.review.date)}",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: infoFontSize),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ScoreIndicator(
+                        score: widget.club.score,
+                        color: widget.club.color,
+                        scale: tileHeight,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              title: Text(
-                widget.club.name,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Text(
-                widget.club.location,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: ScoreIndicator(score: widget.club.score, color: widget.club.color, scale: 50),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

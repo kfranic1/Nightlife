@@ -11,9 +11,8 @@ class ScoreIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: scale,
-      height: scale,
+    return SizedBox.square(
+      dimension: scale,
       child: Stack(
         children: [
           CustomPaint(
