@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/club_list.dart';
+import 'package:nightlife/helpers/filters.dart';
 import 'package:provider/provider.dart';
-
-import '../model/club.dart';
 
 class Filter extends StatefulWidget {
   const Filter({Key? key}) : super(key: key);
@@ -13,27 +12,11 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
   final TextEditingController _searchController = TextEditingController();
-  String _selectedSorting = 'none';
-
-  void _applyFilters() {
-    ClubList clubListModel = context.read<ClubList>();
-
-    // Filter clubs based on search text
-    List<Club> filteredClubs = clubListModel.allClubs.where((club) => club.name.toLowerCase().contains(_searchController.text.toLowerCase())).toList();
-
-    // Sort clubs based on the selected sorting method
-    if (_selectedSorting == 'alphabetical') {
-      filteredClubs.sort((a, b) => a.name.compareTo(b.name));
-    } else if (_selectedSorting == 'score') {
-      filteredClubs.sort((a, b) => b.score.compareTo(a.score));
-    }
-
-    // Update the filtered clubs in the ClubList model
-    clubListModel.updateFilteredClubs(filteredClubs);
-  }
+  BaseFilter _filter = BaseFilter.filters.first;
 
   @override
   Widget build(BuildContext context) {
+    ClubList clubs = context.watch<ClubList>();
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -41,9 +24,7 @@ class _FilterState extends State<Filter> {
           Expanded(
             child: TextField(
               controller: _searchController,
-              onChanged: (value) {
-                _applyFilters();
-              },
+              onChanged: (value) => clubs.updateFilter(textFilter: value, filter: _filter),
               decoration: InputDecoration(
                 labelText: 'Search',
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -59,8 +40,7 @@ class _FilterState extends State<Filter> {
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: DropdownButton<String>(
-              value: _selectedSorting == 'none' ? null : _selectedSorting,
-              hint: const Text("Filter"),
+              value: _filter.name,
               isExpanded: true,
               icon: const Icon(Icons.arrow_drop_down),
               iconSize: 24,
@@ -71,34 +51,20 @@ class _FilterState extends State<Filter> {
               onChanged: (String? newValue) {
                 if (newValue != null) {
                   setState(() {
-                    _selectedSorting = newValue;
-                    _applyFilters();
+                    _filter = BaseFilter.filters.firstWhere((element) => element.name == newValue);
+                    clubs.updateFilter(textFilter: _searchController.text, filter: _filter);
                   });
                 }
               },
-              items: const [
-                DropdownMenuItem(
-                  value: 'none',
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text('Default', style: TextStyle(fontSize: 16, color: Colors.black)),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 'alphabetical',
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text('Alphabetical', style: TextStyle(fontSize: 16, color: Colors.black)),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: 'score',
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text('Score', style: TextStyle(fontSize: 16, color: Colors.black)),
-                  ),
-                ),
-              ],
+              items: BaseFilter.filters
+                  .map((baseFilter) => DropdownMenuItem(
+                        value: baseFilter.name,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(baseFilter.name, style: const TextStyle(fontSize: 16, color: Colors.black)),
+                        ),
+                      ))
+                  .toList(),
             ),
           ),
         ],

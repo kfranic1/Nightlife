@@ -1,29 +1,24 @@
-import 'dart:collection';
-
 import 'package:flutter/foundation.dart';
 import 'package:nightlife/firestore/firestore_service.dart';
+import 'package:nightlife/helpers/filters.dart';
 
 import '../model/club.dart';
 
 class ClubList extends ChangeNotifier {
   List<Club> _clubs = [];
-  List<Club> _filteredClubs = [];
+  List<Club> filteredClubs = [];
 
   Future setup() async {
     return await FirestoreService.getClubs().then((value) {
       _clubs = value;
-      _filteredClubs = List.from(_clubs);
+      filteredClubs = List.from(_clubs);
       notifyListeners();
     });
   }
 
-  UnmodifiableListView<Club> get allClubs => UnmodifiableListView(_clubs);
-
-  UnmodifiableListView<Club> get filteredClubs => UnmodifiableListView(_filteredClubs);
-
-  void updateFilteredClubs(List<Club> newFilteredClubs) {
-    _filteredClubs.clear();
-    _filteredClubs.addAll(newFilteredClubs);
+  void updateFilter({required String textFilter, required BaseFilter filter}) {
+    filteredClubs = _clubs.where((club) => club.name.toLowerCase().contains(textFilter.toLowerCase())).toList();
+    filter.applyFilter(filteredClubs);
     notifyListeners();
   }
 
