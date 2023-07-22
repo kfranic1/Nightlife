@@ -53,10 +53,13 @@ class _ClubTileState extends State<ClubTile> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               hoverColor: Colors.transparent,
               leading: Container(
+                width: 50,
+                height: 50,
                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
                 child: Image.network(
                   widget.club.imageName,
                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+                  fit: BoxFit.fill,
                 ),
               ),
               title: Text(
