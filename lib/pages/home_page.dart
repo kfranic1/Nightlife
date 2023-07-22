@@ -12,20 +12,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = min(1000, MediaQuery.of(context).size.width * 0.75);
+    double width = min(1000, MediaQuery.of(context).size.width * 0.85);
 
     ClubList clubList = context.watch<ClubList>();
     return Scaffold(
       body: Column(
         children: [
+          const SizedBox(height: 28),
           SizedBox(width: width, child: const Filter()),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) => ClubTile(
                 club: clubList.filteredClubs[index],
                 width: width,
               ),
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
               itemCount: clubList.filteredClubs.length,
             ),
           ),
