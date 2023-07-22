@@ -8,6 +8,9 @@ class ClubList extends ChangeNotifier {
   List<Club> _clubs = [];
   List<Club> filteredClubs = [];
 
+  String _filterText = "";
+  BaseFilter _filter = BaseFilter.filters.first;
+
   Future setup() async {
     return await FirestoreService.getClubs().then((value) {
       _clubs = value;
@@ -16,9 +19,22 @@ class ClubList extends ChangeNotifier {
     });
   }
 
-  void updateFilter({required String textFilter, required BaseFilter filter}) {
-    filteredClubs = _clubs.where((club) => club.name.toLowerCase().contains(textFilter.toLowerCase())).toList();
-    filter.applyFilter(filteredClubs);
+  String get filterText => _filterText;
+  BaseFilter get filter => _filter;
+
+  void updateFilter(BaseFilter filter) {
+    _filter = filter;
+    _applyFilter();
+  }
+
+  void updateText(String text) {
+    _filterText = text;
+    _applyFilter();
+  }
+
+  void _applyFilter() {
+    filteredClubs = _clubs.where((club) => club.name.toLowerCase().contains(_filterText.toLowerCase())).toList();
+    _filter.applyFilter(filteredClubs);
     notifyListeners();
   }
 

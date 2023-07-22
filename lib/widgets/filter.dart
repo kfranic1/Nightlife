@@ -12,7 +12,13 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
   final TextEditingController _searchController = TextEditingController();
-  BaseFilter _filter = BaseFilter.filters.first;
+
+  @override
+  void initState() {
+    super.initState();
+    ClubList clubs = context.read<ClubList>();
+    _searchController.text = clubs.filterText;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class _FilterState extends State<Filter> {
           Expanded(
             child: TextField(
               controller: _searchController,
-              onChanged: (value) => clubs.updateFilter(textFilter: value, filter: _filter),
+              onChanged: (value) => clubs.updateText(value),
               decoration: InputDecoration(
                 labelText: 'Search',
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
@@ -39,8 +45,8 @@ class _FilterState extends State<Filter> {
               border: Border.all(color: Colors.grey, width: 1),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: DropdownButton<String>(
-              value: _filter.name,
+            child: DropdownButton<BaseFilter>(
+              value: clubs.filter,
               isExpanded: true,
               icon: const Icon(Icons.arrow_drop_down),
               iconSize: 24,
@@ -48,17 +54,10 @@ class _FilterState extends State<Filter> {
               style: const TextStyle(color: Colors.black),
               underline: Container(),
               focusColor: Colors.transparent,
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  setState(() {
-                    _filter = BaseFilter.filters.firstWhere((element) => element.name == newValue);
-                    clubs.updateFilter(textFilter: _searchController.text, filter: _filter);
-                  });
-                }
-              },
+              onChanged: (BaseFilter? selectedFilter) => clubs.updateFilter(selectedFilter!),
               items: BaseFilter.filters
-                  .map((baseFilter) => DropdownMenuItem(
-                        value: baseFilter.name,
+                  .map((baseFilter) => DropdownMenuItem<BaseFilter>(
+                        value: baseFilter,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(baseFilter.name, style: const TextStyle(fontSize: 16, color: Colors.black)),
