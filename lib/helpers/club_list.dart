@@ -3,14 +3,14 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:nightlife/firestore/firestore_service.dart';
 
-import 'club.dart';
+import '../model/club.dart';
 
 class ClubList extends ChangeNotifier {
   List<Club> _clubs = [];
   List<Club> _filteredClubs = [];
 
-  ClubList() {
-    FirestoreService.getClubs().then((value) {
+  Future setup() async {
+    return await FirestoreService.getClubs().then((value) {
       _clubs = value;
       _filteredClubs = List.from(_clubs);
       notifyListeners();
@@ -26,4 +26,6 @@ class ClubList extends ChangeNotifier {
     _filteredClubs.addAll(newFilteredClubs);
     notifyListeners();
   }
+
+  Club findClubByName(String name) => _clubs.firstWhere((club) => club.name == name);
 }

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../club.dart';
+import '../model/club.dart';
 
 abstract class FirestoreService {
   static String collection = "clubs";

@@ -4,10 +4,9 @@ import 'package:nightlife/routing/configuraiton.dart';
 class CustomRouteInformationParser extends RouteInformationParser<Configuration> {
   @override
   Future<Configuration> parseRouteInformation(RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location!);
-
-    if (uri.pathSegments.isEmpty) return Configuration.home();
-    return Configuration.otherPage(uri.toString().substring(1));
+    String location = routeInformation.location!;
+    if (Uri.parse(location).pathSegments.isEmpty) return Configuration.home();
+    return Configuration.otherPage(Uri.decodeFull(location).substring(1));
   }
 
   @override

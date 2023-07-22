@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../club.dart';
+import '../model/club.dart';
 import '../routing/custom_router_delegate.dart';
 import 'score_indicator.dart';
 
@@ -50,9 +50,15 @@ class _ClubTileState extends State<ClubTile> {
             ),
             child: ListTile(
               onTap: () => context.read<CustomRouterDelegate>().goToClub({"name": widget.club.name}),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               hoverColor: Colors.transparent,
-              leading: const Icon(Icons.place, size: 40),
+              leading: Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                child: Image.network(
+                  widget.club.imageName,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+                ),
+              ),
               title: Text(
                 widget.club.name,
                 style: const TextStyle(

@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:nightlife/club_list.dart';
+import 'package:nightlife/helpers/club_list.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -32,18 +32,23 @@ class Nightlife extends StatelessWidget {
         ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
       ],
       child: Builder(builder: (context) {
-        return MaterialApp.router(
-          scrollBehavior: CustomScrollBehavior(),
-          title: 'Nightlife',
-          debugShowCheckedModeBanner: false,
-          routeInformationParser: context.read<CustomRouteInformationParser>(),
-          routerDelegate: context.read<CustomRouterDelegate>(),
-          backButtonDispatcher: RootBackButtonDispatcher(),
-          theme: ThemeData(
-            fontFamily: 'Roboto',
-            //brightness: Brightness.dark,
-          ),
-        );
+        return FutureBuilder(
+            future: context.read<ClubList>().setup(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) return const CircularProgressIndicator();
+              return MaterialApp.router(
+                scrollBehavior: CustomScrollBehavior(),
+                title: 'Nightlife',
+                debugShowCheckedModeBanner: false,
+                routeInformationParser: context.read<CustomRouteInformationParser>(),
+                routerDelegate: context.read<CustomRouterDelegate>(),
+                backButtonDispatcher: RootBackButtonDispatcher(),
+                theme: ThemeData(
+                  fontFamily: 'Roboto',
+                  //brightness: Brightness.dark,
+                ),
+              );
+            });
       }),
     );
   }
