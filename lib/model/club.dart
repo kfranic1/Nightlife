@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../enums/aspect.dart';
-import '../enums/social_media.dart';
+import '../enums/contact.dart';
 import '../enums/type_of_music.dart';
 import 'review.dart';
 
@@ -12,7 +12,13 @@ class Club {
   String location;
   String imageName;
   List<TypeOfMusic> typeOfMusic;
-  Map<SocialMedia, String> socialMediaProfiles;
+  Map<Contact, String?> contacts = {
+      Contact.email: null,
+      Contact.facebook: null,
+      Contact.instagram: null,
+      Contact.phone: null,
+      Contact.web: null,
+    };
   Review review;
 
   double get score => review.score;
@@ -24,7 +30,7 @@ class Club {
       required this.name,
       required this.location,
       required this.typeOfMusic,
-      required this.socialMediaProfiles,
+      required this.contacts,
       required this.review,
       required this.imageName});
 
@@ -34,10 +40,10 @@ class Club {
       'name': name,
       'location': location,
       'typeOfMusic': typeOfMusic.map((e) => e.toString()),
-      'socialMediaProfiles': socialMediaProfiles.map((key, value) => MapEntry(key.toString(), value)),
+      'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
       'review': {
         'date': review.date,
-        'aspectReviews': review.aspectReviews.map((key, value) => MapEntry(key.toString(), {'score': value.score, 'description': value.description})),
+        'aspectReviews': review.aspectReviews.map((key, value) => MapEntry(key.name, {'score': value.score, 'description': value.description})),
       },
       'imageName': imageName
     };
@@ -52,9 +58,9 @@ class Club {
         name: data['name'],
         location: data['location'],
         typeOfMusic: (data['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.toString() == type)).toList(),
-        socialMediaProfiles: (data['socialMediaProfiles'] as Map<String, dynamic>).map(
+        contacts: (data['contacts'] as Map<String, dynamic>).map(
           (key, value) => MapEntry(
-            SocialMedia.values.firstWhere((e) => e.toString() == key),
+            Contact.values.firstWhere((e) => e.name == key),
             value,
           ),
         ),
@@ -62,7 +68,7 @@ class Club {
           date: DateTime.fromMillisecondsSinceEpoch(reviewData['date'].seconds * 1000),
           aspectReviews: (reviewData['aspectReviews'] as Map<dynamic, dynamic>).map(
             (key, value) => MapEntry(
-              Aspect.values.firstWhere((element) => element.toString() == key),
+              Aspect.values.firstWhere((element) => element.name == key),
               AspectReview(
                 score: value['score'],
                 description: value['description'],

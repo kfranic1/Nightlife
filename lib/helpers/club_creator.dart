@@ -2,14 +2,15 @@ import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/model/review.dart';
 
 import '../enums/aspect.dart';
+import '../enums/contact.dart';
 import '../model/club.dart';
 
 class ClubCreator {
   static Future create() async {
     Club club = Club(
         id: "a",
-        name: "The Secret Club",
-        location: "Adresa2",
+        name: "Club Roko",
+        location: "Jarunska ul. 5, Zagreb",
         review: Review(
           date: DateTime.now(),
           aspectReviews: {
@@ -20,10 +21,15 @@ class ClubCreator {
             Aspect.soundSystemAndLayout: AspectReview(description: "ok", score: 1),
           },
         ),
-        socialMediaProfiles: {},
+        contacts: {
+          Contact.email: null,
+          Contact.facebook: null,
+          Contact.instagram: null,
+          Contact.phone: null,
+          Contact.web: null,
+        },
         typeOfMusic: [TypeOfMusic.other],
-        imageName:
-            "https://firebasestorage.googleapis.com/v0/b/nightlife-zagreb.appspot.com/o/original_Best_Paris_Nightclubs-Faust.jpg?alt=media&token=6821e4c8-bbdf-4f83-ad44-e8adc8ea4864");
+        imageName: "https://firebasestorage.googleapis.com/v0/b/nightlife-zagreb.appspot.com/o/Roko.jpg?alt=media&token=c3a4f90f-142c-4078-982c-d9bfc9635213");
     await Club.createClub(club);
   }
 }

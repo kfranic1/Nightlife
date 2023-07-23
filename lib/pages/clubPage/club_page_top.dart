@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../enums/contact.dart';
 import '../../model/club.dart';
 
 class ClubPageTop extends StatelessWidget {
@@ -56,11 +58,37 @@ class ClubPageTop extends StatelessWidget {
         ],
       ),
       const SizedBox(height: 20, width: 20),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: Contact.values.map((e) => ContactElement(data: club.contacts[e], contact: e)).toList(),
+      ),
+      const SizedBox(height: 20, width: 20),
       const SizedBox(
         height: 150,
         width: 150,
         child: Icon(Icons.map),
       )
     ];
+  }
+}
+
+class ContactElement extends StatelessWidget {
+  const ContactElement({super.key, required this.data, required this.contact});
+
+  final String? data;
+  final Contact contact;
+
+  @override
+  Widget build(BuildContext context) {
+    if (data == null) return Container();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: GestureDetector(
+        onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
+        child: Row(
+          children: [Icon(contact.icon), Text(' $data')],
+        ),
+      ),
+    );
   }
 }
