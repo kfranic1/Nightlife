@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/map_extension.dart';
 import 'package:nightlife/extensions/string_extension.dart';
+import 'package:nightlife/pages/admin_page.dart';
 import 'package:nightlife/routing/configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,8 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
                 switch (_configuration.pathName?.removeParams()) {
                   case Routes.club:
                     return ClubPage(club: context.read<ClubList>().findClubByName(_configuration.pathParams!['name']!));
+                  case Routes.admin:
+                    return const AdminPage();
                   default:
                     return const HomePage();
                 }
@@ -65,6 +68,12 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
 
   @override
   void goToClub(Map<String, String> params) {
+    setNewRoutePath(Configuration.otherPage(Routes.club + params.toStringFromParams()));
+    notifyListeners();
+  }
+
+  @override
+  void goToAdmin(Map<String, String> params) {
     setNewRoutePath(Configuration.otherPage(Routes.club + params.toStringFromParams()));
     notifyListeners();
   }

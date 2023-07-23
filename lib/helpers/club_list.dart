@@ -6,7 +6,7 @@ import '../model/club.dart';
 
 class ClubList extends ChangeNotifier {
   List<Club> _clubs = [];
-  List<Club> filteredClubs = [];
+  List<Club> _filteredClubs = [];
 
   String _filterText = "";
   BaseFilter _filter = BaseFilter.filters.first;
@@ -14,13 +14,15 @@ class ClubList extends ChangeNotifier {
   Future setup() async {
     return await FirestoreService.getClubs().then((value) {
       _clubs = value;
-      filteredClubs = List.from(_clubs);
+      _filteredClubs = List.from(_clubs);
       notifyListeners();
     });
   }
 
   String get filterText => _filterText;
   BaseFilter get filter => _filter;
+  List<Club> get clubs => _clubs;
+  List<Club> get filteredClubs => _filteredClubs;
 
   void updateFilter(BaseFilter filter) {
     _filter = filter;
@@ -33,8 +35,8 @@ class ClubList extends ChangeNotifier {
   }
 
   void _applyFilter() {
-    filteredClubs = _clubs.where((club) => club.name.toLowerCase().contains(_filterText.toLowerCase())).toList();
-    _filter.applyFilter(filteredClubs);
+    _filteredClubs = _clubs.where((club) => club.name.toLowerCase().contains(_filterText.toLowerCase())).toList();
+    _filter.applyFilter(_filteredClubs);
     notifyListeners();
   }
 
