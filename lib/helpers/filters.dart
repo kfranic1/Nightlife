@@ -10,7 +10,7 @@ class DefaultFilter extends BaseFilter {
   @override
   String get name => "Default";
   @override
-  void applyFilter(List<Club> clubs) => clubs;
+  void applyFilter(List<Club> clubs) => clubs; //TODO make this display the latest review and then randomly
 }
 
 class AlphabeticalFilter extends BaseFilter {
@@ -31,5 +31,8 @@ class DateFilter extends BaseFilter {
   @override
   String get name => "Last Review";
   @override
-  void applyFilter(List<Club> clubs) => clubs.sort((a, b) => b.review.date.compareTo(a.review.date));
+  void applyFilter(List<Club> clubs) {
+    clubs.removeWhere((element) => element.review == null);
+    clubs.sort((a, b) => b.review!.date.compareTo(a.review!.date));
+  }
 }

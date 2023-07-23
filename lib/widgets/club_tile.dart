@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:nightlife/extensions/club_extension.dart';
 import 'package:provider/provider.dart';
 
 import '../model/club.dart';
@@ -21,7 +21,6 @@ class ClubTile extends StatefulWidget {
 
 class _ClubTileState extends State<ClubTile> {
   bool _isHovering = false;
-  final formater = DateFormat('dd.MM.yyyy');
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +93,7 @@ class _ClubTileState extends State<ClubTile> {
                               ),
                               const Expanded(child: SizedBox()),
                               Text(
-                                "Last review: ${formater.format(widget.club.review.date)}",
+                                widget.club.lastReview,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: infoFontSize),

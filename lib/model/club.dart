@@ -13,26 +13,26 @@ class Club {
   String imageName;
   List<TypeOfMusic> typeOfMusic;
   Map<Contact, String?> contacts = {
-      Contact.email: null,
-      Contact.facebook: null,
-      Contact.instagram: null,
-      Contact.phone: null,
-      Contact.web: null,
-    };
-  Review review;
+    Contact.email: null,
+    Contact.facebook: null,
+    Contact.instagram: null,
+    Contact.phone: null,
+    Contact.web: null,
+  };
+  Review? review;
 
-  double get score => review.score;
-
+  double get score => review == null ? 0 : review!.score;
   Color get color => (score <= 5) ? Color.lerp(Colors.red, Colors.yellow, score / 5)! : Color.lerp(Colors.yellow, Colors.green, (score - 5) / 5)!;
-
-  Club(
-      {required this.id,
-      required this.name,
-      required this.location,
-      required this.typeOfMusic,
-      required this.contacts,
-      required this.review,
-      required this.imageName});
+  
+  Club({
+    required this.id,
+    required this.name,
+    required this.location,
+    required this.typeOfMusic,
+    required this.contacts,
+    required this.review,
+    required this.imageName,
+  });
 
   // Convert a Club object into a Map to store in Firestore
   Map<String, dynamic> toMap() {
@@ -41,10 +41,12 @@ class Club {
       'location': location,
       'typeOfMusic': typeOfMusic.map((e) => e.toString()),
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
-      'review': {
-        'date': review.date,
-        'aspectReviews': review.aspectReviews.map((key, value) => MapEntry(key.name, {'score': value.score, 'description': value.description})),
-      },
+      'review': review == null
+          ? null
+          : {
+              'date': review!.date,
+              'aspectReviews': review!.aspectReviews.map((key, value) => MapEntry(key.name, {'score': value.score, 'description': value.description})),
+            },
       'imageName': imageName
     };
   }
@@ -52,7 +54,7 @@ class Club {
   // Convert a Firestore DocumentSnapshot into a Club object
   factory Club.fromDocument(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    Map<String, dynamic> reviewData = data['review'];
+    Map<String, dynamic>? reviewData = data['review'];
     return Club(
         id: doc.id,
         name: data['name'],
@@ -64,18 +66,20 @@ class Club {
             value,
           ),
         ),
-        review: Review(
-          date: DateTime.fromMillisecondsSinceEpoch(reviewData['date'].seconds * 1000),
-          aspectReviews: (reviewData['aspectReviews'] as Map<dynamic, dynamic>).map(
-            (key, value) => MapEntry(
-              Aspect.values.firstWhere((element) => element.name == key),
-              AspectReview(
-                score: value['score'],
-                description: value['description'],
+        review: reviewData == null
+            ? null
+            : Review(
+                date: DateTime.fromMillisecondsSinceEpoch(reviewData['date'].seconds * 1000),
+                aspectReviews: (reviewData['aspectReviews'] as Map<dynamic, dynamic>).map(
+                  (key, value) => MapEntry(
+                    Aspect.values.firstWhere((element) => element.name == key),
+                    AspectReview(
+                      score: value['score'],
+                      description: value['description'],
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
         imageName: data['imageName']);
   }
 
