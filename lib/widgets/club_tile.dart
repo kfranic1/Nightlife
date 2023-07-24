@@ -49,6 +49,8 @@ class _ClubTileState extends State<ClubTile> {
             onEnter: (_) => setState(() => _isHovering = true),
             onExit: (_) => setState(() => _isHovering = false),
             child: GestureDetector(
+              onTapDown: (_) => setState(() => _isHovering = true),
+              onTapCancel: () => setState(() => _isHovering = false),
               onTap: () => context.read<CustomRouterDelegate>().goToClub({"name": widget.club.name}),
               child: Container(
                 decoration: BoxDecoration(
