@@ -25,7 +25,7 @@ class _ClubTileState extends State<ClubTile> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-      double tileHeight = constraints.maxWidth > 600 ? 100 : 60;
+      double tileHeight = constraints.maxWidth > 600 ? 100 : 72;
       double nameFontSize = constraints.maxWidth > 600 ? 24 : 16;
       double infoFontSize = constraints.maxWidth > 600 ? 14 : 12;
       return Center(
@@ -85,11 +85,29 @@ class _ClubTileState extends State<ClubTile> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              const SizedBox(height: 4),
                               Text(
                                 widget.club.location,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: infoFontSize),
+                              ),
+                              const SizedBox(height: 4),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colors.green[400],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2),
+                                  child: Text(
+                                    widget.club.typeOfMusic.first.toString().toUpperCase() +
+                                        ((widget.club.typeOfMusic.length > 1) ? " +${widget.club.typeOfMusic.length - 1} more" : ""),
+                                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
                               ),
                               const Expanded(child: SizedBox()),
                               Text(
