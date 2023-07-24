@@ -23,7 +23,11 @@ class Club {
   Review? review;
 
   double get score => review == null ? 0 : review!.score;
-  Color get color => (score <= 5) ? Color.lerp(Colors.red, Colors.yellow, score / 5)! : Color.lerp(Colors.yellow, Colors.green, (score - 5) / 5)!;
+  Color get color => (score == 0)
+      ? Colors.white
+      : (score <= 5)
+          ? Color.lerp(Colors.red, Colors.yellow, score / 5)!
+          : Color.lerp(Colors.yellow, Colors.green, (score - 5) / 5)!;
 
   Club({
     required this.id,
