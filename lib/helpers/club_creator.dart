@@ -29,7 +29,7 @@ class ClubCreator {
           Contact.web: null,
         },
         typeOfMusic: [TypeOfMusic.other],
-        imageName: "https://firebasestorage.googleapis.com/v0/b/nightlife-zagreb.appspot.com/o/Roko.jpg?alt=media&token=c3a4f90f-142c-4078-982c-d9bfc9635213");
+        imageUrl: "https://firebasestorage.googleapis.com/v0/b/nightlife-zagreb.appspot.com/o/Roko.jpg?alt=media&token=c3a4f90f-142c-4078-982c-d9bfc9635213");
     await Club.createClub(club);
   }
 }

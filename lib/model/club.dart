@@ -10,7 +10,7 @@ class Club {
   String id;
   String name;
   String location;
-  String imageName;
+  String imageUrl;
   List<TypeOfMusic> typeOfMusic;
   Map<Contact, String?> contacts = {
     Contact.email: null,
@@ -23,7 +23,7 @@ class Club {
 
   double get score => review == null ? 0 : review!.score;
   Color get color => (score <= 5) ? Color.lerp(Colors.red, Colors.yellow, score / 5)! : Color.lerp(Colors.yellow, Colors.green, (score - 5) / 5)!;
-  
+
   Club({
     required this.id,
     required this.name,
@@ -31,7 +31,7 @@ class Club {
     required this.typeOfMusic,
     required this.contacts,
     required this.review,
-    required this.imageName,
+    required this.imageUrl,
   });
 
   // Convert a Club object into a Map to store in Firestore
@@ -47,7 +47,7 @@ class Club {
               'date': review!.date,
               'aspectReviews': review!.aspectReviews.map((key, value) => MapEntry(key.name, {'score': value.score, 'description': value.description})),
             },
-      'imageName': imageName
+      'imageUrl': imageUrl
     };
   }
 
@@ -80,13 +80,18 @@ class Club {
                   ),
                 ),
               ),
-        imageName: data['imageName']);
+        imageUrl: data['imageUrl']);
   }
 
   // Create a club in Firestore
   static Future<void> createClub(Club club) async {
     final clubsCollection = FirebaseFirestore.instance.collection('clubs');
     await clubsCollection.add(club.toMap());
+  }
+
+  static Future<void> updateClub(Club club) async {
+    final clubsCollection = FirebaseFirestore.instance.collection('clubs');
+    await clubsCollection.doc(club.id).update(club.toMap());
   }
 
   // Retrieve a club from Firestore by ID

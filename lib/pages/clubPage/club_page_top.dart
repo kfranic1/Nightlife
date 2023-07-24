@@ -32,7 +32,7 @@ class ClubPageTop extends StatelessWidget {
         width: 150,
         height: 150,
         child: Image.network(
-          club.imageName,
+          club.imageUrl,
           fit: BoxFit.contain,
         ),
       ),
