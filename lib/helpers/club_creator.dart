@@ -10,6 +10,7 @@ class ClubCreator {
     Club club = Club(
         id: "a",
         name: "Club Roko",
+        description: '',
         location: "Jarunska ul. 5, Zagreb",
         review: Review(
           date: DateTime.now(),

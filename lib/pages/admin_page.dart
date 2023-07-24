@@ -19,6 +19,7 @@ class _AdminPageState extends State<AdminPage> {
   Club _club = Club(
     id: '',
     name: 'New Club',
+    description: '',
     location: '',
     typeOfMusic: [],
     contacts: {for (var element in Contact.values) element: ""},
@@ -53,7 +54,10 @@ class _AdminPageState extends State<AdminPage> {
             style: const TextStyle(color: Colors.black),
             underline: Container(),
             focusColor: Colors.transparent,
-            onChanged: (Club? club) => setState(() => _club = club!),
+            onChanged: (Club? club) => setState(() {
+              _formKey.currentState!.reset();
+              _club = club!;
+            }),
             items: clubs
                 .map((club) => DropdownMenuItem<Club>(
                       value: club,
@@ -77,40 +81,52 @@ class _AdminPageState extends State<AdminPage> {
             validate: true,
           ),
           ClubTextField(
+            labelText: "Description",
+            initialValue: _club.description,
+            onChanged: (value) => _club.description = value,
+          ),
+          ClubTextField(
             labelText: 'Address',
             initialValue: _club.location,
             onChanged: (value) => _club.location = value,
             validate: true,
+            icon: const Icon(Icons.location_pin),
           ),
           ClubTextField(
             labelText: 'Phone',
             initialValue: _club.contacts[Contact.phone] ?? '',
             onChanged: (value) => _club.contacts[Contact.phone] = value,
+            icon: Icon(Contact.phone.icon),
           ),
           ClubTextField(
             labelText: 'Web',
             initialValue: _club.contacts[Contact.web] ?? '',
             onChanged: (value) => _club.contacts[Contact.web] = value,
+            icon: const Icon(Icons.web),
           ),
           ClubTextField(
             labelText: 'Email',
             initialValue: _club.contacts[Contact.email] ?? '',
             onChanged: (value) => _club.contacts[Contact.email] = value,
+            icon: const Icon(Icons.email),
           ),
           ClubTextField(
             labelText: 'Instagram',
             initialValue: _club.contacts[Contact.instagram] ?? '',
             onChanged: (value) => _club.contacts[Contact.instagram] = value,
+            icon: Icon(Contact.instagram.icon),
           ),
           ClubTextField(
             labelText: 'Facebook',
             initialValue: _club.contacts[Contact.facebook] ?? '',
             onChanged: (value) => _club.contacts[Contact.facebook] = value,
+            icon: Icon(Contact.facebook.icon),
           ),
           ClubTextField(
             labelText: 'Image url',
             initialValue: _club.imageUrl,
             onChanged: (value) => _club.imageUrl = value,
+            icon: const Icon(Icons.image),
           ),
           Container(
             decoration: BoxDecoration(
@@ -157,10 +173,9 @@ class _AdminPageState extends State<AdminPage> {
                         if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Operation successful')));
                       } catch (error) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred: ${error.toString()}')));
-                      } finally {
-                        setState(() => loading = false);
                       }
                     }
+                    setState(() => loading = false);
                   },
             child: loading ? const CircularProgressIndicator() : const Icon(Icons.save),
           ),
@@ -180,11 +195,13 @@ class ClubTextField extends StatefulWidget {
   final String initialValue;
   final void Function(String)? onChanged;
   final bool validate;
+  final Icon? icon;
 
   const ClubTextField({
     Key? key,
     required this.labelText,
     required this.initialValue,
+    this.icon,
     this.onChanged,
     this.validate = false,
   }) : super(key: key);
@@ -205,7 +222,11 @@ class _ClubTextFieldState extends State<ClubTextField> {
   @override
   void didUpdateWidget(ClubTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _controller.text = widget.initialValue;
+    if (widget.initialValue != oldWidget.initialValue) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _controller.text = widget.initialValue;
+      });
+    }
   }
 
   @override
@@ -213,6 +234,7 @@ class _ClubTextFieldState extends State<ClubTextField> {
     return TextFormField(
       controller: _controller,
       decoration: InputDecoration(
+        icon: widget.icon,
         labelText: widget.labelText,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
       ),

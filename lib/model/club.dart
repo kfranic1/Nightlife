@@ -9,6 +9,7 @@ import 'review.dart';
 class Club {
   String id;
   String name;
+  String description;
   String location;
   String imageUrl;
   List<TypeOfMusic> typeOfMusic;
@@ -27,6 +28,7 @@ class Club {
   Club({
     required this.id,
     required this.name,
+    required this.description,
     required this.location,
     required this.typeOfMusic,
     required this.contacts,
@@ -38,6 +40,7 @@ class Club {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'description': description,
       'location': location,
       'typeOfMusic': typeOfMusic.map((e) => e.name),
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
@@ -58,6 +61,7 @@ class Club {
     return Club(
         id: doc.id,
         name: data['name'],
+        description: data['description'],
         location: data['location'],
         typeOfMusic: (data['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.name == type)).toList(),
         contacts: (data['contacts'] as Map<String, dynamic>).map(
