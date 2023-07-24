@@ -32,7 +32,7 @@ class _ClubTileState extends State<ClubTile> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.ease,
-          width: min(1000, widget.width) * (_isHovering ? 1.1 : 1),
+          width: min(1000, widget.width) * (_isHovering ? 1.05 : 1),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),

@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = min(1000, MediaQuery.of(context).size.width * 0.85);
+    double width = min(1000, MediaQuery.of(context).size.width * 0.95);
 
     ClubList clubList = context.watch<ClubList>();
     return Column(
