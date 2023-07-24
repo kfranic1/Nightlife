@@ -39,7 +39,7 @@ class Club {
     return {
       'name': name,
       'location': location,
-      'typeOfMusic': typeOfMusic.map((e) => e.toString()),
+      'typeOfMusic': typeOfMusic.map((e) => e.name),
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
       'review': review == null
           ? null
@@ -59,7 +59,7 @@ class Club {
         id: doc.id,
         name: data['name'],
         location: data['location'],
-        typeOfMusic: (data['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.toString() == type)).toList(),
+        typeOfMusic: (data['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.name == type)).toList(),
         contacts: (data['contacts'] as Map<String, dynamic>).map(
           (key, value) => MapEntry(
             Contact.values.firstWhere((e) => e.name == key),

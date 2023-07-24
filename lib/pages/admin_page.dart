@@ -3,6 +3,7 @@ import 'package:nightlife/enums/contact.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:provider/provider.dart';
 
+import '../enums/type_of_music.dart';
 import '../model/club.dart';
 
 class AdminPage extends StatefulWidget {
@@ -20,23 +21,25 @@ class _AdminPageState extends State<AdminPage> {
     name: 'New Club',
     location: '',
     typeOfMusic: [],
-    contacts: {},
+    contacts: {for (var element in Contact.values) element: ""},
     review: null,
     imageUrl: '',
   );
 
   late List<Club> clubs;
+  late List<bool> typeOfMusicSelected;
 
   @override
   void initState() {
+    super.initState();
     ClubList clubList = context.read<ClubList>();
     clubs = List.from(clubList.clubs);
     clubs.add(_club);
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    typeOfMusicSelected = TypeOfMusic.values.map((type) => _club.typeOfMusic.contains(type)).toList();
     return Form(
       key: _formKey,
       child: ListView(
@@ -108,6 +111,36 @@ class _AdminPageState extends State<AdminPage> {
             labelText: 'Image url',
             initialValue: _club.imageUrl,
             onChanged: (value) => _club.imageUrl = value,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: ExpansionTile(
+              title: Text("Types of music (${_club.typeOfMusic.join(', ')})"),
+              children: TypeOfMusic.values.map((type) {
+                int index = type.index;
+                return DropdownMenuItem(
+                  value: type,
+                  child: CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: Text(type.toString()),
+                    value: typeOfMusicSelected[index],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        typeOfMusicSelected[index] = value!;
+                        if (value) {
+                          _club.typeOfMusic.add(type);
+                        } else {
+                          _club.typeOfMusic.remove(type);
+                        }
+                      });
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
           ),
           FloatingActionButton(
             onPressed: loading
