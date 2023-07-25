@@ -3,13 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../enums/aspect.dart';
 
 class Review {
-  late DateTime date;
-  late Map<Aspect, AspectReview> aspectReviews;
+  DateTime date = DateTime.now();
+  Map<Aspect, AspectReview> aspectReviews = {for (var element in Aspect.values) element: AspectReview(description: '', score: 1)};
 
   double get score => aspectReviews.values.fold<double>(0, (previousValue, element) => previousValue + element.score) / Aspect.values.length;
 
   final _firestore = FirebaseFirestore.instance;
 
+  Review.empty();
   Review({required this.date, required this.aspectReviews});
 
   // Get a Review from Firestore

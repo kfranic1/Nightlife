@@ -85,6 +85,20 @@ class Club {
         imageUrl: data['imageUrl']);
   }
 
+  Future<void> updateReview(Review review) async {
+    this.review = review;
+    final clubsCollection = FirebaseFirestore.instance.collection('clubs');
+    await clubsCollection.doc(id).update({
+      'review': {
+        'date': review.date,
+        'aspectReviews': review.aspectReviews.map((key, value) => MapEntry(key.name, {
+              'score': value.score,
+              'description': value.description,
+            })),
+      }
+    });
+  }
+
   @override
   String toString() {
     return "$name - $id\n$review";
