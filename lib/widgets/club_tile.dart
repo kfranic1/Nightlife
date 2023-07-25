@@ -128,7 +128,6 @@ class _ClubTileState extends State<ClubTile> {
                       padding: const EdgeInsets.all(16.0),
                       child: ScoreIndicator(
                         score: widget.club.score,
-                        color: widget.club.score.color,
                         scale: tileHeight,
                       ),
                     ),

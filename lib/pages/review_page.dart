@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/double_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/club_text_field.dart';
+import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../model/club.dart';
@@ -121,6 +122,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   .toList(),
             ),
           ),
+          ScoreIndicator(score: _review.score, scale: 50),
           FloatingActionButton(
             onPressed: loading
                 ? null

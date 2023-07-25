@@ -1,13 +1,13 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:nightlife/extensions/double_extension.dart';
 
 class ScoreIndicator extends StatelessWidget {
   final double score;
   final double scale;
-  final Color color;
 
-  const ScoreIndicator({super.key, required this.score, required this.color, required this.scale});
+  const ScoreIndicator({super.key, required this.score, required this.scale});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ScoreIndicator extends StatelessWidget {
         children: [
           CustomPaint(
             painter: ScoreCirclePainter(
-              color,
+              score.color,
               score / 10,
               strokeWidth: scale / 50 * 10,
             ),
@@ -28,7 +28,6 @@ class ScoreIndicator extends StatelessWidget {
               score.toStringAsFixed(1),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                //color: Colors.black,
                 fontSize: 14 * scale / 50,
               ),
             ),
