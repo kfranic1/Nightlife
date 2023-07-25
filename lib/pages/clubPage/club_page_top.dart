@@ -83,10 +83,13 @@ class ContactElement extends StatelessWidget {
     if (data == null) return Container();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: GestureDetector(
-        onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
-        child: Row(
-          children: [Icon(contact.icon), Text(' $data')],
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
+          child: Row(
+            children: [Icon(contact.icon), Text(' $data')],
+          ),
         ),
       ),
     );

@@ -23,7 +23,7 @@ class _AdminPageState extends State<AdminPage> {
     description: '',
     location: '',
     typeOfMusic: [],
-    contacts: {for (var element in Contact.values) element: ""},
+    contacts: {for (var element in Contact.values) element: null},
     review: null,
     imageUrl: '',
   );
