@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 import '../enums/aspect.dart';
 import '../enums/contact.dart';
@@ -23,11 +22,6 @@ class Club {
   Review? review;
 
   double get score => review == null ? 0 : review!.score;
-  Color get color => (score == 0)
-      ? Colors.white
-      : (score <= 5)
-          ? Color.lerp(Colors.red, Colors.yellow, score / 5)!
-          : Color.lerp(Colors.yellow, Colors.green, (score - 5) / 5)!;
 
   Club({
     required this.id,
@@ -91,6 +85,11 @@ class Club {
         imageUrl: data['imageUrl']);
   }
 
+  @override
+  String toString() {
+    return "$name - $id\n$review";
+  }
+
   // Create a club in Firestore
   static Future<void> createClub(Club club) async {
     final clubsCollection = FirebaseFirestore.instance.collection('clubs');
@@ -107,10 +106,5 @@ class Club {
     final clubsCollection = FirebaseFirestore.instance.collection('clubs');
     DocumentSnapshot doc = await clubsCollection.doc(clubId).get();
     return Club.fromDocument(doc);
-  }
-
-  @override
-  String toString() {
-    return "$name - $id\n$review";
   }
 }

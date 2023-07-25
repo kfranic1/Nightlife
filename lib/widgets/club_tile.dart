@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/club_extension.dart';
+import 'package:nightlife/extensions/double_extension.dart';
 import 'package:provider/provider.dart';
 
 import '../model/club.dart';
@@ -55,7 +56,7 @@ class _ClubTileState extends State<ClubTile> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: _isHovering ? widget.club.color.withAlpha(50) : Colors.transparent,
+                  color: _isHovering ? widget.club.score.color.withAlpha(50) : Colors.transparent,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +128,7 @@ class _ClubTileState extends State<ClubTile> {
                       padding: const EdgeInsets.all(16.0),
                       child: ScoreIndicator(
                         score: widget.club.score,
-                        color: widget.club.color,
+                        color: widget.club.score.color,
                         scale: tileHeight,
                       ),
                     ),

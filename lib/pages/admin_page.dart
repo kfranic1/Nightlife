@@ -4,6 +4,7 @@ import 'package:nightlife/helpers/club_list.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/type_of_music.dart';
+import '../helpers/club_text_field.dart';
 import '../model/club.dart';
 
 class AdminPage extends StatefulWidget {
@@ -33,8 +34,7 @@ class _AdminPageState extends State<AdminPage> {
   @override
   void initState() {
     super.initState();
-    ClubList clubList = context.read<ClubList>();
-    clubs = List.from(clubList.clubs);
+    clubs = List.from(context.read<ClubList>().clubs);
     clubs.add(_club);
   }
 
@@ -45,34 +45,40 @@ class _AdminPageState extends State<AdminPage> {
       key: _formKey,
       child: ListView(
         children: [
-          DropdownButton<Club>(
-            value: _club,
-            isExpanded: true,
-            icon: const Icon(Icons.arrow_drop_down),
-            iconSize: 24,
-            elevation: 16,
-            style: const TextStyle(color: Colors.black),
-            underline: Container(),
-            focusColor: Colors.transparent,
-            onChanged: (Club? club) => setState(() {
-              _formKey.currentState!.reset();
-              _club = club!;
-            }),
-            items: clubs
-                .map((club) => DropdownMenuItem<Club>(
-                      value: club,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          club.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: DropdownButton<Club>(
+              value: _club,
+              isExpanded: true,
+              icon: const Icon(Icons.arrow_drop_down),
+              iconSize: 24,
+              elevation: 16,
+              style: const TextStyle(color: Colors.black),
+              underline: Container(),
+              focusColor: Colors.transparent,
+              onChanged: (Club? club) => setState(() {
+                _formKey.currentState!.reset();
+                _club = club!;
+              }),
+              items: clubs
+                  .map((club) => DropdownMenuItem<Club>(
+                        value: club,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            club.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                    ))
-                .toList(),
+                      ))
+                  .toList(),
+            ),
           ),
           ClubTextField(
             labelText: "Club name",
@@ -127,6 +133,7 @@ class _AdminPageState extends State<AdminPage> {
             initialValue: _club.imageUrl,
             onChanged: (value) => _club.imageUrl = value,
             icon: const Icon(Icons.image),
+            maxLines: null,
           ),
           Container(
             decoration: BoxDecoration(
@@ -187,65 +194,5 @@ class _AdminPageState extends State<AdminPage> {
             .toList(),
       ),
     );
-  }
-}
-
-class ClubTextField extends StatefulWidget {
-  final String labelText;
-  final String initialValue;
-  final void Function(String)? onChanged;
-  final bool validate;
-  final Icon? icon;
-
-  const ClubTextField({
-    Key? key,
-    required this.labelText,
-    required this.initialValue,
-    this.icon,
-    this.onChanged,
-    this.validate = false,
-  }) : super(key: key);
-
-  @override
-  State<ClubTextField> createState() => _ClubTextFieldState();
-}
-
-class _ClubTextFieldState extends State<ClubTextField> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(text: widget.initialValue);
-  }
-
-  @override
-  void didUpdateWidget(ClubTextField oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.initialValue != oldWidget.initialValue) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _controller.text = widget.initialValue;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _controller,
-      decoration: InputDecoration(
-        icon: widget.icon,
-        labelText: widget.labelText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-      ),
-      onChanged: widget.onChanged,
-      validator: widget.validate ? (value) => value == null || value.isEmpty ? "Element can't be empty" : null : null,
-    );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }
