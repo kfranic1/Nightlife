@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/club_list.dart';
+import 'package:nightlife/helpers/default_box_decoration.dart';
 import 'package:nightlife/helpers/filters.dart';
 import 'package:provider/provider.dart';
 
@@ -43,10 +44,7 @@ class _FilterState extends State<Filter> {
           height: 48,
           width: 140,
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
+          decoration: DefaultBoxDecoration(),
           child: DropdownButton<BaseFilter>(
             value: clubs.filter,
             isExpanded: true,

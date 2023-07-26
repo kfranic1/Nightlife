@@ -7,7 +7,7 @@ class ScoreIndicator extends StatelessWidget {
   final double score;
   final double scale;
 
-  const ScoreIndicator({super.key, required this.score, required this.scale});
+  const ScoreIndicator({super.key, required this.score, this.scale = 50});
 
   @override
   Widget build(BuildContext context) {

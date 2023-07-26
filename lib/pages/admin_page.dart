@@ -1,6 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
+import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
+import 'package:nightlife/helpers/default_box_decoration.dart';
+import 'package:nightlife/widgets/club_dropdown.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/type_of_music.dart';
@@ -45,41 +49,15 @@ class _AdminPageState extends State<AdminPage> {
       key: _formKey,
       child: ListView(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: DropdownButton<Club>(
-              value: _club,
-              isExpanded: true,
-              icon: const Icon(Icons.arrow_drop_down),
-              iconSize: 24,
-              elevation: 16,
-              style: const TextStyle(color: Colors.black),
-              underline: Container(),
-              focusColor: Colors.transparent,
-              onChanged: (Club? club) => setState(() {
-                _formKey.currentState!.reset();
-                _club = club!;
-              }),
-              items: clubs
-                  .map((club) => DropdownMenuItem<Club>(
-                        value: club,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            club.name,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
+          ClubDropdown(
+            club: _club,
+            clubs: clubs,
+            onChanged: (Club? club) => setState(() {
+              _formKey.currentState!.reset();
+              _club = club!;
+            }),
           ),
+          const Divider(height: 2, thickness: 2, color: Colors.black),
           ClubTextField(
             labelText: "Club name",
             initialValue: _club.name,
@@ -136,10 +114,7 @@ class _AdminPageState extends State<AdminPage> {
             maxLines: null,
           ),
           Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
+            decoration: DefaultBoxDecoration(),
             child: ExpansionTile(
               title: Text("Types of music (${_club.typeOfMusic.join(', ')})"),
               children: TypeOfMusic.values.map((type) {
@@ -165,7 +140,7 @@ class _AdminPageState extends State<AdminPage> {
               }).toList(),
             ),
           ),
-          FloatingActionButton(
+          ElevatedButton(
             onPressed: loading
                 ? null
                 : () async {
@@ -184,14 +159,9 @@ class _AdminPageState extends State<AdminPage> {
                     }
                     setState(() => loading = false);
                   },
-            child: loading ? const CircularProgressIndicator() : const Icon(Icons.save),
+            child: loading ? const CircularProgressIndicator() : const Text("Save"),
           ),
-        ]
-            .map((e) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: e,
-                ))
-            .toList(),
+        ].addPadding(),
       ),
     );
   }

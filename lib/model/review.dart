@@ -11,6 +11,11 @@ class Review {
   final _firestore = FirebaseFirestore.instance;
 
   Review.empty();
+  Review.from(Review review) {
+    date = review.date;
+    aspectReviews = {for (var entry in review.aspectReviews.entries) entry.key: AspectReview(score: entry.value.score, description: entry.value.description)};
+  }
+
   Review({required this.date, required this.aspectReviews});
 
   // Get a Review from Firestore
@@ -42,6 +47,8 @@ class Review {
   String toString() {
     return "Review from $date.\n$aspectReviews";
   }
+
+  bool isEqual(Review other) => aspectReviews.entries.every((element) => element.value.isEqual(other.aspectReviews[element.key]!));
 }
 
 class AspectReview {
@@ -57,4 +64,6 @@ class AspectReview {
   String toString() {
     return "$score: $description";
   }
+
+  bool isEqual(AspectReview other) => score == other.score && description == other.description;
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/map_extension.dart';
 import 'package:nightlife/extensions/string_extension.dart';
 import 'package:nightlife/pages/admin_page.dart';
-import 'package:nightlife/pages/review_page.dart';
 import 'package:nightlife/routing/configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../helpers/club_list.dart';
 import '../pages/clubPage/club_page.dart';
 import '../pages/home_page.dart';
+import '../pages/reviewPage/review_page.dart';
 
 class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNotifier, PopNavigatorRouterDelegateMixin<Configuration> implements Routes {
   Configuration _configuration = Configuration.home();
