@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/default_box_decoration.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 
-import '../../enums/aspect.dart';
-import '../../model/review.dart';
+import '../../../enums/aspect.dart';
+import '../../../model/review.dart';
 
 class ReviewField extends StatefulWidget {
   const ReviewField({super.key, required Review review, required Aspect aspect})

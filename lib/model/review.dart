@@ -4,7 +4,7 @@ import '../enums/aspect.dart';
 
 class Review {
   DateTime date = DateTime.now();
-  Map<Aspect, AspectReview> aspectReviews = {for (var element in Aspect.values) element: AspectReview(description: '', score: 1)};
+  Map<Aspect, AspectReview> aspectReviews = {for (var element in Aspect.values) element: AspectReview(description: '', score: 0)};
 
   double get score => aspectReviews.values.fold<double>(0, (previousValue, element) => previousValue + element.score) / Aspect.values.length;
 
