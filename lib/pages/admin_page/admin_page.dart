@@ -53,9 +53,25 @@ class _AdminPageState extends State<AdminPage> {
           value: _club,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Expanded(child: ClubEditPage()),
-              Expanded(child: ReviewPage()),
+            children: [
+              Expanded(
+                child: FocusScope(
+                  node: FocusScopeNode(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ClubEditPage(),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: FocusScope(
+                  node: FocusScopeNode(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ReviewPage(),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
