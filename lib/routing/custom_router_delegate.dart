@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/map_extension.dart';
 import 'package:nightlife/extensions/string_extension.dart';
 import 'package:nightlife/pages/admin_page/admin_page.dart';
+import 'package:nightlife/pages/error_page.dart';
 import 'package:nightlife/routing/configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/club_list.dart';
+import '../model/club.dart';
 import '../pages/clubPage/club_page.dart';
 import '../pages/home_page.dart';
 
@@ -36,11 +38,13 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
               child: Builder(builder: (context) {
                 switch (_configuration.pathName?.removeParams()) {
                   case Routes.club:
-                    return ClubPage(club: context.read<ClubList>().findClubByName(_configuration.pathParams!['name']!));
+                    Club? club = context.read<ClubList>().findClubByName(_configuration.pathParams!['name']!);
+                    if (club == null) return const ErrorPage();
+                    return ClubPage(club: club);
                   case Routes.admin:
                     return const AdminPage();
                   default:
-                    return const HomePage();
+                    return const ErrorPage();
                 }
               }),
             ),
