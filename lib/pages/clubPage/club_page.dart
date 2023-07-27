@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/model/club.dart';
+import 'package:nightlife/widgets/review_display.dart';
+import 'package:provider/provider.dart';
 
-import 'club_page_top.dart';
+import 'club_page_info.dart';
 
 class ClubPage extends StatelessWidget {
   final Club club;
@@ -9,19 +11,23 @@ class ClubPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      children: [
-        Padding(
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ClubPageTop(club: club),
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(),
-        ),
-      ],
+          child: ListView(
+            scrollDirection: constraints.maxWidth < 700 ? Axis.vertical : Axis.horizontal,
+            children: [
+              ClubPageInfo(club: club),
+              const SizedBox.square(dimension: 10),
+              Provider.value(
+                value: club.review,
+                child: const ReviewDisplay(),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

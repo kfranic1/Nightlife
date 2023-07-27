@@ -11,13 +11,13 @@ enum Aspect {
       case Aspect.atmosphere:
         return "Atmosphere";
       case Aspect.pricesAndDrinkVariety:
-        return "Prices And Drink Variety";
+        return "Prices and drink variety";
       case Aspect.soundSystemAndLayout:
-        return "Sound System And Layout";
+        return "Sound system and layout";
       case Aspect.customerService:
-        return "Customer Service";
+        return "Customer service";
       case Aspect.overallImpression:
-        return "Overall Impression";
+        return "Overall impression";
     }
   }
 }
