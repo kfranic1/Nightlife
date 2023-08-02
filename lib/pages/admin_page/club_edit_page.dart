@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
-import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/default_box_decoration.dart';
 import 'package:nightlife/pages/admin_page/form_button.dart';
 import 'package:provider/provider.dart';
@@ -86,42 +85,48 @@ class _ClubEditPageState extends State<ClubEditPage> {
             icon: const Icon(Icons.image),
             maxLines: null,
           ),
-          Container(
-            decoration: DefaultBoxDecoration(),
-            child: ExpansionTile(
-              title: Text("Types of music (${_club.typeOfMusic.join(', ')})"),
-              children: TypeOfMusic.values.map((type) {
-                int index = type.index;
-                return DropdownMenuItem(
-                  value: type,
-                  child: CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    title: Text(type.toString()),
-                    value: typeOfMusicSelected[index],
-                    onChanged: (bool? value) {
-                      setState(() {
-                        typeOfMusicSelected[index] = value!;
-                        if (value) {
-                          _club.typeOfMusic.add(type);
-                        } else {
-                          _club.typeOfMusic.remove(type);
-                        }
-                      });
-                    },
-                  ),
-                );
-              }).toList(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: DefaultBoxDecoration(),
+              child: ExpansionTile(
+                title: Text("Types of music (${_club.typeOfMusic.join(', ')})"),
+                children: TypeOfMusic.values.map((type) {
+                  int index = type.index;
+                  return DropdownMenuItem(
+                    value: type,
+                    child: CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(type.toString()),
+                      value: typeOfMusicSelected[index],
+                      onChanged: (bool? value) {
+                        setState(() {
+                          typeOfMusicSelected[index] = value!;
+                          if (value) {
+                            _club.typeOfMusic.add(type);
+                          } else {
+                            _club.typeOfMusic.remove(type);
+                          }
+                        });
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           ),
-          FormButton(
-              formStateKey: _formKey,
-              action: () async {
-                if (_club.id.isEmpty)
-                  await Club.createClub(_club);
-                else
-                  await Club.updateClub(_club);
-              }),
-        ].addPadding(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FormButton(
+                formStateKey: _formKey,
+                action: () async {
+                  if (_club.id.isEmpty)
+                    await Club.createClub(_club);
+                  else
+                    await Club.updateClub(_club);
+                }),
+          ),
+        ],
       ),
     );
   }

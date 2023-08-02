@@ -49,16 +49,19 @@ class _ClubTextFieldState extends State<ClubTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: _controller,
-      decoration: InputDecoration(
-        icon: widget.icon,
-        labelText: widget.labelText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        controller: _controller,
+        decoration: InputDecoration(
+          icon: widget.icon,
+          labelText: widget.labelText,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+        ),
+        onChanged: widget.onChanged,
+        validator: widget.validate ? (widget.validator) : null,
+        maxLines: widget.maxLines,
       ),
-      onChanged: widget.onChanged,
-      validator: widget.validate ? (widget.validator) : null,
-      maxLines: widget.maxLines,
     );
   }
 

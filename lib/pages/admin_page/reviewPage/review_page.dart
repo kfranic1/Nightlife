@@ -24,7 +24,11 @@ class _ReviewPageState extends State<ReviewPage> {
   Widget build(BuildContext context) {
     _formKey = ValueKey<int>(_formKey.value + 1);
     _club = context.watch<Club>();
-    if (_club.id.isEmpty) return const Placeholder();
+    if (_club.id.isEmpty)
+      return const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Placeholder(),
+      );
     _review = Review.from(_club.review ?? Review.empty());
     return Form(
       key: _formStateKey,
@@ -62,8 +66,7 @@ class _ReviewPageState extends State<ReviewPage> {
           .toList()
           .rearrange((p0, p1) => p0.toString().compareTo(p1.toString()))
           .map((entry) => ReviewField(review: _review, aspect: entry.key))
-          .toList()
-          .addPadding(),
+          .toList(),
     );
   }
 }

@@ -33,7 +33,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
     if (review == null) return const Text("This club doesn't have a review yet.");
     return SizedBox(
       width: 500,
-      height: MediaQuery.of(context).size.height - 20,
+      height: MediaQuery.of(context).size.height - 76,
       child: Column(
         children: [
           Expanded(
