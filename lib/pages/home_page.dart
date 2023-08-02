@@ -17,9 +17,9 @@ class HomePage extends StatelessWidget {
     ClubList clubList = context.watch<ClubList>();
     return Column(
       children: [
-        const SizedBox(height: 28),
+        const SizedBox(height: 12),
         SizedBox(width: width, child: const Filter()),
-        const SizedBox(height: 20),
+        const SizedBox(height: 12),
         Expanded(
           child: ListView.separated(
             itemBuilder: (context, index) => ClubTile(

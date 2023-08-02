@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlife/extensions/map_extension.dart';
 import 'package:nightlife/extensions/string_extension.dart';
 import 'package:nightlife/pages/admin_page/admin_page.dart';
@@ -24,6 +25,40 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        leadingWidth: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0.4,
+        title: TextButton(
+          style: const ButtonStyle(overlayColor: MaterialStatePropertyAll(Colors.transparent)),
+          child: const Text(
+            'Nightlife Zagreb',
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
+          ),
+          onPressed: () => goToHome(),
+        ),
+        actions: [
+          TextButton.icon(
+            style: const ButtonStyle(overlayColor: MaterialStatePropertyAll(Colors.transparent)),
+            onPressed: () async => {}, //await launchUrl(Uri.parse("address")),
+            label: const Text(
+              "Visit our Instagram",
+              maxLines: 1,
+              style: TextStyle(fontSize: 12),
+            ),
+            icon: const FaIcon(
+              FontAwesomeIcons.instagram,
+              color: Colors.purple,
+            ),
+          ),
+        ],
+      ),
       body: Navigator(
         key: navigatorKey,
         pages: [

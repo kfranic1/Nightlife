@@ -4,6 +4,7 @@ import 'package:nightlife/helpers/club_list.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 
+import 'helpers/primary_swatch.dart';
 import 'other/custom_scroll_behavior.dart';
 import 'other/firebase_options.dart';
 import 'routing/custom_route_information_parser.dart';
@@ -45,6 +46,7 @@ class Nightlife extends StatelessWidget {
                 backButtonDispatcher: RootBackButtonDispatcher(),
                 theme: ThemeData(
                   fontFamily: 'Roboto',
+                  primarySwatch: primarySwatch,
                   //brightness: Brightness.dark,
                 ),
               );
