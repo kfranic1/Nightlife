@@ -53,9 +53,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   Widget discardButton() {
     return ElevatedButton(
-      onPressed: () => setState(() {
-        _review = Review.from(_club.review ?? Review.empty());
-      }),
+      onPressed: () => setState(() => _review = Review.from(_club.review ?? Review.empty())),
       child: const Text('Discard changes'),
     );
   }

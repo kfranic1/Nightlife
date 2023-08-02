@@ -20,7 +20,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
   final PageController _controller = PageController();
   int _currentPage = 0;
   late Review? review;
-  List<Aspect> aspects = List<Aspect>.from(Aspect.values).rearrange((p0, p1) => p0.name.compareTo(p1.name));
+  List<Aspect> aspects = List<Aspect>.from(Aspect.values).rearrange((p0, p1) => p0.index.compareTo(p1.index));
 
   @override
   void initState() {
