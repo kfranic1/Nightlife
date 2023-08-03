@@ -41,7 +41,7 @@ class ClubList extends ChangeNotifier {
   }
 
   Club? findClubByName(String name) {
-    if(!clubs.any((club) => club.name == name)) return null;
+    if (!clubs.any((club) => club.name == name)) return null;
     return _clubs.firstWhere((club) => club.name == name);
-    }
+  }
 }

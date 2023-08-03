@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
+import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/default_box_decoration.dart';
+import 'package:nightlife/model/work_day.dart';
 import 'package:nightlife/pages/admin_page/form_button.dart';
 import 'package:provider/provider.dart';
 
@@ -16,16 +18,15 @@ class ClubEditPage extends StatefulWidget {
 }
 
 class _ClubEditPageState extends State<ClubEditPage> {
+  final timePattern = RegExp(r'^([01][0-9]|2[0-3]):[0-5][0-9] - ([01][0-9]|2[0-3]):[0-5][0-9]$');
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
-  late List<bool> typeOfMusicSelected;
   late Club _club;
 
   @override
   Widget build(BuildContext context) {
     _club = context.watch<Club>();
-    typeOfMusicSelected = TypeOfMusic.values.map((type) => _club.typeOfMusic.contains(type)).toList();
     return Form(
       key: _formKey,
       child: Column(
@@ -89,26 +90,59 @@ class _ClubEditPageState extends State<ClubEditPage> {
             padding: const EdgeInsets.all(8.0),
             child: Container(
               decoration: DefaultBoxDecoration(),
+              padding: const EdgeInsets.all(8.0),
               child: ExpansionTile(
-                title: Text("Types of music (${_club.typeOfMusic.join(', ')})"),
-                children: TypeOfMusic.values.map((type) {
-                  int index = type.index;
-                  return DropdownMenuItem(
-                    value: type,
-                    child: CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(type.toString()),
-                      value: typeOfMusicSelected[index],
-                      onChanged: (bool? value) {
-                        setState(() {
-                          typeOfMusicSelected[index] = value!;
-                          if (value) {
-                            _club.typeOfMusic.add(type);
-                          } else {
-                            _club.typeOfMusic.remove(type);
-                          }
-                        });
-                      },
+                maintainState: true,
+                title: const Text("Work days"),
+                children: _club.workHours.keys.toList().rearrange((p0, p1) => p0.index - p1.index).map((dayOfWeek) {
+                  WorkDay day = _club.workHours[dayOfWeek]!;
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: DefaultBoxDecoration(),
+                      child: Row(children: [
+                        SizedBox(width: 100, child: Text(dayOfWeek.name)),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          width: 200,
+                          child: ClubTextField(
+                            initialValue: day.hours,
+                            labelText: "hh:mm - hh:mm",
+                            onChanged: (value) => day.hours = value,
+                            validate: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                if (day.typeOfMusic.isNotEmpty) return "Missing working hours";
+                                return null;
+                              }
+                              if (!timePattern.hasMatch(value)) return "The time is not in correct format";
+                              if (day.typeOfMusic.isEmpty) return "Select at least one genre";
+                              return null;
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: ExpansionTile(
+                            title: Text("Types of music (${day.typeOfMusic.join(', ')})"),
+                            children: TypeOfMusic.values.toList().rearrange((p0, p1) => p0.name.compareTo(p1.name)).map((type) {
+                              return CheckboxListTile(
+                                controlAffinity: ListTileControlAffinity.leading,
+                                title: Text(type.toString()),
+                                value: day.typeOfMusic.contains(type),
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    if (value!) {
+                                      day.typeOfMusic.add(type);
+                                    } else {
+                                      day.typeOfMusic.remove(type);
+                                    }
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ]),
                     ),
                   );
                 }).toList(),

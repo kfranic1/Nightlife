@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nightlife/enums/day_of_week.dart';
+import 'package:nightlife/model/work_day.dart';
 import 'package:nightlife/pages/admin_page/reviewPage/review_page.dart';
 import 'package:provider/provider.dart';
 
@@ -21,10 +23,10 @@ class _AdminPageState extends State<AdminPage> {
     name: 'New Club',
     description: '',
     location: '',
-    typeOfMusic: [],
     contacts: {for (var element in Contact.values) element: null},
     review: null,
     imageUrl: '',
+    workHours: {for (var element in DayOfWeek.values) element: WorkDay(hours: '', typeOfMusic: [])},
   );
 
   late List<Club> clubs;

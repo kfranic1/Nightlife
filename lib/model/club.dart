@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nightlife/enums/day_of_week.dart';
+import 'package:nightlife/model/work_day.dart';
 
 import '../enums/aspect.dart';
 import '../enums/contact.dart';
@@ -11,27 +13,22 @@ class Club {
   String description;
   String location;
   String imageUrl;
-  List<TypeOfMusic> typeOfMusic;
-  Map<Contact, String?> contacts = {
-    Contact.email: null,
-    Contact.facebook: null,
-    Contact.instagram: null,
-    Contact.phone: null,
-    Contact.web: null,
-  };
+  Map<Contact, String?> contacts;
   Review? review;
+  Map<DayOfWeek, WorkDay> workHours;
 
   double get score => review == null ? 0 : review!.score;
+  List<TypeOfMusic> get typeOfMusic => workHours.values.map((value) => value.typeOfMusic).toList().expand((element) => element).toSet().toList();
 
   Club({
     required this.id,
     required this.name,
     required this.description,
     required this.location,
-    required this.typeOfMusic,
     required this.contacts,
     required this.review,
     required this.imageUrl,
+    required this.workHours,
   });
 
   // Convert a Club object into a Map to store in Firestore
@@ -40,7 +37,6 @@ class Club {
       'name': name,
       'description': description,
       'location': location,
-      'typeOfMusic': typeOfMusic.map((e) => e.name),
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
       'review': review == null
           ? null
@@ -48,7 +44,8 @@ class Club {
               'date': review!.date,
               'aspectReviews': review!.aspectReviews.map((key, value) => MapEntry(key.name, {'score': value.score, 'description': value.description})),
             },
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'workHours': workHours.map((key, value) => MapEntry(key.name, value.toMap())),
     };
   }
 
@@ -61,7 +58,6 @@ class Club {
         name: data['name'],
         description: data['description'],
         location: data['location'],
-        typeOfMusic: (data['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.name == type)).toList(),
         contacts: (data['contacts'] as Map<String, dynamic>).map(
           (key, value) => MapEntry(
             Contact.values.firstWhere((e) => e.name == key),
@@ -82,7 +78,14 @@ class Club {
                   ),
                 ),
               ),
-        imageUrl: data['imageUrl']);
+        imageUrl: data['imageUrl'],
+        workHours: (data['workHours'] as Map<dynamic, dynamic>).map((key, value) => MapEntry(
+              DayOfWeek.values.firstWhere((element) => element.name == key),
+              WorkDay(
+                hours: value['hours'],
+                typeOfMusic: (value['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.name == type)).toList(),
+              ),
+            )));
   }
 
   Future<void> updateReview(Review review) async {

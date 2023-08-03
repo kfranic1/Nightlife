@@ -96,22 +96,23 @@ class _ClubTileState extends State<ClubTile> {
                                 style: TextStyle(fontSize: infoFontSize),
                               ),
                               const SizedBox(height: 4),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.green[400],
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2),
-                                  child: Text(
-                                    widget.club.typeOfMusic.first.toString().toUpperCase() +
-                                        ((widget.club.typeOfMusic.length > 1) ? " +${widget.club.typeOfMusic.length - 1} more" : ""),
-                                    style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.club.typeOfMusic.isNotEmpty)
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    color: Colors.green[400],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2),
+                                    child: Text(
+                                      widget.club.typeOfMusic.first.toString().toUpperCase() +
+                                          ((widget.club.typeOfMusic.length > 1) ? " +${widget.club.typeOfMusic.length - 1} more" : ""),
+                                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
                               const Expanded(child: SizedBox()),
                               Text(
                                 widget.club.lastReview,
