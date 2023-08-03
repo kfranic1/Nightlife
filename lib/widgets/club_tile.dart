@@ -65,7 +65,7 @@ class _ClubTileState extends State<ClubTile> {
                       padding: const EdgeInsets.all(16.0),
                       child: CachedNetworkImage(
                         imageUrl: widget.club.imageUrl,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) => const Icon(Icons.error),
                         fit: BoxFit.fill,
                         height: tileHeight,

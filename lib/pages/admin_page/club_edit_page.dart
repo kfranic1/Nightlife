@@ -101,7 +101,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
                     child: Container(
                       decoration: DefaultBoxDecoration(),
                       child: Row(children: [
-                        SizedBox(width: 100, child: Text(dayOfWeek.name)),
+                        SizedBox(width: 80, child: Text(dayOfWeek.name)),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           width: 200,
@@ -117,6 +117,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
                               }
                               if (!timePattern.hasMatch(value)) return "The time is not in correct format";
                               if (day.typeOfMusic.isEmpty) return "Select at least one genre";
+                              if (day.typeOfMusic.length > 3) return "Select at most 3 genres";
                               return null;
                             },
                           ),

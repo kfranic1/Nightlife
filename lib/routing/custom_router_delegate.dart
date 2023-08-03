@@ -75,7 +75,10 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
                   case Routes.club:
                     Club? club = context.read<ClubList>().findClubByName(_configuration.pathParams!['name']!);
                     if (club == null) return const ErrorPage();
-                    return ClubPage(club: club);
+                    return Provider.value(
+                      value: club,
+                      child: const ClubPage(),
+                    );
                   case Routes.admin:
                     return const AdminPage();
                   default:
