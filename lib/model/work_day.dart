@@ -17,4 +17,11 @@ class WorkDay {
       'typeOfMusic': typeOfMusic.map((e) => e.name),
     };
   }
+
+  factory WorkDay.fromMap(Map<dynamic, dynamic> data) {
+    return WorkDay(
+      hours: data['hours'],
+      typeOfMusic: (data['typeOfMusic'] as List<dynamic>).map((type) => TypeOfMusic.values.firstWhere((e) => e.name == type)).toList(),
+    );
+  }
 }

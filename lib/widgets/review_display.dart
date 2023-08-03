@@ -37,7 +37,6 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
             controller: _controller,
             itemBuilder: (context, index) {
               Aspect aspect = aspects[index];
-              AspectReview aspectReview = review!.aspectReviews[aspect]!;
               return Container(
                 padding: const EdgeInsets.all(8),
                 decoration: DefaultBoxDecoration(),
@@ -56,12 +55,12 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
                     ),
                     Expanded(
                       child: Text(
-                        aspectReview.description,
+                        review!.aspectReviews[aspect]!.description,
                         style: const TextStyle(fontSize: 20),
                       ),
                     ),
                     ScoreIndicator(
-                      score: aspectReview.score,
+                      score: review!.aspectReviews[aspect]!.score,
                       scale: 72,
                     ),
                   ],
