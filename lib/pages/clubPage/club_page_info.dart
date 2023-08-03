@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nested_scroll_views/material.dart';
 import 'package:nightlife/helpers/default_box_decoration.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,39 +13,41 @@ class ClubPageInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            width: 150,
-            height: 150,
-            child: Image.network(
-              club.imageUrl,
-              fit: BoxFit.contain,
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      child: NestedSingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox.square(
+              dimension: 150,
+              child: Image.network(
+                club.imageUrl,
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
-          const SizedBox(height: 20, width: 20),
-          Text(
-            club.name,
-            style: const TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
+            const SizedBox.square(dimension: 20),
+            Text(
+              club.name,
+              style: const TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text(
-            club.location,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 24),
-          ),
-          const SizedBox(height: 20, width: 20),
-          IntrinsicWidth(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: Contact.values.map((e) => ContactElement(data: club.contacts[e], contact: e)).toList(),
+            Text(
+              club.location,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 24),
             ),
-          ),
-        ],
+            const SizedBox.square(dimension: 20),
+            IntrinsicWidth(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: Contact.values.map((e) => ContactElement(data: club.contacts[e], contact: e)).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
