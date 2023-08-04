@@ -15,14 +15,14 @@ class ReviewPage extends StatefulWidget {
 }
 
 class _ReviewPageState extends State<ReviewPage> {
-  final GlobalKey<FormState> _formStateKey = GlobalKey<FormState>();
-  ValueKey<int> _formKey = const ValueKey<int>(0);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  ValueKey<int> _valueKey = const ValueKey<int>(0);
   late Review _review;
   late Club _club;
 
   @override
   Widget build(BuildContext context) {
-    _formKey = ValueKey<int>(_formKey.value + 1);
+    _valueKey = ValueKey<int>(_valueKey.value + 1);
     _club = context.watch<Club>();
     if (_club.id.isEmpty)
       return const Padding(
@@ -31,30 +31,63 @@ class _ReviewPageState extends State<ReviewPage> {
       );
     _review = Review.from(_club.review ?? Review.empty());
     return Form(
-      key: _formStateKey,
+      key: _formKey,
       child: Column(
-        key: _formKey,
+        key: _valueKey,
         children: <Widget>[
           reviewFields(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                discardButton(),
+                Expanded(
+                  child: FormButton(
+                    action: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        await FormButton.tryAction(context, () async => await _club.updateReview(_review));
+                      }
+                    },
+                    label: "Save",
+                    color: Colors.green,
+                  ),
+                ),
                 const SizedBox(width: 10),
-                Expanded(child: FormButton(formStateKey: _formStateKey, action: () async => await _club.updateReview(_review))),
+                FormButton(
+                  action: () async => setState(() {}),
+                  label: 'Discard changes',
+                ),
+                const SizedBox(width: 10),
+                FormButton(
+                  action: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Are you sure you want to delete this review?"),
+                          actions: [
+                            TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+                            TextButton(
+                              onPressed: () async {
+                                FormButton.tryAction(context, () async => await _club.updateReview(null));
+                                setState(() {});
+                                if (context.mounted) Navigator.of(context).pop();
+                              },
+                              child: const Text("Delete"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  color: Colors.red,
+                  label: "Delete",
+                ),
               ],
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget discardButton() {
-    return ElevatedButton(
-      onPressed: () => setState(() => _review = Review.from(_club.review ?? Review.empty())),
-      child: const Text('Discard changes'),
     );
   }
 

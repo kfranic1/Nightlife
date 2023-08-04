@@ -153,13 +153,20 @@ class _ClubEditPageState extends State<ClubEditPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: FormButton(
-                formStateKey: _formKey,
-                action: () async {
-                  if (_club.id.isEmpty)
-                    await Club.createClub(_club);
-                  else
-                    await Club.updateClub(_club);
-                }),
+              action: () async {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  await FormButton.tryAction(context, () async {
+                    if (_club.id.isEmpty)
+                      await Club.createClub(_club);
+                    else
+                      await Club.updateClub(_club);
+                  });
+                }
+              },
+              label: "Save",
+              color: Colors.green,
+            ),
           ),
         ],
       ),

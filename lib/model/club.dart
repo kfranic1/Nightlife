@@ -65,10 +65,10 @@ class Club {
     );
   }
 
-  Future<void> updateReview(Review review) async {
+  Future<void> updateReview(Review? review) async {
     this.review = review;
     final clubsCollection = FirebaseFirestore.instance.collection('clubs');
-    await clubsCollection.doc(id).update({'review': review.toMap()});
+    await clubsCollection.doc(id).update({'review': review?.toMap()});
   }
 
   @override

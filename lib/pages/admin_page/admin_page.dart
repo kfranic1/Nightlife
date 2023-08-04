@@ -77,6 +77,7 @@ class _AdminPageState extends State<AdminPage> {
             ],
           ),
         ),
+        const SizedBox(height: 40)
       ],
     );
   }
