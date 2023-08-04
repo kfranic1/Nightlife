@@ -29,6 +29,12 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -74,7 +80,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(
-            5,
+            aspects.length,
             (listIndex) => IconButton(
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,

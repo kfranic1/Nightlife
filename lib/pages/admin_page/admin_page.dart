@@ -30,7 +30,6 @@ class _AdminPageState extends State<AdminPage> {
   );
 
   late List<Club> clubs;
-  late List<bool> typeOfMusicSelected;
   @override
   void initState() {
     super.initState();

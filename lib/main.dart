@@ -36,7 +36,7 @@ class Nightlife extends StatelessWidget {
         return FutureBuilder(
             future: context.read<ClubList>().setup(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator());
+              if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: primaryColor));
               return MaterialApp.router(
                 scrollBehavior: CustomScrollBehavior(),
                 title: 'Nightlife Zagreb',

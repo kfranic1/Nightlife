@@ -19,8 +19,13 @@ class _FilterState extends State<Filter> {
   @override
   void initState() {
     super.initState();
-    ClubList clubs = context.read<ClubList>();
-    _searchController.text = clubs.filterText;
+    _searchController.text = context.read<ClubList>().filterText;
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,13 +48,13 @@ class _FilterState extends State<Filter> {
         Row(
           children: [
             DropdownFilter<TypeOfMusic?>(
+              label: "Genre",
               value: clubs.typeOfMusic,
               onChanged: (TypeOfMusic? type) => clubs.updateTypeOfMusic(type),
-              label: "Genre",
               items: Map.fromIterable(
                 TypeOfMusic.values.toList().rearrange((p0, p1) => p0.name.compareTo(p1.name)),
                 key: (element) => element,
-                value: (element) => element == null ? "None" : element.toString(),
+                value: (element) => element.toString(),
               )..addAll({null: "None"}),
             ),
             const SizedBox(width: 8),
@@ -76,7 +81,7 @@ class DropdownFilter<T> extends StatelessWidget {
   });
 
   final String label;
-  final void Function(T?)? onChanged;
+  final ValueChanged<T?>? onChanged;
   final Map<T, String> items;
   final T value;
 

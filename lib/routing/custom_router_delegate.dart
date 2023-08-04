@@ -104,19 +104,21 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
 
   @override
   void goToHome() {
-    setNewRoutePath(Configuration.home());
-    notifyListeners();
+    _updateRoute(Configuration.home());
   }
 
   @override
   void goToClub(Map<String, String> params) {
-    setNewRoutePath(Configuration.otherPage(Routes.club + params.toStringFromParams()));
-    notifyListeners();
+    _updateRoute(Configuration.otherPage(Routes.club + params.toStringFromParams()));
   }
 
   @override
   void goToAdmin(Map<String, String> params) {
-    setNewRoutePath(Configuration.otherPage(Routes.admin + params.toStringFromParams()));
+    _updateRoute(Configuration.otherPage(Routes.admin + params.toStringFromParams()));
+  }
+
+  void _updateRoute(Configuration configuration) {
+    setNewRoutePath(configuration);
     notifyListeners();
   }
 }

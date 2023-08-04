@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/routing/custom_router_delegate.dart';
-import 'package:provider/provider.dart';
+import 'package:nightlife/helpers/primary_swatch.dart';
 
 class ErrorPage extends StatelessWidget {
-  final String errorMessage = 'This page does not exist.';
-
   const ErrorPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Icon(
+          Icon(
             Icons.error_outline,
-            color: Colors.red,
-            size: 50,
+            color: primaryColor,
+            size: 75,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Text(
-            errorMessage,
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.redAccent,
+            'This page does not exist.',
+            style: TextStyle(
+              fontSize: 32,
+              color: primaryColor,
             ),
             textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              context.read<CustomRouterDelegate>().goToHome();
-            },
-            child: const Text('Go to Home Page'),
           ),
         ],
       ),
