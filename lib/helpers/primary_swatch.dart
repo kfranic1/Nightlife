@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
-MaterialColor primarySwatch = MaterialColor(
-  const Color.fromARGB(255, 34, 14, 85).value,
-  const <int, Color>{
-    50: Color.fromRGBO(34, 14, 85, 0.1),
-    100: Color.fromRGBO(34, 14, 85, 0.2),
-    200: Color.fromRGBO(34, 14, 85, 0.3),
-    300: Color.fromRGBO(34, 14, 85, 0.4),
-    400: Color.fromRGBO(34, 14, 85, 0.5),
-    500: Color.fromRGBO(34, 14, 85, 0.6),
-    600: Color.fromRGBO(34, 14, 85, 0.7),
-    700: Color.fromRGBO(34, 14, 85, 0.8),
-    800: Color.fromRGBO(34, 14, 85, 0.9),
-    900: Color.fromRGBO(34, 14, 85, 1),
-  },
-);
+const Color primaryColor = Color.fromARGB(255, 49, 21, 121);
+
+MaterialColor primarySwatch = fromColor(primaryColor);
+
+MaterialColor fromColor(Color color) {
+  return MaterialColor(color.value, {
+    50: Color.fromRGBO(color.red, color.green, color.blue, 0.1),
+    100: Color.fromRGBO(color.red, color.green, color.blue, 0.2),
+    200: Color.fromRGBO(color.red, color.green, color.blue, 0.3),
+    300: Color.fromRGBO(color.red, color.green, color.blue, 0.4),
+    400: Color.fromRGBO(color.red, color.green, color.blue, 0.5),
+    500: Color.fromRGBO(color.red, color.green, color.blue, 0.6),
+    600: Color.fromRGBO(color.red, color.green, color.blue, 0.7),
+    700: Color.fromRGBO(color.red, color.green, color.blue, 0.8),
+    800: Color.fromRGBO(color.red, color.green, color.blue, 0.9),
+    900: Color.fromRGBO(color.red, color.green, color.blue, 1),
+  });
+}
