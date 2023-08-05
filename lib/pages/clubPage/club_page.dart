@@ -21,7 +21,7 @@ class ClubPage extends StatelessWidget {
             scrollDirection: Axis.vertical,
             children: [
               const ClubPageInfo(),
-              if(review != null) Provider.value(
+              if(review != null) Provider<Review>.value(
                 value: review,
                 child: const ReviewDisplay(),
               ),

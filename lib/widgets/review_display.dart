@@ -19,13 +19,13 @@ class ReviewDisplay extends StatefulWidget {
 class _ReviewDisplayState extends State<ReviewDisplay> {
   final PageController _controller = PageController();
   int _currentPage = 0;
-  late Review? review;
+  late final Review review;
   List<Aspect> aspects = List<Aspect>.from(Aspect.values).rearrange((p0, p1) => p0.index.compareTo(p1.index));
 
   @override
   void initState() {
     super.initState();
-    review = context.read<Review?>();
+    review = context.read<Review>();
   }
 
   @override
@@ -61,12 +61,12 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
                     ),
                     Expanded(
                       child: Text(
-                        review!.aspectReviews[aspect]!.description,
+                        review.aspectReviews[aspect]!.description,
                         style: const TextStyle(fontSize: 20),
                       ),
                     ),
                     ScoreIndicator(
-                      score: review!.aspectReviews[aspect]!.score,
+                      score: review.aspectReviews[aspect]!.score,
                       scale: 72,
                     ),
                   ],
