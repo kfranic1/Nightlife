@@ -22,6 +22,4 @@ class AspectReview {
   String toString() {
     return "$score: $description";
   }
-
-  bool isEqual(AspectReview other) => score == other.score && description == other.description;
 }

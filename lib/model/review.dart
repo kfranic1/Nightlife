@@ -40,6 +40,4 @@ class Review {
   String toString() {
     return "Review from $date.\n$aspectReviews";
   }
-
-  bool isEqual(Review other) => aspectReviews.entries.every((element) => element.value.isEqual(other.aspectReviews[element.key]!));
 }
