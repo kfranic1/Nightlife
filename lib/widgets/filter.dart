@@ -4,6 +4,7 @@ import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/default_box_decoration.dart';
 import 'package:nightlife/helpers/filters.dart';
+import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:provider/provider.dart';
 
 class Filter extends StatefulWidget {
@@ -40,7 +41,8 @@ class _FilterState extends State<Filter> {
             onChanged: (value) => clubs.updateText(value),
             decoration: InputDecoration(
               labelText: 'Search',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: primaryColor)),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: primaryColor)),
             ),
           ),
         ),
@@ -99,20 +101,27 @@ class DropdownFilter<T> extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Expanded(
-              child: DropdownButton<T?>(
-                value: value,
-                underline: Container(),
-                onChanged: onChanged,
-                isExpanded: true,
-                items: items.keys
-                    .map((key) => DropdownMenuItem<T>(
-                          value: key,
-                          child: Text(
-                            items[key]!,
-                            style: TextStyle(fontSize: 13, color: Theme.of(context).primaryColor),
-                          ),
-                        ))
-                    .toList(),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                ),
+                child: DropdownButton<T?>(
+                  value: value,
+                  underline: Container(),
+                  onChanged: onChanged,
+                  isExpanded: true,
+                  items: items.keys
+                      .map((key) => DropdownMenuItem<T>(
+                            value: key,
+                            child: Text(
+                              items[key]!,
+                              style: TextStyle(fontSize: 13, color: Theme.of(context).primaryColor),
+                            ),
+                          ))
+                      .toList(),
+                ),
               ),
             ),
           ],

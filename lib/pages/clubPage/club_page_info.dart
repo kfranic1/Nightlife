@@ -108,6 +108,11 @@ class ClubPageInfo extends StatelessWidget {
                 ),
               ),
             ),
+            if (club.review != null)
+              const Text(
+                "Scroll down to see the review",
+                style: TextStyle(color: Colors.grey),
+              )
           ],
         ),
       ),
