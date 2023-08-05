@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/model/work_day.dart';
+import 'package:nightlife/pages/admin_page/admin_login.dart';
 import 'package:nightlife/pages/admin_page/reviewPage/review_page.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +41,8 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = context.watch<User?>();
+    if (user == null) return const AdminLogin();
     return ListView(
       children: [
         Padding(
