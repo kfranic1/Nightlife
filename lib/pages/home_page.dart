@@ -19,17 +19,48 @@ class HomePage extends StatelessWidget {
       children: [
         const SizedBox(height: 12),
         SizedBox(width: width, child: const Filter()),
-        const SizedBox(height: 12),
         Expanded(
-          child: ListView.separated(
-            itemBuilder: (context, index) => ClubTile(
-              club: clubList.filteredClubs[index],
-              width: width,
-            ),
-            separatorBuilder: (context, index) => const SizedBox(height: 12),
-            itemCount: clubList.filteredClubs.length,
+          child: ListView(
+            children: [
+              SizedBox(
+                width: width,
+                child: Column(
+                  children: [
+                    Text(
+                      "LAST REVIEWED",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                    const SizedBox(height: 12),
+                    if (clubList.lastReviewed != null) ClubTile(club: clubList.lastReviewed!, width: width),
+                    SizedBox(
+                      width: width,
+                      child: const Divider(
+                        color: Colors.black,
+                        height: 24,
+                        thickness: 1,
+                      ),
+                    ),
+                    Text(
+                      "CLUBS",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => ClubTile(
+                  club: clubList.filteredClubs[index],
+                  width: width,
+                ),
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                itemCount: clubList.filteredClubs.length,
+              ),
+            ],
           ),
-        ),
+        )
       ],
     );
   }

@@ -3,4 +3,6 @@ extension ListExtension<T> on List<T> {
     sort(compare);
     return this;
   }
+
+  T? get firstOrNull => length == 0 ? null : first;
 }

@@ -4,13 +4,14 @@ abstract class BaseFilter {
   String get name;
   void applyFilter(List<Club> clubs);
   static List<BaseFilter> filters = [DefaultFilter(), AlphabeticalFilter(), ScoreFilter(), DateFilter()];
+  static DefaultFilter defaultFilter = filters.first as DefaultFilter;
 }
 
 class DefaultFilter extends BaseFilter {
   @override
   String get name => "Default";
   @override
-  void applyFilter(List<Club> clubs) => clubs; //TODO make this display the latest review and then randomly
+  void applyFilter(List<Club> clubs) => clubs;
 }
 
 class AlphabeticalFilter extends BaseFilter {
@@ -29,7 +30,7 @@ class ScoreFilter extends BaseFilter {
 
 class DateFilter extends BaseFilter {
   @override
-  String get name => "Last Review";
+  String get name => "Review Date";
   @override
   void applyFilter(List<Club> clubs) {
     clubs.removeWhere((element) => element.review == null);

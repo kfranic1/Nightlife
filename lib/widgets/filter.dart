@@ -21,6 +21,7 @@ class _FilterState extends State<Filter> {
   void initState() {
     super.initState();
     _searchController.text = context.read<ClubList>().filterText;
+    _searchController.addListener(() => context.read<ClubList>().updateText(_searchController.text));
   }
 
   @override
@@ -38,11 +39,15 @@ class _FilterState extends State<Filter> {
           height: 48,
           child: TextField(
             controller: _searchController,
-            onChanged: (value) => clubs.updateText(value),
             decoration: InputDecoration(
               labelText: 'Search',
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: primaryColor)),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: primaryColor)),
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: () => _searchController.clear(),
+                splashRadius: 20,
+              ),
             ),
           ),
         ),
@@ -53,6 +58,7 @@ class _FilterState extends State<Filter> {
               label: "Genre",
               value: clubs.typeOfMusic,
               onChanged: (TypeOfMusic? type) => clubs.updateTypeOfMusic(type),
+              onClear: () => clubs.updateTypeOfMusic(null),
               items: Map.fromIterable(
                 TypeOfMusic.values.toList().rearrange((p0, p1) => p0.name.compareTo(p1.name)),
                 key: (element) => element,
@@ -64,9 +70,15 @@ class _FilterState extends State<Filter> {
               label: "Sort",
               value: clubs.filter,
               onChanged: (BaseFilter? selectedFilter) => clubs.updateFilter(selectedFilter!),
+              onClear: () => clubs.updateFilter(BaseFilter.defaultFilter),
               items: Map.fromIterable(BaseFilter.filters, key: (element) => element, value: (element) => element.name),
             ),
           ],
+        ),
+        const Divider(
+          color: Colors.black,
+          height: 24,
+          thickness: 1,
         ),
       ],
     );
@@ -80,10 +92,12 @@ class DropdownFilter<T> extends StatelessWidget {
     required this.onChanged,
     required this.items,
     required this.value,
+    required this.onClear,
   });
 
   final String label;
   final ValueChanged<T?>? onChanged;
+  final void Function()? onClear;
   final Map<T, String> items;
   final T value;
 
@@ -111,6 +125,11 @@ class DropdownFilter<T> extends StatelessWidget {
                   underline: Container(),
                   onChanged: onChanged,
                   isExpanded: true,
+                  icon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: onClear,
+                    splashRadius: 20,
+                  ),
                   items: items.keys
                       .map((key) => DropdownMenuItem<T>(
                             value: key,
