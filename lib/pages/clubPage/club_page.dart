@@ -13,22 +13,19 @@ class ClubPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Review? review = context.read<Club>().review;
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: NestedPageView(
-            scrollDirection: Axis.vertical,
-            children: [
-              const ClubPageInfo(),
-              if(review != null) Provider<Review>.value(
-                value: review,
-                child: const ReviewDisplay(),
-              ),
-            ],
-          ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: NestedPageView(
+        scrollDirection: Axis.vertical,
+        children: [
+          const ClubPageInfo(),
+          if (review != null)
+            Provider<Review>.value(
+              value: review,
+              child: const ReviewDisplay(),
+            ),
+        ],
+      ),
     );
   }
 }

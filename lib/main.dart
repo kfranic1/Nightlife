@@ -47,7 +47,7 @@ class Nightlife extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: primaryColor));
               return MaterialApp.router(
-                scrollBehavior: CustomScrollBehavior(),
+                scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
                 title: 'Nightlife Zagreb',
                 debugShowCheckedModeBanner: false,
                 routeInformationParser: context.read<CustomRouteInformationParser>(),
@@ -56,6 +56,7 @@ class Nightlife extends StatelessWidget {
                 theme: ThemeData(
                   fontFamily: 'Roboto',
                   primarySwatch: primarySwatch,
+                  appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
                   //brightness: Brightness.dark,
                 ),
               );

@@ -16,11 +16,14 @@ class ReviewDisplay extends StatefulWidget {
   State<ReviewDisplay> createState() => _ReviewDisplayState();
 }
 
-class _ReviewDisplayState extends State<ReviewDisplay> {
+class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveClientMixin<ReviewDisplay> {
   final PageController _controller = PageController();
   int _currentPage = 0;
   late final Review review;
   List<Aspect> aspects = List<Aspect>.from(Aspect.values).rearrange((p0, p1) => p0.index.compareTo(p1.index));
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -36,6 +39,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: [
         Expanded(
@@ -60,9 +64,11 @@ class _ReviewDisplayState extends State<ReviewDisplay> {
                       thickness: 2,
                     ),
                     Expanded(
-                      child: Text(
-                        review.aspectReviews[aspect]!.description,
-                        style: const TextStyle(fontSize: 20),
+                      child: SingleChildScrollView(
+                        child: Text(
+                          review.aspectReviews[aspect]!.description,
+                          style: const TextStyle(fontSize: 20),
+                        ),
                       ),
                     ),
                     ScoreIndicator(

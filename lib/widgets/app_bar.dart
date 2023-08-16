@@ -6,7 +6,6 @@ AppBar appBar({required void Function()? onPressed}) {
     titleSpacing: 0,
     leadingWidth: 0,
     automaticallyImplyLeading: false,
-    backgroundColor: Colors.white,
     elevation: 0.4,
     title: TextButton(
       style: const ButtonStyle(overlayColor: MaterialStatePropertyAll(Colors.transparent)),

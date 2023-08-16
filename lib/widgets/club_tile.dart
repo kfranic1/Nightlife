@@ -6,6 +6,7 @@ import 'package:nightlife/extensions/club_extension.dart';
 import 'package:nightlife/extensions/double_extension.dart';
 import 'package:provider/provider.dart';
 
+import '../helpers/constants.dart';
 import '../model/club.dart';
 import '../routing/custom_router_delegate.dart';
 import 'score_indicator.dart';
@@ -26,9 +27,9 @@ class _ClubTileState extends State<ClubTile> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-      double tileHeight = constraints.maxWidth > 600 ? 100 : 72;
-      double nameFontSize = constraints.maxWidth > 600 ? 24 : 16;
-      double infoFontSize = constraints.maxWidth > 600 ? 14 : 12;
+      double tileHeight = constraints.maxWidth > kWidthWeb ? 100 : 72;
+      double nameFontSize = constraints.maxWidth > kWidthWeb ? 24 : 16;
+      double infoFontSize = constraints.maxWidth > kWidthWeb ? 14 : 12;
       return Center(
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
