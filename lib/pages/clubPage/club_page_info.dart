@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
-import 'package:nightlife/helpers/default_box_decoration.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../enums/contact.dart';
 import '../../model/club.dart';
-import '../../model/work_day.dart';
+import '../../widgets/column_with_title.dart';
+import '../../widgets/contact_display.dart';
+import '../../widgets/day_of_week_display.dart';
 
 class ClubPageInfo extends StatefulWidget {
   const ClubPageInfo({super.key});
@@ -24,6 +24,7 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    double width = min(400, MediaQuery.of(context).size.width - 20);
     Club club = context.watch<Club>();
     return SingleChildScrollView(
       child: Center(
@@ -52,67 +53,29 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 24),
             ),
-            Container(
-              width: min(400, MediaQuery.of(context).size.width - 20),
-              decoration: DefaultBoxDecoration(),
-              child: ExpansionTile(
-                title: const Text("Contacts & Social Media"),
-                children: Contact.values.map((e) => ContactElement(data: club.contacts[e], contact: e)).toList(),
+            SizedBox(
+              width: width,
+              child: const Divider(
+                color: Colors.black,
+                height: 20,
+                thickness: 1,
               ),
             ),
-            Container(
-              width: min(400, MediaQuery.of(context).size.width - 20),
-              decoration: DefaultBoxDecoration(),
-              child: ExpansionTile(
-                shape: const Border(),
-                maintainState: true,
-                title: const Text("Work days"),
-                children: club.workHours.keys
-                    .toList()
-                    .where((element) => club.workHours[element]!.open)
-                    .toList()
-                    .rearrange((p0, p1) => p0.index - p1.index)
-                    .map((dayOfWeek) {
-                  WorkDay day = club.workHours[dayOfWeek]!;
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: DefaultBoxDecoration(),
-                      child: Column(
-                        children: [
-                          Row(children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text.rich(
-                                    TextSpan(children: [
-                                      TextSpan(
-                                        text: dayOfWeek.name.toUpperCase(),
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                      TextSpan(text: '(${day.typeOfMusic.join(',')})'),
-                                    ]),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(
-                                day.hours,
-                                maxLines: 1,
-                              ),
-                            ),
-                          ]),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
+            ColumnWithTitle(
+              width: width,
+              title: "Contacts & Social Media",
+              children: Contact.values.map((e) => ContactDisplay(data: club.contacts[e], contact: e)).toList(),
+            ),
+            ColumnWithTitle(
+              width: width,
+              title: "Work days",
+              children: club.workHours.keys
+                  .toList()
+                  .where((element) => club.workHours[element]!.open)
+                  .toList()
+                  .rearrange((p0, p1) => p0.index - p1.index)
+                  .map((dayOfWeek) => DayOfWeekDisplay(day: club.workHours[dayOfWeek]!, dayName: dayOfWeek.name.toUpperCase()))
+                  .toList(),
             ),
             if (club.review != null)
               const Text(
@@ -120,32 +83,6 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
                 style: TextStyle(color: Colors.grey),
               )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class ContactElement extends StatelessWidget {
-  const ContactElement({super.key, required this.data, required this.contact});
-
-  final String? data;
-  final Contact contact;
-
-  @override
-  Widget build(BuildContext context) {
-    if (data == null) return Container();
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: Container(
-          decoration: DefaultBoxDecoration(),
-          child: ListTile(
-            onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
-            leading: Icon(contact.icon),
-            title: Text(data!),
-          ),
         ),
       ),
     );
