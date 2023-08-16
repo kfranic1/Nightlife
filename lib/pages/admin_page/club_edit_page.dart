@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
 import 'package:nightlife/extensions/list_extension.dart';
-import 'package:nightlife/helpers/default_box_decoration.dart';
+import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/work_day.dart';
 import 'package:nightlife/pages/admin_page/form_button.dart';
 import 'package:provider/provider.dart';
@@ -88,8 +88,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: DefaultBoxDecoration(),
+            child: DecoratedContainer(
               padding: const EdgeInsets.all(8.0),
               child: ExpansionTile(
                 maintainState: true,
@@ -98,8 +97,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
                   WorkDay day = _club.workHours[dayOfWeek]!;
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: DefaultBoxDecoration(),
+                    child: DecoratedContainer(
                       child: Row(children: [
                         SizedBox(width: 80, child: Text(dayOfWeek.name)),
                         Container(

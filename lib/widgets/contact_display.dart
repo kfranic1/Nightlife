@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../enums/contact.dart';
-import '../helpers/default_box_decoration.dart';
+import '../helpers/decorated_container.dart';
 
 class ContactDisplay extends StatelessWidget {
   const ContactDisplay({super.key, required this.data, required this.contact});
@@ -17,8 +17,7 @@ class ContactDisplay extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: Container(
-          decoration: DefaultBoxDecoration(),
+        child: DecoratedContainer(
           child: ListTile(
             onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
             leading: Icon(contact.icon),

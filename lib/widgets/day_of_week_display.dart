@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/default_box_decoration.dart';
+import 'package:nightlife/helpers/decorated_container.dart';
 
 import '../model/work_day.dart';
 
@@ -17,8 +17,7 @@ class DayOfWeekDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        decoration: DefaultBoxDecoration(),
+      child: DecoratedContainer(
         child: Row(
           children: [
             Expanded(

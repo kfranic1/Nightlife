@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
-import 'package:nightlife/helpers/default_box_decoration.dart';
+import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -50,9 +50,8 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                 controller: _controller,
                 itemBuilder: (context, index) {
                   Aspect aspect = aspects[index];
-                  return Container(
+                  return DecoratedContainer(
                     padding: const EdgeInsets.all(8),
-                    decoration: DefaultBoxDecoration(),
                     child: Column(
                       children: [
                         Text(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
-import 'package:nightlife/helpers/default_box_decoration.dart';
+import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/helpers/filters.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:provider/provider.dart';
@@ -90,9 +90,8 @@ class DropdownFilter<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: DecoratedContainer(
         padding: const EdgeInsets.only(left: 12.0),
-        decoration: DefaultBoxDecoration(),
         child: Row(
           children: [
             Text(
