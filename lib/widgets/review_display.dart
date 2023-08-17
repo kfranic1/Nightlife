@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
+import 'package:nightlife/extensions/review_extension.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/aspect.dart';
-import '../helpers/constants.dart';
 import '../model/review.dart';
 
 class ReviewDisplay extends StatefulWidget {
@@ -106,7 +106,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
               ),
             ),
             Text(
-              "Reviewed on - ${ddMMyyyyFormater.format(review.date)}",
+              review.reviewDateDescription,
               style: const TextStyle(color: Colors.grey),
             )
           ],

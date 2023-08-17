@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nightlife/extensions/club_extension.dart';
+import 'package:nightlife/extensions/review_extension.dart';
 import 'package:nightlife/extensions/double_extension.dart';
 import 'package:provider/provider.dart';
 
@@ -116,7 +116,7 @@ class _ClubTileState extends State<ClubTile> {
                                 ),
                               const Expanded(child: SizedBox()),
                               Text(
-                                widget.club.lastReviewDateDescription,
+                                widget.club.review.reviewDateDescription,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: infoFontSize),
