@@ -116,7 +116,7 @@ class _ClubTileState extends State<ClubTile> {
                                 ),
                               const Expanded(child: SizedBox()),
                               Text(
-                                widget.club.lastReview,
+                                widget.club.lastReviewDateDescription,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: infoFontSize),

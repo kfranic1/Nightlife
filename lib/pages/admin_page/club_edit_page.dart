@@ -31,6 +31,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
       key: _formKey,
       child: Column(
         children: [
+          const Text("Club info"),
           ClubTextField(
             labelText: "Club name",
             initialValue: _club.name,

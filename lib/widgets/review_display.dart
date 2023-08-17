@@ -7,6 +7,7 @@ import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/aspect.dart';
+import '../helpers/constants.dart';
 import '../model/review.dart';
 
 class ReviewDisplay extends StatefulWidget {
@@ -103,6 +104,10 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                   ),
                 ),
               ),
+            ),
+            Text(
+              "Reviewed on - ${ddMMyyyyFormater.format(review.date)}",
+              style: const TextStyle(color: Colors.grey),
             )
           ],
         ),
