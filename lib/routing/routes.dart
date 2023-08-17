@@ -5,5 +5,4 @@ abstract class Routes {
 
   void goToHome() {}
   void goToClub(Map<String, String> params) {}
-  void goToAdmin(Map<String, String> params) {}
 }

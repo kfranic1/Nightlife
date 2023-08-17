@@ -1,20 +1,18 @@
-import 'package:nightlife/extensions/string_extension.dart';
-
 class Configuration {
-  final String? pathName;
+  final String? path;
   final Map<String, String>? pathParams;
 
   Configuration.home()
-      : pathName = null,
+      : path = null,
         pathParams = null;
 
-  Configuration.otherPage(this.pathName) : pathParams = pathName!.paramsFromUrl();
+  Configuration.otherPage(this.path, this.pathParams);
 
-  bool get isHomePage => pathName == null;
-  bool get isOtherPage => pathName != null;
+  bool get isHomePage => path == null;
+  bool get isOtherPage => path != null;
 
   @override
   String toString() {
-    return '${pathName ?? ''}__$pathParams';
+    return '${path ?? ''}__$pathParams';
   }
 }
