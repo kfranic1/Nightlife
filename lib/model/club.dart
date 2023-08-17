@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/day_of_week.dart';
+import 'package:nightlife/firestore/firestore_service.dart';
 import 'package:nightlife/model/work_day.dart';
 
 import '../enums/contact.dart';
@@ -67,8 +68,7 @@ class Club {
 
   Future<void> updateReview(Review? review) async {
     this.review = review;
-    final clubsCollection = FirebaseFirestore.instance.collection('clubs');
-    await clubsCollection.doc(id).update({'review': review?.toMap()});
+    await FirestoreService.clubsCollection.doc(id).update({'review': review?.toMap()});
   }
 
   @override
@@ -78,19 +78,16 @@ class Club {
 
   // Create a club in Firestore
   static Future<void> createClub(Club club) async {
-    final clubsCollection = FirebaseFirestore.instance.collection('clubs');
-    await clubsCollection.add(club.toMap());
+    await FirestoreService.clubsCollection.add(club.toMap());
   }
 
   static Future<void> updateClub(Club club) async {
-    final clubsCollection = FirebaseFirestore.instance.collection('clubs');
-    await clubsCollection.doc(club.id).update(club.toMap());
+    await FirestoreService.clubsCollection.doc(club.id).update(club.toMap());
   }
 
   // Retrieve a club from Firestore by ID
   static Future<Club> getClub(String clubId) async {
-    final clubsCollection = FirebaseFirestore.instance.collection('clubs');
-    DocumentSnapshot doc = await clubsCollection.doc(clubId).get();
+    DocumentSnapshot doc = await FirestoreService.clubsCollection.doc(clubId).get();
     return Club.fromDocument(doc);
   }
 }
