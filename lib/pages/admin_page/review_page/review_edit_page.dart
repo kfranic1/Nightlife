@@ -8,14 +8,14 @@ import '../../../model/review.dart';
 import '../form_button.dart';
 import 'review_field.dart';
 
-class ReviewPage extends StatefulWidget {
-  const ReviewPage({super.key});
+class ReviewEditPage extends StatefulWidget {
+  const ReviewEditPage({super.key});
 
   @override
-  State<ReviewPage> createState() => _ReviewPageState();
+  State<ReviewEditPage> createState() => _ReviewEditPageState();
 }
 
-class _ReviewPageState extends State<ReviewPage> {
+class _ReviewEditPageState extends State<ReviewEditPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   ValueKey<int> _valueKey = const ValueKey<int>(0);
   late Review _review;
