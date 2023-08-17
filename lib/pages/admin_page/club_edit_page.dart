@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
+import 'package:nightlife/extensions/contact_extension.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/work_day.dart';
