@@ -20,7 +20,7 @@ jobs:
           channel: 'stable'
           
       - run: flutter pub get
-      - run: flutter build web
+      - run: flutter build web --no-tree-shake-icons #TODO watch for removing the flag, causes bug atm
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
