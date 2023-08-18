@@ -59,7 +59,13 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
               },
             ),
           ),
-          reviewFields(),
+          Column(
+            children: _review.aspectReviews.entries
+                .toList()
+                .rearrange((p0, p1) => p0.toString().compareTo(p1.toString()))
+                .map((entry) => ReviewField(review: _review, aspect: entry.key))
+                .toList(),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -86,16 +92,6 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget reviewFields() {
-    return Column(
-      children: _review.aspectReviews.entries
-          .toList()
-          .rearrange((p0, p1) => p0.toString().compareTo(p1.toString()))
-          .map((entry) => ReviewField(review: _review, aspect: entry.key))
-          .toList(),
     );
   }
 }

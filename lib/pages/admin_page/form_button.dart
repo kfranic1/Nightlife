@@ -22,10 +22,11 @@ class FormButton extends StatefulWidget {
           duration: Duration(seconds: 1),
         ));
     } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('An error occurred: ${error.toString()}'),
-        duration: const Duration(seconds: 1),
-      ));
+      if (context.mounted)
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('An error occurred: ${error.toString()}'),
+          duration: const Duration(seconds: 1),
+        ));
     }
   }
 }
