@@ -4,6 +4,7 @@ import 'package:nightlife/pages/error_page.dart';
 import 'package:nightlife/routing/configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 import 'package:nightlife/widgets/app_bar.dart';
+import 'package:nightlife/widgets/options_drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/club_list.dart';
@@ -23,7 +24,19 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(onPressed: goToHome),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Builder(builder: (context) {
+          return appBar(
+            onPressedHome: goToHome,
+            onPressedDrawer: () => Scaffold.of(context).openEndDrawer(),
+          );
+        }),
+      ),
+      endDrawer: const Drawer(
+        width: 250,
+        child: OptionsDrawer(),
+      ),
       body: Navigator(
         key: navigatorKey,
         pages: [
