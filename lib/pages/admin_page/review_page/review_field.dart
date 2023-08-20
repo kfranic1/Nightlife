@@ -47,15 +47,30 @@ class _ReviewFieldState extends State<ReviewField> {
               height: 100,
               child: TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Description',
+                  labelText: 'Description Croatian',
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
                   alignLabelWithHint: true,
                 ),
-                initialValue: widget._review.aspectReviews[widget._aspect]!.description,
+                initialValue: widget._review.aspectReviews[widget._aspect]!.descriptionHr,
                 maxLines: null,
                 expands: true,
                 textAlignVertical: TextAlignVertical.top,
-                onChanged: (value) => widget._review.aspectReviews[widget._aspect]!.description = value,
+                onChanged: (value) => widget._review.aspectReviews[widget._aspect]!.descriptionHr = value,
+              ),
+            ),
+            SizedBox(
+              height: 100,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Description English',
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                  alignLabelWithHint: true,
+                ),
+                initialValue: widget._review.aspectReviews[widget._aspect]!.descriptionEn,
+                maxLines: null,
+                expands: true,
+                textAlignVertical: TextAlignVertical.top,
+                onChanged: (value) => widget._review.aspectReviews[widget._aspect]!.descriptionEn = value,
               ),
             ),
           ]

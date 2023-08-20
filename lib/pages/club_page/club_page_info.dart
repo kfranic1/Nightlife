@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
+import 'package:nightlife/widgets/translatable_text.dart';
 import 'package:provider/provider.dart';
 
 import '../../enums/contact.dart';
@@ -67,8 +68,9 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
             ),
             SizedBox(
               width: width,
-              child: Text(
-                club.description,
+              child: TranslatableText(
+                textHr: club.descriptionHr,
+                textEn: club.descriptionEn,
                 maxLines: null,
               ),
             ),

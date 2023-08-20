@@ -3,14 +3,17 @@ import 'aspect_review.dart';
 
 class Review {
   DateTime date = DateTime.now();
-  Map<Aspect, AspectReview> aspectReviews = {for (var element in Aspect.values) element: AspectReview(description: '', score: 0)};
+  Map<Aspect, AspectReview> aspectReviews = {for (var element in Aspect.values) element: AspectReview(descriptionHr: '', descriptionEn: '', score: 0)};
 
   double get score => aspectReviews.values.fold<double>(0, (previousValue, element) => previousValue + element.score) / Aspect.values.length;
 
   Review.empty();
   Review.from(Review review) {
     date = review.date;
-    aspectReviews = {for (var entry in review.aspectReviews.entries) entry.key: AspectReview(score: entry.value.score, description: entry.value.description)};
+    aspectReviews = {
+      for (var entry in review.aspectReviews.entries)
+        entry.key: AspectReview(score: entry.value.score, descriptionHr: entry.value.descriptionHr, descriptionEn: entry.value.descriptionEn)
+    };
   }
 
   Review({required this.date, required this.aspectReviews});
@@ -30,7 +33,7 @@ class Review {
   factory Review.fromMap(Map<dynamic, dynamic> data) {
     return Review(
       date: DateTime.fromMillisecondsSinceEpoch(data['date'].seconds * 1000),
-      aspectReviews: (data['aspectReviews'] as Map<dynamic, dynamic>).map(
+      aspectReviews: (data['aspectReviews'] as Map<String, dynamic>).map(
         (key, value) => MapEntry(Aspect.values.firstWhere((element) => element.name == key), AspectReview.fromMap(value)),
       ),
     );

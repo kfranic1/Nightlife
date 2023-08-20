@@ -23,7 +23,8 @@ class _AdminPageState extends State<AdminPage> {
   Club _club = Club(
     id: '',
     name: 'New Club',
-    description: '',
+    descriptionHr: '',
+    descriptionEn: '',
     location: '',
     contacts: {for (var element in Contact.values) element: null},
     review: null,

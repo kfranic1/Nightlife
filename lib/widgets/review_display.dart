@@ -5,6 +5,7 @@ import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/extensions/review_extension.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
+import 'package:nightlife/widgets/translatable_text.dart';
 import 'package:provider/provider.dart';
 
 import '../enums/aspect.dart';
@@ -55,8 +56,9 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        Text(
-                          aspect.toString(),
+                        TranslatableText(
+                          textHr: aspect.titleHr,
+                          textEn: aspect.titleEn,
                           style: const TextStyle(fontSize: 28),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -68,8 +70,9 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                         ),
                         Expanded(
                           child: SingleChildScrollView(
-                            child: Text(
-                              review.aspectReviews[aspect]!.description,
+                            child: TranslatableText(
+                              textHr: review.aspectReviews[aspect]!.descriptionHr,
+                              textEn: review.aspectReviews[aspect]!.descriptionEn,
                               style: const TextStyle(fontSize: 20),
                             ),
                           ),

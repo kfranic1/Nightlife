@@ -5,8 +5,22 @@ enum Aspect {
   customerService,
   overallImpression;
 
-  @override
-  String toString() {
+  String get titleHr {
+    switch (this) {
+      case Aspect.atmosphere:
+        return "Atmosfera";
+      case Aspect.pricesAndDrinkVariety:
+        return "Cijene i izbor pića";
+      case Aspect.soundSystemAndLayout:
+        return "Razglas i prostor";
+      case Aspect.customerService:
+        return "Usluga";
+      case Aspect.overallImpression:
+        return "Ukupni dojam";
+    }
+  }
+
+  String get titleEn {
     switch (this) {
       case Aspect.atmosphere:
         return "Atmosphere";

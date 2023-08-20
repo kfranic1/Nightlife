@@ -40,9 +40,15 @@ class _ClubEditPageState extends State<ClubEditPage> {
             validate: true,
           ),
           ClubTextField(
-            labelText: "Description",
-            initialValue: _club.description,
-            onChanged: (value) => _club.description = value,
+            labelText: "Description Croatian",
+            initialValue: _club.descriptionHr,
+            onChanged: (value) => _club.descriptionHr = value,
+            maxLines: null,
+          ),
+          ClubTextField(
+            labelText: "Description English",
+            initialValue: _club.descriptionEn,
+            onChanged: (value) => _club.descriptionEn = value,
             maxLines: null,
           ),
           ClubTextField(
