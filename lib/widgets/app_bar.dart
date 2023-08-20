@@ -1,5 +1,7 @@
+import 'package:flag/flag_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nightlife/widgets/language_icon_button.dart';
 
 AppBar appBar({required void Function()? onPressed}) {
   return AppBar(
@@ -40,6 +42,13 @@ AppBar appBar({required void Function()? onPressed}) {
           color: Colors.purple,
         ),
       ),
+      const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          LanguageIconButton(flagsCode: FlagsCode.HR, locale: Locale('hr')),
+          LanguageIconButton(flagsCode: FlagsCode.GB, locale: Locale('en')),
+        ],
+      )
     ],
   );
 }
