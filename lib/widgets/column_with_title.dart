@@ -21,7 +21,14 @@ class ColumnWithTitle extends StatelessWidget {
             _title,
             style: TextStyle(color: Theme.of(context).primaryColor),
           ),
-          Column(children: _children),
+          const SizedBox(height: 8),
+          ListView.separated(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) => _children[index],
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            itemCount: _children.length,
+          ),
         ],
       ),
     );

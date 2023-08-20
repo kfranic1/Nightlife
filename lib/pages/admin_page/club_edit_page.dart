@@ -43,6 +43,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
             labelText: "Description",
             initialValue: _club.description,
             onChanged: (value) => _club.description = value,
+            maxLines: null,
           ),
           ClubTextField(
             labelText: 'Address',

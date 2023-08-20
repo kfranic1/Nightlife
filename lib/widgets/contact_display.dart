@@ -14,17 +14,14 @@ class ContactDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (data == null) return Container();
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: DecoratedContainer(
-          child: ListTile(
-            onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
-            leading: Icon(contact.icon),
-            title: Text(data!),
-            dense: true,
-          ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: DecoratedContainer(
+        child: ListTile(
+          onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
+          leading: Icon(contact.icon),
+          title: Text(data!),
+          dense: true,
         ),
       ),
     );

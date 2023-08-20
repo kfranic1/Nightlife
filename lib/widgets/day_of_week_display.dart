@@ -15,38 +15,35 @@ class DayOfWeekDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: DecoratedContainer(
-        child: Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text.rich(
-                    TextSpan(children: [
-                      TextSpan(
-                        text: dayName,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                        ),
+    return DecoratedContainer(
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text.rich(
+                  TextSpan(children: [
+                    TextSpan(
+                      text: dayName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
                       ),
-                      TextSpan(text: '(${day.typeOfMusic.join(',')})'),
-                    ]),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis),
-              ),
+                    ),
+                    TextSpan(text: '(${day.typeOfMusic.join(',')})'),
+                  ]),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                day.hours,
-                maxLines: 1,
-              ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              day.hours,
+              maxLines: 1,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

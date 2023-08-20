@@ -31,34 +31,45 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
         child: Wrap(
           direction: Axis.vertical,
           crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
+          spacing: 12,
           children: [
-            SizedBox.square(
-              dimension: 150,
-              child: Image.network(
-                club.imageUrl,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Text(
-              club.name,
-              style: const TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              club.location,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 24),
+            Column(
+              children: [
+                SizedBox.square(
+                  dimension: 150,
+                  child: Image.network(
+                    club.imageUrl,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Text(
+                  club.name,
+                  style: const TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  club.location,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 24),
+                ),
+              ],
             ),
             SizedBox(
               width: width,
               child: const Divider(
+                height: 0,
                 color: Colors.black,
-                height: 20,
                 thickness: 1,
+              ),
+            ),
+            SizedBox(
+              width: width,
+              child: Text(
+                club.description,
+                maxLines: null,
               ),
             ),
             ColumnWithTitle(
