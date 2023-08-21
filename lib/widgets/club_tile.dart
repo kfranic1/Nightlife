@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:nightlife/extensions/review_extension.dart';
 import 'package:nightlife/extensions/double_extension.dart';
+import 'package:nightlife/extensions/review_extension.dart';
 import 'package:provider/provider.dart';
 
 import '../helpers/constants.dart';
@@ -59,12 +59,12 @@ class _ClubTileState extends State<ClubTile> {
                   borderRadius: BorderRadius.circular(16),
                   color: _isHovering ? widget.club.score.color.withAlpha(50) : Colors.transparent,
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: CachedNetworkImage(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CachedNetworkImage(
                         imageUrl: widget.club.imageUrl,
                         placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -72,10 +72,8 @@ class _ClubTileState extends State<ClubTile> {
                         height: tileHeight,
                         width: tileHeight,
                       ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      const SizedBox(width: 16),
+                      Expanded(
                         child: SizedBox(
                           height: tileHeight,
                           child: Column(
@@ -89,30 +87,19 @@ class _ClubTileState extends State<ClubTile> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 4),
                               Text(
                                 widget.club.location,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(fontSize: infoFontSize),
                               ),
-                              const SizedBox(height: 4),
+                              const Expanded(child: SizedBox()),
                               if (widget.club.typeOfMusic.isNotEmpty)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                    color: Colors.green[400],
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2),
-                                    child: Text(
-                                      widget.club.typeOfMusic.first.toString().toUpperCase() +
-                                          ((widget.club.typeOfMusic.length > 1) ? " +${widget.club.typeOfMusic.length - 1} more" : ""),
-                                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
+                                Text(
+                                  widget.club.typeOfMusic.join(', '),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: infoFontSize),
                                 ),
                               const Expanded(child: SizedBox()),
                               Text(
@@ -125,15 +112,14 @@ class _ClubTileState extends State<ClubTile> {
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: ScoreIndicator(
-                        score: widget.club.score,
-                        scale: tileHeight,
-                      ),
-                    ),
-                  ],
+                      const SizedBox(width: 4),
+                      if (widget.club.score != 0)
+                        ScoreIndicator(
+                          score: widget.club.score,
+                          scale: tileHeight,
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),

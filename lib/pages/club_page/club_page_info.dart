@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
@@ -37,9 +38,9 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
               children: [
                 SizedBox.square(
                   dimension: 150,
-                  child: Image.network(
-                    club.imageUrl,
-                    fit: BoxFit.contain,
+                  child: CachedNetworkImage(
+                    imageUrl: club.imageUrl,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 Text(
