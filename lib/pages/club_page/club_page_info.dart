@@ -31,30 +31,36 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
       child: Center(
         child: Wrap(
           direction: Axis.vertical,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 12,
+          spacing: 16,
           children: [
-            Column(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox.square(
-                  dimension: 150,
+                  dimension: 72,
                   child: CachedNetworkImage(
                     imageUrl: club.imageUrl,
                     fit: BoxFit.fill,
                   ),
                 ),
-                Text(
-                  club.name,
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  club.location,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 24),
+                const SizedBox(width: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      club.name,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      club.location,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  ],
                 ),
               ],
             ),
