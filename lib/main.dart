@@ -27,23 +27,15 @@ class Nightlife extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<CustomRouteInformationParser>(
-          create: (context) => CustomRouteInformationParser(),
-        ),
-        ListenableProvider<CustomRouterDelegate>(
-          create: (context) => CustomRouterDelegate(),
-        ),
+        Provider<CustomRouteInformationParser>(create: (context) => CustomRouteInformationParser()),
+        ChangeNotifierProvider<CustomRouterDelegate>(create: (context) => CustomRouterDelegate()),
         ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
-        Provider<AuthService>(
-          create: (context) => AuthService(FirebaseAuth.instance),
-        ),
+        Provider<AuthService>(create: (context) => AuthService()),
         StreamProvider<User?>(
           create: (context) => context.read<AuthService>().authStateChanges,
           initialData: null,
         ),
-        ChangeNotifierProvider(
-          create: (context) => Language(),
-        ),
+        ChangeNotifierProvider(create: (context) => Language()),
       ],
       child: Builder(builder: (context) {
         return FutureBuilder(

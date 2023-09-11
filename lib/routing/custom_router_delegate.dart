@@ -40,14 +40,9 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
       body: Navigator(
         key: navigatorKey,
         pages: [
-          if (_configuration.isHomePage)
-            MaterialPage(
-              key: ValueKey(_configuration.path),
-              child: const HomePage(),
-            ),
+          if (_configuration.isHomePage) const MaterialPage(child: HomePage()),
           if (_configuration.isOtherPage)
             MaterialPage(
-              key: ValueKey(_configuration.path),
               child: Builder(builder: (context) {
                 switch (_configuration.path) {
                   case Routes.club:
@@ -77,16 +72,14 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   }
 
   @override
-  Future<void> setNewRoutePath(Configuration configuration) async => _configuration = configuration;
-
-  @override
-  void goToHome() => _updateRoute(Configuration.home());
-
-  @override
-  void goToClub(Map<String, String> params) => _updateRoute(Configuration.otherPage(Routes.club, params));
-
-  void _updateRoute(Configuration configuration) {
-    setNewRoutePath(configuration);
+  Future<void> setNewRoutePath(Configuration configuration) async {
+    _configuration = configuration;
     notifyListeners();
   }
+
+  @override
+  void goToHome() => setNewRoutePath(Configuration.home());
+
+  @override
+  void goToClub(Map<String, String> params) => setNewRoutePath(Configuration.otherPage(Routes.club, params));
 }
