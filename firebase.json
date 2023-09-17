@@ -11,6 +11,13 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "redirects": [
+      {
+        "source": "www.nightlife-zagreb.com",
+        "destination": "https://nightlife-zagreb.com",
+        "type": 301
+      }
     ]
   }
 }
