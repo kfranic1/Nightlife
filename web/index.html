@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -18,7 +19,15 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Find the best clubs in Zagreb.">
+  <meta name="name" content="Nightlife-Zagreb - Find the best clubs in Zagreb">
+  <meta name="description" content="Looking for the perfect club in Zagreb. Check out Nightlife Zagreb and find the perfect place to go clubbing.">
+  <meta property="og:title" content="Nightlife-Zagreb - Find the best clubs in Zagreb">
+  <meta property="og:description" content="Looking for the perfect club in Zagreb. Check out Nightlife Zagreb and find the perfect place to go clubbing.">
+  <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/nightlife-zagreb.appspot.com/o/app%2Fbanner.png?alt=media&token=5f103235-bce4-4ec9-b784-a369bb4209e2">
+  <meta property="og:url" content="https://nightlife-zagreb.web.app/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="Nightlife, Zagreb, Clubs, Clubbing, Izlazak, Party, Klub">
+  <link rel="canonical" href="https://nightlife-zagreb.web.app/">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -27,9 +36,9 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>Nightlife Zagreb</title>
+  <title>Nightlife Zagreb - Find the best clubs in Zagreb.</title>
   <link rel="manifest" href="manifest.json">
 
   <script>
@@ -39,20 +48,22 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
 </head>
+
 <body>
   <script>
-    window.addEventListener('load', function(ev) {
+    window.addEventListener('load', function (ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         }
-      }).then(function(engineInitializer) {
+      }).then(function (engineInitializer) {
         return engineInitializer.initializeEngine();
-      }).then(function(appRunner) {
+      }).then(function (appRunner) {
         return appRunner.runApp();
       });
     });
   </script>
 </body>
+
 </html>

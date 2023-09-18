@@ -1,11 +1,11 @@
 {
-    "name": "Nightlife Zagreb",
+    "name": "Nightlife-Zagreb - Find the best clubs in Zagreb",
     "short_name": "Nightlife Zagreb",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Find the best clubs in Zagreb.",
+    "description": "Looking for the perfect club in Zagreb. Check out Nightlife Zagreb and find the perfect place to go clubbing.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
