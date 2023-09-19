@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/double_extension.dart';
 import 'package:nightlife/extensions/review_extension.dart';
@@ -9,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../helpers/constants.dart';
 import '../model/club.dart';
 import '../routing/custom_router_delegate.dart';
-import 'score_indicator.dart';
+import 'club_image.dart';
 
 class ClubTile extends StatefulWidget {
   final Club club;
@@ -64,13 +63,9 @@ class _ClubTileState extends State<ClubTile> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: widget.club.imageUrl,
-                        placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                        fit: BoxFit.fill,
-                        height: tileHeight,
-                        width: tileHeight,
+                      SizedBox.square(
+                        dimension: tileHeight,
+                        child: ClubImage(club: widget.club),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
@@ -112,12 +107,6 @@ class _ClubTileState extends State<ClubTile> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 4),
-                      if (widget.club.score != 0)
-                        ScoreIndicator(
-                          score: widget.club.score,
-                          scale: tileHeight,
-                        ),
                     ],
                   ),
                 ),
