@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/firestore/firestore_service.dart';
 import 'package:nightlife/helpers/filters.dart';
 
@@ -13,7 +12,6 @@ class ClubList extends ChangeNotifier {
   String _filterText = "";
   TypeOfMusic? _typeOfMusic;
   BaseFilter _filter = BaseFilter.filters.first;
-  Club? lastReviewed;
 
   Future setup() async {
     return await FirestoreService.getClubs().then((value) {
@@ -49,8 +47,6 @@ class ClubList extends ChangeNotifier {
     _filteredClubs = _clubs.where((club) => club.name.toLowerCase().contains(_filterText.toLowerCase())).toList();
     if (_typeOfMusic != null) _filteredClubs = _filteredClubs.where((element) => element.typeOfMusic.contains(_typeOfMusic)).toList();
     _filter.applyFilter(_filteredClubs);
-    lastReviewed = _filteredClubs.where((club) => club.review != null).toList().rearrange((p0, p1) => p0.review!.date.compareTo(p1.review!.date)).firstOrNull;
-    _filteredClubs.remove(lastReviewed);
     notifyListeners();
   }
 
