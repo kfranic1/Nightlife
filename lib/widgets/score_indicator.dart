@@ -40,10 +40,11 @@ class ScoreIndicator extends StatelessWidget {
 
 class ScoreCirclePainter extends CustomPainter {
   final Color color;
+  final Color backgroundColor;
   final double percentage;
   final double strokeWidth;
 
-  ScoreCirclePainter(this.color, this.percentage, {this.strokeWidth = 10});
+  ScoreCirclePainter(this.color, this.percentage, {this.strokeWidth = 10, this.backgroundColor = const Color.fromARGB(0, 255, 255, 255)});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -51,7 +52,7 @@ class ScoreCirclePainter extends CustomPainter {
     final radius = math.min(size.width, size.height) / 2 - strokeWidth / 2;
 
     Paint backgroundPaint = Paint()
-      ..color = const Color.fromARGB(117, 189, 189, 189)
+      ..color = backgroundColor
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
