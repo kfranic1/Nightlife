@@ -28,7 +28,7 @@ class ScoreIndicator extends StatelessWidget {
               score.toStringAsFixed(1),
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 14 * scale / 50,
+                fontSize: 16 * scale / 50,
               ),
             ),
           ),

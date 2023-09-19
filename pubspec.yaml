@@ -47,6 +47,7 @@ dependencies:
   nested_scroll_views: ^0.0.8
   firebase_auth: ^4.7.2
   flag: ^7.0.0
+  flutter_layout_grid: ^2.0.5
 
 dev_dependencies:
   flutter_test:
