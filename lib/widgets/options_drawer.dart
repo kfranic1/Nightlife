@@ -1,7 +1,9 @@
 import 'package:flag/flag_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/language_icon_button.dart';
+import 'package:provider/provider.dart';
 
 class OptionsDrawer extends StatelessWidget {
   const OptionsDrawer({super.key});
@@ -10,6 +12,7 @@ class OptionsDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        IconButton(onPressed: () => context.read<CustomRouterDelegate>().goToProfile(), icon: const Icon(Icons.person)),
         const Expanded(child: SizedBox()),
         TextButton.icon(
           style: const ButtonStyle(overlayColor: MaterialStatePropertyAll(Colors.transparent)),
@@ -30,7 +33,7 @@ class OptionsDrawer extends StatelessWidget {
             LanguageIconButton(flagsCode: FlagsCode.HR, locale: Locale('hr')),
             LanguageIconButton(flagsCode: FlagsCode.GB, locale: Locale('en')),
           ],
-        )
+        ),
       ],
     );
   }

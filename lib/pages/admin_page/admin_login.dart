@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/pages/admin_page/form_button.dart';
+import 'package:nightlife/pages/profile_page/profile_action_button.dart';
 import 'package:nightlife/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -40,9 +40,12 @@ class _AdminLoginState extends State<AdminLogin> {
               controller: _password,
             ),
           ),
-          FormButton(
-            action: () async => await FormButton.tryAction(context, () => context.read<AuthService>().signIn(email: _email.text, password: _password.text)),
-            label: "Log In",
+          ProfileActionButton(
+            action: () => context.read<AuthService>().signIn(email: _email.text, password: _password.text),
+            label: const Text(
+              "LOG IN",
+              style: TextStyle(color: Colors.white),
+            ),
           )
         ]),
       ),

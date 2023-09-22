@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/pages/admin_page/admin_page.dart';
 import 'package:nightlife/pages/error_page.dart';
+import 'package:nightlife/pages/profile_page/profile_page.dart';
 import 'package:nightlife/routing/configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 import 'package:provider/provider.dart';
@@ -66,4 +67,7 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
 
   @override
   void goToClub(String clubName) => setNewRoutePath(Configuration.club(clubName));
+  
+  @override
+  void goToProfile() => setNewRoutePath(Configuration.otherPage(Routes.profile, null));
 }
