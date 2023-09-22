@@ -41,7 +41,7 @@ class _FormButtonState extends State<FormButton> {
             style: ElevatedButton.styleFrom(backgroundColor: widget._color),
             onPressed: () async {
               setState(() => loading = true);
-              await widget._action.call();
+              await FormButton.tryAction(context, widget._action);
               setState(() => loading = false);
             },
             child: Text(widget._label),
