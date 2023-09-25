@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/day_of_week.dart';
+import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/firestore/firestore_service.dart';
 import 'package:nightlife/model/work_day.dart';
 
@@ -15,6 +16,7 @@ class Club {
   String location;
   String imageUrl;
   Map<Contact, String?> contacts;
+  Map<SocialMedia, String?> socialMedia;
   Review? review;
   Map<DayOfWeek, WorkDay> workHours;
 
@@ -28,6 +30,7 @@ class Club {
     required this.descriptionEn,
     required this.location,
     required this.contacts,
+    required this.socialMedia,
     required this.review,
     required this.imageUrl,
     required this.workHours,
@@ -41,6 +44,7 @@ class Club {
       'descriptionEn': descriptionEn,
       'location': location,
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
+      'socialMedia': socialMedia.map((key, value) => MapEntry(key.name, value)),
       'review': review == null ? null : review!.toMap(),
       'imageUrl': imageUrl,
       'workHours': workHours.map((key, value) => MapEntry(key.name, value.toMap())),
@@ -59,6 +63,10 @@ class Club {
       location: data['location'],
       contacts: (data['contacts'] as Map<String, dynamic>).map((key, value) => MapEntry(
             Contact.values.firstWhere((e) => e.name == key),
+            value,
+          )),
+      socialMedia: (data['socialMedia'] as Map<String, dynamic>).map((key, value) => MapEntry(
+            SocialMedia.values.firstWhere((e) => e.name == key),
             value,
           )),
       review: reviewData == null ? null : Review.fromMap(reviewData),
