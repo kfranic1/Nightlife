@@ -1,1 +1,1 @@
-enum Contact { facebook, instagram, web, phone, email }
+enum Contact { web, phone, email }

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/day_of_week.dart';
+import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/model/work_day.dart';
 import 'package:nightlife/pages/admin_page/admin_login.dart';
 import 'package:nightlife/pages/admin_page/review_page/review_edit_page.dart';
@@ -27,6 +28,7 @@ class _AdminPageState extends State<AdminPage> {
     descriptionEn: '',
     location: '',
     contacts: {for (var element in Contact.values) element: null},
+    socialMedia: {for (var element in SocialMedia.values) element: null},
     review: null,
     imageUrl: '',
     workHours: {for (var element in DayOfWeek.values) element: WorkDay(hours: '', typeOfMusic: [])},

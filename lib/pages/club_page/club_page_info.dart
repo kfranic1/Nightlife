@@ -10,6 +10,7 @@ import '../../model/club.dart';
 import '../../widgets/column_with_title.dart';
 import '../../widgets/contact_display.dart';
 import '../../widgets/day_of_week_display.dart';
+import 'social_media_links.dart';
 
 class ClubPageInfo extends StatefulWidget {
   const ClubPageInfo({super.key});
@@ -31,6 +32,7 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
       child: Center(
         child: Wrap(
           direction: Axis.vertical,
+          crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 16,
           children: [
             Row(
@@ -83,7 +85,7 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
               ),
             ColumnWithTitle(
               width: width,
-              title: "Contacts & Social Media",
+              title: "Contacts",
               children: club.contacts.keys
                   .where((key) => club.contacts[key] != null)
                   .toList()
@@ -103,6 +105,7 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
                       .map((dayOfWeek) => DayOfWeekDisplay(day: club.workHours[dayOfWeek]!, dayName: dayOfWeek.name.toUpperCase()))
                       .toList(),
             ),
+            SocialMediaLinks(club: club),
             if (club.review != null)
               const Text(
                 "Scroll down to see the review",
