@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../enums/contact.dart';
 
 extension ContactExtension on Contact {
   IconData get icon {
     switch (this) {
-      case Contact.facebook:
-        return FontAwesomeIcons.facebook;
-      case Contact.instagram:
-        return FontAwesomeIcons.instagram;
       case Contact.web:
         return Icons.web;
       case Contact.phone:
@@ -21,8 +16,6 @@ extension ContactExtension on Contact {
 
   String get action {
     switch (this) {
-      case Contact.facebook:
-      case Contact.instagram:
       case Contact.web:
         return "https://";
       case Contact.phone:

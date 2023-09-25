@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
+import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/extensions/contact_extension.dart';
 import 'package:nightlife/extensions/list_extension.dart';
+import 'package:nightlife/extensions/social_media_extension.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/work_day.dart';
 import 'package:nightlife/pages/admin_page/form_button.dart';
@@ -68,25 +70,25 @@ class _ClubEditPageState extends State<ClubEditPage> {
             labelText: 'Web',
             initialValue: _club.contacts[Contact.web] ?? '',
             onChanged: (value) => _club.contacts[Contact.web] = value,
-            icon: const Icon(Icons.web),
+            icon: Icon(Contact.web.icon),
           ),
           ClubTextField(
             labelText: 'Email',
             initialValue: _club.contacts[Contact.email] ?? '',
             onChanged: (value) => _club.contacts[Contact.email] = value,
-            icon: const Icon(Icons.email),
+            icon: Icon(Contact.email.icon),
           ),
           ClubTextField(
             labelText: 'Instagram',
-            initialValue: _club.contacts[Contact.instagram] ?? '',
-            onChanged: (value) => _club.contacts[Contact.instagram] = value,
-            icon: Icon(Contact.instagram.icon),
+            initialValue: _club.socialMedia[SocialMedia.instagram] ?? '',
+            onChanged: (value) => _club.socialMedia[SocialMedia.instagram] = value,
+            icon: Icon(SocialMedia.instagram.icon),
           ),
           ClubTextField(
             labelText: 'Facebook',
-            initialValue: _club.contacts[Contact.facebook] ?? '',
-            onChanged: (value) => _club.contacts[Contact.facebook] = value,
-            icon: Icon(Contact.facebook.icon),
+            initialValue: _club.socialMedia[SocialMedia.facebook] ?? '',
+            onChanged: (value) => _club.socialMedia[SocialMedia.facebook] = value,
+            icon: Icon(SocialMedia.facebook.icon),
           ),
           ClubTextField(
             labelText: 'Image url',
