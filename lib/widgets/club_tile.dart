@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nightlife/widgets/seo_text.dart';
 import 'package:provider/provider.dart';
+import 'package:seo/seo.dart';
 
 import '../model/club.dart';
 import '../routing/custom_router_delegate.dart';
@@ -25,8 +27,9 @@ class ClubTile extends StatelessWidget {
               children: [
                 SizedBox.square(child: ClubImage(club: club)),
                 const SizedBox(height: 4),
-                Text(
+                SEOText(
                   club.name,
+                  textTagStyle: TextTagStyle.h1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 20,
@@ -34,8 +37,9 @@ class ClubTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
+                SEOText(
                   club.location,
+                  textTagStyle: TextTagStyle.h2,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontSize: 12),

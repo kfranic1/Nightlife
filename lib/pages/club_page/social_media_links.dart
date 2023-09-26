@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/extensions/social_media_extension.dart';
 import 'package:nightlife/model/club.dart';
+import 'package:seo/seo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialMediaLinks extends StatelessWidget {
@@ -33,15 +34,19 @@ class SocialMediaButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      padding: EdgeInsets.zero,
-      splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
-      hoverColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      iconSize: 40,
-      onPressed: () async => await launchUrl(Uri.parse(data)),
-      icon: FaIcon(socialMedia.icon),
+    return Seo.link(
+      anchor: socialMedia.name,
+      href: data,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        splashColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        iconSize: 40,
+        onPressed: () async => await launchUrl(Uri.parse(data)),
+        icon: FaIcon(socialMedia.icon),
+      ),
     );
   }
 }
