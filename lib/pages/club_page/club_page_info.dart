@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
+import 'package:nightlife/pages/club_page/club_name_and_image.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
 import 'package:provider/provider.dart';
 
@@ -35,45 +35,7 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 16,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox.square(
-                  dimension: 72,
-                  child: CachedNetworkImage(
-                    imageUrl: club.imageUrl,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      club.name,
-                      style: const TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      club.location,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              width: width,
-              child: const Divider(
-                height: 0,
-                color: Colors.black,
-                thickness: 1,
-              ),
-            ),
+            Center(child: ClubImageAndName(club: club)),
             if (club.descriptionEn.isNotEmpty && club.descriptionHr.isNotEmpty) //TODO temporary - each club should have a non empty description
               SizedBox(
                 width: width,
