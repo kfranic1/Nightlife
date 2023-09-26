@@ -472,6 +472,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  seo:
+    dependency: "direct main"
+    description:
+      name: seo
+      sha256: "72c877adcaa4f2d4eb49428e0c5560669fcca4a264246641ad2c78e4abb70812"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

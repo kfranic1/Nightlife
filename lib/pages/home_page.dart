@@ -27,13 +27,7 @@ class HomePage extends StatelessWidget {
               rowSizes: List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
               gridFit: GridFit.loose,
               columnGap: 20,
-              children: clubList.filteredClubs
-                  .map(
-                    (e) => ClubTile(
-                      club: e,
-                    ),
-                  )
-                  .toList(),
+              children: clubList.filteredClubs.map((e) => ClubTile(club: e)).toList(),
             )
           ],
         ),

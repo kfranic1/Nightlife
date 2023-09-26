@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
+import 'package:seo/seo.dart';
 
 class ClubImage extends StatelessWidget {
   const ClubImage({super.key, required this.club});
@@ -17,11 +18,15 @@ class ClubImage extends StatelessWidget {
         aspectRatio: 1,
         child: Stack(
           children: [
-            CachedNetworkImage(
-              imageUrl: club.imageUrl,
-              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
+            Seo.image(
+              alt: "Nightlife Zagreb - ${club.name}",
+              src: club.imageUrl,
+              child: CachedNetworkImage(
+                imageUrl: club.imageUrl,
+                placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
+              ),
             ),
             if (club.score != 0)
               Align(

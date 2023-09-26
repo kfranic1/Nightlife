@@ -5,6 +5,8 @@ import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/language.dart';
 import 'package:nightlife/services/auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:seo/html/seo_controller.dart';
+import 'package:seo/html/tree/widget_tree.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'helpers/primary_swatch.dart';
@@ -25,39 +27,43 @@ class Nightlife extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<CustomRouteInformationParser>(create: (context) => CustomRouteInformationParser()),
-        ChangeNotifierProvider<CustomRouterDelegate>(create: (context) => CustomRouterDelegate()),
-        ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
-        Provider<AuthService>(create: (context) => AuthService()),
-        StreamProvider<User?>(
-          create: (context) => context.read<AuthService>().authStateChanges,
-          initialData: null,
-        ),
-        ChangeNotifierProvider(create: (context) => Language()),
-      ],
-      child: Builder(builder: (context) {
-        return FutureBuilder(
-            future: context.read<ClubList>().setup(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: primaryColor));
-              return MaterialApp.router(
-                scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
-                title: 'Nightlife Zagreb',
-                debugShowCheckedModeBanner: false,
-                routeInformationParser: context.read<CustomRouteInformationParser>(),
-                routerDelegate: context.read<CustomRouterDelegate>(),
-                backButtonDispatcher: RootBackButtonDispatcher(),
-                theme: ThemeData(
-                  fontFamily: 'Roboto',
-                  primarySwatch: primarySwatch,
-                  appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-                  //brightness: Brightness.dark,
-                ),
-              );
-            });
-      }),
+    return SeoController(
+      enabled: true,
+      tree: WidgetTree(context: context),
+      child: MultiProvider(
+        providers: [
+          Provider<CustomRouteInformationParser>(create: (context) => CustomRouteInformationParser()),
+          ChangeNotifierProvider<CustomRouterDelegate>(create: (context) => CustomRouterDelegate()),
+          ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
+          Provider<AuthService>(create: (context) => AuthService()),
+          StreamProvider<User?>(
+            create: (context) => context.read<AuthService>().authStateChanges,
+            initialData: null,
+          ),
+          ChangeNotifierProvider(create: (context) => Language()),
+        ],
+        child: Builder(builder: (context) {
+          return FutureBuilder(
+              future: context.read<ClubList>().setup(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: primaryColor));
+                return MaterialApp.router(
+                  scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
+                  title: 'Nightlife Zagreb',
+                  debugShowCheckedModeBanner: false,
+                  routeInformationParser: context.read<CustomRouteInformationParser>(),
+                  routerDelegate: context.read<CustomRouterDelegate>(),
+                  backButtonDispatcher: RootBackButtonDispatcher(),
+                  theme: ThemeData(
+                    fontFamily: 'Roboto',
+                    primarySwatch: primarySwatch,
+                    appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+                    //brightness: Brightness.dark,
+                  ),
+                );
+              });
+        }),
+      ),
     );
   }
 }
