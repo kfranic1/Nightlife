@@ -21,7 +21,7 @@ class ClubTile extends StatelessWidget {
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
-            onTap: () => context.read<CustomRouterDelegate>().goToClub({"name": club.name}),
+            onTap: () => context.read<CustomRouterDelegate>().goToClub(club.name),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

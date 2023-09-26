@@ -4,5 +4,5 @@ abstract class Routes {
   static const String admin = "admin";
 
   void goToHome() {}
-  void goToClub(Map<String, String> params) {}
+  void goToClub(String clubName) {}
 }
