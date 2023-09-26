@@ -21,6 +21,8 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   @override
   Configuration get currentConfiguration => _configuration;
 
+  List<Configuration> _configurationsStack = [Configuration.home()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,30 +42,28 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
       body: Navigator(
         key: navigatorKey,
         pages: [
-          if (_configuration.isHomePage) const MaterialPage(child: HomePage()),
-          if (_configuration.isOtherPage)
-            MaterialPage(
-              child: Builder(builder: (context) {
-                switch (_configuration.path) {
-                  case Routes.club:
-                    if (_configuration.pathParams == null || !_configuration.pathParams!.containsKey('name')) return const ErrorPage();
-                    Club? club = context.read<ClubList>().findClubByName(_configuration.pathParams!['name']!);
-                    if (club == null) return const ErrorPage();
-                    return Provider.value(
-                      value: club,
-                      child: const ClubPage(),
-                    );
-                  case Routes.admin:
-                    return const AdminPage();
-                  default:
-                    return const ErrorPage();
-                }
-              }),
-            ),
+          if (_configuration.isHomePage)
+            const MaterialPage(child: HomePage())
+          else if (_configuration.isAdmin)
+            const MaterialPage(child: AdminPage())
+          else if (_configuration.isClub)
+            MaterialPage(child: Builder(
+              builder: (context) {
+                Club? club = context.read<ClubList>().findClubByName(_configuration.info!);
+                if (club == null) return const ErrorPage();
+                return Provider.value(
+                  value: club,
+                  child: const ClubPage(),
+                );
+              },
+            ))
+          else
+            const MaterialPage(child: ErrorPage())
         ],
         onPopPage: (route, result) {
           if (!route.didPop(result)) return false;
-          _configuration = Configuration.home();
+          if (_configurationsStack.length > 1) _configurationsStack.removeLast();
+          _configuration = _configurationsStack.last;
           notifyListeners();
           return true;
         },
@@ -73,6 +73,7 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
 
   @override
   Future<void> setNewRoutePath(Configuration configuration) async {
+    _configurationsStack.add(configuration);
     _configuration = configuration;
     notifyListeners();
   }
@@ -81,5 +82,5 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   void goToHome() => setNewRoutePath(Configuration.home());
 
   @override
-  void goToClub(Map<String, String> params) => setNewRoutePath(Configuration.otherPage(Routes.club, params));
+  void goToClub(String clubName) => setNewRoutePath(Configuration.club(clubName));
 }
