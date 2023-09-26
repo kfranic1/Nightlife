@@ -25,20 +25,21 @@ class ClubImage extends StatelessWidget {
             ),
             if (club.score != 0)
               Align(
-                  alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(2),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(size),
-                        color: Colors.white.withOpacity(0.5),
-                      ),
-                      child: ScoreIndicator(
-                        score: club.score,
-                        scale: size,
-                      ),
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(size),
+                      color: Colors.white.withOpacity(0.5),
                     ),
-                  ))
+                    child: ScoreIndicator(
+                      score: club.score,
+                      scale: size,
+                    ),
+                  ),
+                ),
+              )
           ],
         ),
       ),
