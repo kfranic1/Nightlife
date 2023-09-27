@@ -29,7 +29,7 @@ class _AdminPageState extends State<AdminPage> {
     location: '',
     contacts: {for (var element in Contact.values) element: null},
     socialMedia: {for (var element in SocialMedia.values) element: null},
-    review: null,
+    reviewData: null,
     imageUrl: '',
     workHours: {for (var element in DayOfWeek.values) element: WorkDay(hours: '', typeOfMusic: [])},
   );

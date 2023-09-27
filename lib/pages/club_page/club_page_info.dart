@@ -68,7 +68,7 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
                       .toList(),
             ),
             SocialMediaLinks(club: club),
-            if (club.review != null)
+            if (club.reviewId != null)
               const Text(
                 "Scroll down to see the review",
                 style: TextStyle(color: Colors.grey),
