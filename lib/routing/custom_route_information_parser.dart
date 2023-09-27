@@ -7,7 +7,8 @@ class CustomRouteInformationParser extends RouteInformationParser<Configuration>
   Future<Configuration> parseRouteInformation(RouteInformation routeInformation) async {
     final Uri uri = routeInformation.uri;
     if (uri.pathSegments.isEmpty) return Configuration.home();
-    if (uri.pathSegments[0] == Routes.admin) return Configuration.admin();
+    if (uri.pathSegments[0] == Routes.admin) return Configuration.other(Routes.admin);
+    if (uri.pathSegments[0] == Routes.profile) return Configuration.other(Routes.profile);
     if (uri.pathSegments[0] == Routes.club && uri.pathSegments.length > 1) {
       String decodedInfo = Uri.decodeQueryComponent(uri.pathSegments[1]);
       return Configuration.club(decodedInfo);
@@ -19,6 +20,7 @@ class CustomRouteInformationParser extends RouteInformationParser<Configuration>
   RouteInformation restoreRouteInformation(Configuration configuration) {
     if (configuration.isHomePage) return RouteInformation(uri: Uri.parse('/'));
     if (configuration.isAdmin) return RouteInformation(uri: Uri.parse("/${Routes.admin}"));
+    if (configuration.isProfile) return RouteInformation(uri: Uri.parse("/${Routes.profile}"));
     if (configuration.isClub) {
       String encodedInfo = Uri.encodeQueryComponent(configuration.info!);
       return RouteInformation(uri: Uri(path: "/${Routes.club}/$encodedInfo"));
