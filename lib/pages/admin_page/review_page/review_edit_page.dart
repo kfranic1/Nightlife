@@ -26,72 +26,77 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
     _valueKey = ValueKey<int>(_valueKey.value + 1);
     _club = context.watch<Club>();
     if (_club.id.isEmpty) return const SizedBox();
-    _review = Review.from(_club.review ?? Review.empty());
-    return Form(
-      key: _formKey,
-      child: Column(
-        key: _valueKey,
-        children: <Widget>[
-          const Text("Review info"),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              initialValue: ddMMyyyyFormater.format(_review.date),
-              decoration: InputDecoration(
-                labelText: 'Date dd.MM.yyyy',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-              ),
-              validator: (value) {
-                if (!RegExp(r'^(\d{2})\.(\d{2})\.(\d{4})').hasMatch(value!)) return "Wrong format";
-                try {
-                  ddMMyyyyFormater.parseStrict(value);
-                  return null;
-                } catch (e) {
-                  return "Date is not correct";
-                }
-              },
-              onChanged: (value) {
-                try {
-                  _review.date = ddMMyyyyFormater.parseStrict(value);
-                } catch (e) {
-                  _review.date = DateTime.now();
-                }
-              },
-            ),
-          ),
-          Column(
-            children: _review.aspectReviews.entries
-                .toList()
-                .rearrange((p0, p1) => p0.toString().compareTo(p1.toString()))
-                .map((entry) => ReviewField(review: _review, aspect: entry.key))
-                .toList(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: FormButton(
-                    action: () async {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        await FormButton.tryAction(context, () async => await _club.updateReview(_review));
+    return FutureBuilder(
+        future: _club.reviewId == null ? Future.value(Review.empty(_club.id)) : Review.getReview(_club.reviewId!),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator());
+          _review = snapshot.data as Review;
+          return Form(
+            key: _formKey,
+            child: Column(
+              key: _valueKey,
+              children: <Widget>[
+                const Text("Review info"),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    initialValue: ddMMyyyyFormater.format(_review.date),
+                    decoration: InputDecoration(
+                      labelText: 'Date dd.MM.yyyy',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+                    ),
+                    validator: (value) {
+                      if (!RegExp(r'^(\d{2})\.(\d{2})\.(\d{4})').hasMatch(value!)) return "Wrong format";
+                      try {
+                        ddMMyyyyFormater.parseStrict(value);
+                        return null;
+                      } catch (e) {
+                        return "Date is not correct";
                       }
                     },
-                    label: "Save",
-                    color: Colors.green,
+                    onChanged: (value) {
+                      try {
+                        _review.date = ddMMyyyyFormater.parseStrict(value);
+                      } catch (e) {
+                        _review.date = DateTime.now();
+                      }
+                    },
                   ),
                 ),
-                const SizedBox(width: 10),
-                FormButton(
-                  action: () async => setState(() {}),
-                  label: 'Discard changes',
+                Column(
+                  children: _review.aspectReviews.entries
+                      .toList()
+                      .rearrange((p0, p1) => p0.toString().compareTo(p1.toString()))
+                      .map((entry) => ReviewField(review: _review, aspect: entry.key))
+                      .toList(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: FormButton(
+                          action: () async {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              await FormButton.tryAction(context, () async => await _review.updateReview());
+                            }
+                          },
+                          label: "Save",
+                          color: Colors.green,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      FormButton(
+                        action: () async => setState(() {}),
+                        label: 'Discard changes',
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

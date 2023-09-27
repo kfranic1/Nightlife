@@ -33,7 +33,7 @@ class DateFilter extends BaseFilter {
   String get name => "Review Date";
   @override
   void applyFilter(List<Club> clubs) {
-    clubs.removeWhere((element) => element.review == null);
-    clubs.sort((a, b) => b.review!.date.compareTo(a.review!.date));
+    clubs.removeWhere((element) => element.reviewDate == null);
+    clubs.sort((a, b) => b.reviewDate!.compareTo(a.reviewDate!));
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nested_scroll_views/material.dart';
 import 'package:nightlife/model/club.dart';
-import 'package:nightlife/model/review.dart';
 import 'package:nightlife/widgets/review_display.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
@@ -24,11 +23,7 @@ class ClubPage extends StatelessWidget {
           scrollDirection: Axis.vertical,
           children: [
             const ClubPageInfo(),
-            if (club.review != null)
-              Provider<Review>.value(
-                value: club.review!,
-                child: const ReviewDisplay(),
-              ),
+            if (club.reviewId != null) ReviewDisplay(reviewId: club.reviewId!),
           ],
         ),
       ),

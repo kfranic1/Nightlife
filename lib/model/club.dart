@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/firestore/firestore_service.dart';
+import 'package:nightlife/model/review_data.dart';
 import 'package:nightlife/model/work_day.dart';
 
 import '../enums/contact.dart';
 import '../enums/type_of_music.dart';
-import 'review.dart';
 
 class Club {
   String id;
@@ -17,10 +17,13 @@ class Club {
   String imageUrl;
   Map<Contact, String?> contacts;
   Map<SocialMedia, String?> socialMedia;
-  Review? review;
+  ReviewData? _reviewData;
   Map<DayOfWeek, WorkDay> workHours;
 
-  double get score => review == null ? 0 : review!.score;
+  String? get reviewId => _reviewData?.reviewId;
+  double get score => _reviewData == null ? 0 : _reviewData!.score;
+  DateTime? get reviewDate => _reviewData?.date;
+
   List<TypeOfMusic> get typeOfMusic => workHours.values.map((value) => value.typeOfMusic).toList().expand((element) => element).toSet().toList();
 
   Club({
@@ -31,10 +34,10 @@ class Club {
     required this.location,
     required this.contacts,
     required this.socialMedia,
-    required this.review,
+    required ReviewData? reviewData,
     required this.imageUrl,
     required this.workHours,
-  });
+  }) : _reviewData = reviewData;
 
   // Convert a Club object into a Map to store in Firestore
   Map<String, dynamic> toMap() {
@@ -45,7 +48,7 @@ class Club {
       'location': location,
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
       'socialMedia': socialMedia.map((key, value) => MapEntry(key.name, value)),
-      'review': review == null ? null : review!.toMap(),
+      'reviewData': _reviewData == null ? null : _reviewData!.toMap(),
       'imageUrl': imageUrl,
       'workHours': workHours.map((key, value) => MapEntry(key.name, value.toMap())),
     };
@@ -54,7 +57,6 @@ class Club {
   // Convert a Firestore DocumentSnapshot into a Club object
   factory Club.fromDocument(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    Map<String, dynamic>? reviewData = data['review'];
     return Club(
       id: doc.id,
       name: data['name'],
@@ -69,7 +71,7 @@ class Club {
             SocialMedia.values.firstWhere((e) => e.name == key),
             value,
           )),
-      review: reviewData == null ? null : Review.fromMap(reviewData),
+      reviewData: doc['reviewData'] != null ? ReviewData.fromMap(doc['reviewData'] as Map<String, dynamic>) : null,
       imageUrl: data['imageUrl'],
       workHours: (data['workHours'] as Map<dynamic, dynamic>).map((key, value) => MapEntry(
             DayOfWeek.values.firstWhere((element) => element.name == key),
@@ -78,28 +80,16 @@ class Club {
     );
   }
 
-  Future<void> updateReview(Review? review) async {
-    this.review = review;
-    await FirestoreService.clubsCollection.doc(id).update({'review': review?.toMap()});
-  }
-
-  @override
-  String toString() {
-    return "$name - $id\n$review";
-  }
-
-  // Create a club in Firestore
   static Future<void> createClub(Club club) async {
-    await FirestoreService.clubsCollection.add(club.toMap());
+    await FirestoreService.clubCollection.add(club.toMap());
   }
 
   static Future<void> updateClub(Club club) async {
-    await FirestoreService.clubsCollection.doc(club.id).update(club.toMap());
+    await FirestoreService.clubCollection.doc(club.id).update(club.toMap());
   }
 
-  // Retrieve a club from Firestore by ID
   static Future<Club> getClub(String clubId) async {
-    DocumentSnapshot doc = await FirestoreService.clubsCollection.doc(clubId).get();
+    DocumentSnapshot doc = await FirestoreService.clubCollection.doc(clubId).get();
     return Club.fromDocument(doc);
   }
 }
