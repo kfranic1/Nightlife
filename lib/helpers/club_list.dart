@@ -14,7 +14,7 @@ class ClubList extends ChangeNotifier {
   BaseFilter _filter = BaseFilter.filters.first;
 
   Future setup() async {
-    return await FirestoreService.getClubs().then((value) {
+    await FirestoreService.getClubs().then((value) {
       _clubs = value;
       _clubs.shuffle();
       _filteredClubs = List.from(_clubs);

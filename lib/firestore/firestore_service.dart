@@ -3,10 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../model/club.dart';
 
 abstract class FirestoreService {
-  static CollectionReference<Map<String, dynamic>> clubsCollection = FirebaseFirestore.instance.collection("clubs");
+  static CollectionReference<Map<String, dynamic>> clubCollection = FirebaseFirestore.instance.collection("clubs");
+  static CollectionReference<Map<String, dynamic>> reviewCollection = FirebaseFirestore.instance.collection("reviews");
 
   static Future<List<Club>> getClubs() async {
-    return (await clubsCollection.get().then((value) => value.docs.map((e) => Club.fromDocument((e))))).toList();
+    return (await clubCollection.get().then((value) => value.docs.map((e) => Club.fromDocument((e))))).toList();
   }
 
   static Future renameField({required CollectionReference<Map<String, dynamic>> collection, required String oldValueName, required String newValueName}) async {
