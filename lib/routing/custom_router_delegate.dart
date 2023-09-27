@@ -31,6 +31,8 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
           const MaterialPage(child: HomePage())
         else if (_configuration.isAdmin)
           const MaterialPage(child: AdminPage())
+          else if (_configuration.isProfile)
+            const MaterialPage(child: ProfilePage())
         else if (_configuration.isClub)
           MaterialPage(child: Builder(
             builder: (context) {
@@ -67,7 +69,7 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
 
   @override
   void goToClub(String clubName) => setNewRoutePath(Configuration.club(clubName));
-  
+
   @override
-  void goToProfile() => setNewRoutePath(Configuration.otherPage(Routes.profile, null));
+  void goToProfile() => setNewRoutePath(Configuration.other(Routes.profile));
 }
