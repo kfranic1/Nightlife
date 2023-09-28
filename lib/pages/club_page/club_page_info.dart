@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
-import 'package:nightlife/pages/club_page/club_name_and_image.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +34,6 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 16,
           children: [
-            Center(child: ClubImageAndName(club: club)),
             if (club.descriptionEn.isNotEmpty && club.descriptionHr.isNotEmpty) //TODO temporary - each club should have a non empty description
               SizedBox(
                 width: width,
@@ -68,11 +66,6 @@ class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClie
                       .toList(),
             ),
             SocialMediaLinks(club: club),
-            if (club.reviewId != null)
-              const Text(
-                "Scroll down to see the review",
-                style: TextStyle(color: Colors.grey),
-              )
           ],
         ),
       ),
