@@ -43,7 +43,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                 children: [
                   const Center(
                     child: Text(
-                      "We are working on this feature. \nFollow us on instagram to get the latest updates.",
+                      "We are working on this feature. \n\nFollow us on instagram to get the latest updates.",
                       textAlign: TextAlign.center,
                     ),
                   ), //TODO create a reservations page
