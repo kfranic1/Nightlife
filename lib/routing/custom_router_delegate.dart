@@ -21,7 +21,7 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   @override
   Configuration get currentConfiguration => _configuration;
 
-  List<Configuration> _configurationsStack = [Configuration.home()];
+  final List<Configuration> _configurationsStack = [Configuration.home()];
 
   @override
   Widget build(BuildContext context) {
