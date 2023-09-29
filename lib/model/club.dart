@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/social_media.dart';
-import 'package:nightlife/firestore/firestore_service.dart';
+import 'package:nightlife/services/firestore_service.dart';
 import 'package:nightlife/model/review_data.dart';
 import 'package:nightlife/model/work_day.dart';
 

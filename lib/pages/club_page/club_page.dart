@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:nested_scroll_views/material.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/club_page/club_name_and_image.dart';
-import 'package:nightlife/widgets/review_display.dart';
+import 'package:nightlife/pages/club_page/club_subpages/club_info.dart';
+import 'package:nightlife/pages/club_page/club_subpages/reservation_display.dart';
+import 'package:nightlife/pages/club_page/club_subpages/review_display.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
-
-import 'club_page_info.dart';
 
 class ClubPage extends StatefulWidget {
   const ClubPage({super.key});
@@ -41,13 +41,8 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
               child: NestedTabBarView(
                 controller: tabController,
                 children: [
-                  const Center(
-                    child: Text(
-                      "We are working on this feature. \nFollow us on instagram to get the latest updates.",
-                      textAlign: TextAlign.center,
-                    ),
-                  ), //TODO create a reservations page
-                  const ClubPageInfo(),
+                  const ReservationDisplay(),
+                  const ClubInfo(),
                   if (club.reviewId == null) const Center(child: Text("This club has not yet been reviewed.")) else ReviewDisplay(reviewId: club.reviewId!),
                 ],
               ),
