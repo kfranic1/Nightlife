@@ -5,20 +5,20 @@ import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/club.dart';
-import '../../widgets/column_with_title.dart';
-import '../../widgets/contact_display.dart';
-import '../../widgets/day_of_week_display.dart';
-import 'social_media_links.dart';
+import '../../../model/club.dart';
+import '../../../widgets/column_with_title.dart';
+import '../../../widgets/contact_display.dart';
+import '../../../widgets/day_of_week_display.dart';
+import '../social_media_links.dart';
 
-class ClubPageInfo extends StatefulWidget {
-  const ClubPageInfo({super.key});
+class ClubInfo extends StatefulWidget {
+  const ClubInfo({super.key});
 
   @override
-  State<ClubPageInfo> createState() => _ClubPageInfoState();
+  State<ClubInfo> createState() => _ClubInfoState();
 }
 
-class _ClubPageInfoState extends State<ClubPageInfo> with AutomaticKeepAliveClientMixin<ClubPageInfo> {
+class _ClubInfoState extends State<ClubInfo> with AutomaticKeepAliveClientMixin<ClubInfo> {
   @override
   bool get wantKeepAlive => true;
 

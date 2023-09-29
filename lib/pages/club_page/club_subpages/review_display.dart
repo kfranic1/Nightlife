@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:nightlife/enums/aspect.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/extensions/review_extension.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
+import 'package:nightlife/model/review.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
-
-import '../enums/aspect.dart';
-import '../model/review.dart';
 
 class ReviewDisplay extends StatefulWidget {
   const ReviewDisplay({super.key, required this.reviewId});
