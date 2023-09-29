@@ -6,23 +6,21 @@ import '../model/club.dart';
 class ClubDropdown extends StatelessWidget {
   const ClubDropdown({
     super.key,
-    required Club club,
-    required List<Club> clubs,
-    required Function(Club?)? onChanged,
-  })  : _club = club,
-        _clubs = clubs,
-        _onChanged = onChanged;
+    required this.club,
+    required this.clubs,
+    required this.onChanged,
+  });
 
-  final Club _club;
-  final List<Club> _clubs;
-  final Function(Club?)? _onChanged;
+  final Club club;
+  final List<Club> clubs;
+  final Function(Club?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedContainer(
       padding: const EdgeInsets.only(left: 8),
       child: DropdownButton<Club>(
-        value: _club,
+        value: club,
         isExpanded: true,
         icon: const Icon(Icons.arrow_drop_down),
         iconSize: 24,
@@ -30,8 +28,8 @@ class ClubDropdown extends StatelessWidget {
         style: const TextStyle(color: Colors.black),
         underline: Container(),
         focusColor: Colors.transparent,
-        onChanged: _onChanged,
-        items: _clubs.map((club) => clubDropdownMenuItem(club)).toList(),
+        onChanged: onChanged,
+        items: clubs.map((club) => clubDropdownMenuItem(club)).toList(),
       ),
     );
   }

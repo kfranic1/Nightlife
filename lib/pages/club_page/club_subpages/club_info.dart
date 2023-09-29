@@ -11,22 +11,13 @@ import '../../../widgets/contact_display.dart';
 import '../../../widgets/day_of_week_display.dart';
 import '../social_media_links.dart';
 
-class ClubInfo extends StatefulWidget {
+class ClubInfo extends StatelessWidget {
   const ClubInfo({super.key});
 
   @override
-  State<ClubInfo> createState() => _ClubInfoState();
-}
-
-class _ClubInfoState extends State<ClubInfo> with AutomaticKeepAliveClientMixin<ClubInfo> {
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     double width = min(400, MediaQuery.of(context).size.width - 20);
-    Club club = context.watch<Club>();
+    Club club = context.read<Club>();
     return SingleChildScrollView(
       child: Center(
         child: Wrap(

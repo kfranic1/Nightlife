@@ -39,6 +39,7 @@ class _AdminPageState extends State<AdminPage> {
   void initState() {
     super.initState();
     clubs = List.from(context.read<ClubList>().clubs);
+    clubs.sort((a, b) => a.name.compareTo(b.name));
     clubs.add(_club);
   }
 

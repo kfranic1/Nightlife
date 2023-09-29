@@ -27,7 +27,7 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
     _club = context.watch<Club>();
     if (_club.id.isEmpty) return const SizedBox();
     return FutureBuilder(
-        future: _club.reviewId == null ? Future.value(Review.empty(_club.id)) : Review.getReview(_club.reviewId!),
+        future: _club.hasReview ? Review.getReview(_club.id) : Future.value(Review.empty(_club.id)),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator());
           _review = snapshot.data as Review;
@@ -79,17 +79,12 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
                           action: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              await FormButton.tryAction(context, () async => await _review.updateReview());
+                              await FormButton.tryAction(context, () async => await _review.setReview());
                             }
                           },
                           label: "Save",
                           color: Colors.green,
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      FormButton(
-                        action: () async => setState(() {}),
-                        label: 'Discard changes',
                       ),
                     ],
                   ),
