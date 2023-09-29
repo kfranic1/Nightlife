@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/social_media.dart';
-import 'package:nightlife/services/firestore_service.dart';
 import 'package:nightlife/model/review_data.dart';
 import 'package:nightlife/model/work_day.dart';
+import 'package:nightlife/services/firestore_service.dart';
 
 import '../enums/contact.dart';
 import '../enums/type_of_music.dart';
@@ -20,7 +20,7 @@ class Club {
   ReviewData? _reviewData;
   Map<DayOfWeek, WorkDay> workHours;
 
-  String? get reviewId => _reviewData?.reviewId;
+  bool get hasReview => _reviewData != null;
   double get score => _reviewData == null ? 0 : _reviewData!.score;
   DateTime? get reviewDate => _reviewData?.date;
 

@@ -43,7 +43,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                 children: [
                   const ReservationDisplay(),
                   const ClubInfo(),
-                  if (club.reviewId == null) const Center(child: Text("This club has not yet been reviewed.")) else ReviewDisplay(reviewId: club.reviewId!),
+                  if (club.hasReview) ReviewDisplay(reviewId: club.id) else const Center(child: Text("This club has not yet been reviewed.")),
                 ],
               ),
             ),
