@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nightlife/firestore/firestore_service.dart';
+import 'package:nightlife/services/firestore_service.dart';
 import 'package:nightlife/model/review_data.dart';
 
 import '../enums/aspect.dart';
