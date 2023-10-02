@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:nested_scroll_views/material.dart';
+import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/club_page/club_name_and_image.dart';
+import 'package:nightlife/pages/club_page/social_media_links.dart';
 import 'package:nightlife/pages/club_page/club_subpages/club_info.dart';
 import 'package:nightlife/pages/club_page/club_subpages/reservation_display.dart';
 import 'package:nightlife/pages/club_page/club_subpages/review_display.dart';
@@ -20,7 +24,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
 
   @override
   void initState() {
-    tabController = TabController(initialIndex: 1, length: 3, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -37,40 +41,56 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
           children: [
             Center(child: ClubImageAndName(club: club)),
             const SizedBox(height: 16),
+            SizedBox(
+              height: 50,
+              width: min(400, MediaQuery.of(context).size.width - 20),
+              child: TabBar(
+                controller: tabController,
+                labelPadding: EdgeInsets.zero,
+                unselectedLabelColor: Colors.black,
+                labelColor: primaryColor,
+                tabs: const [
+                  TabBarElement("DETAILS"),
+                  TabBarElement("RESERVATIONS"),
+                  TabBarElement("REVIEW"),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
             Expanded(
               child: NestedTabBarView(
                 controller: tabController,
                 children: [
-                  const ReservationDisplay(),
                   const ClubInfo(),
+                  const ReservationDisplay(),
                   if (club.hasReview) ReviewDisplay(reviewId: club.id) else const Center(child: Text("This club has not yet been reviewed.")),
                 ],
               ),
             ),
-            TabBar(
-              controller: tabController,
-              tabs: const [
-                Column(
-                  children: [
-                    Icon(Icons.table_bar_outlined, color: Colors.black),
-                    Text("Reservations", style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.info_outline, color: Colors.black),
-                    Text("Info", style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.rate_review_outlined, color: Colors.black),
-                    Text("Review", style: TextStyle(color: Colors.black)),
-                  ],
-                ),
-              ],
-            ),
+            SocialMediaLinks(club: club),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class TabBarElement extends StatelessWidget {
+  const TabBarElement(
+    this.text, {
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: Center(
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 12),
         ),
       ),
     );
