@@ -61,12 +61,22 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                           padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
-                              TranslatableText(
-                                textHr: aspect.titleHr,
-                                textEn: aspect.titleEn,
-                                style: const TextStyle(fontSize: 28),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TranslatableText(
+                                    textHr: aspect.titleHr,
+                                    textEn: aspect.titleEn,
+                                    style: const TextStyle(fontSize: 28),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  ScoreIndicator(
+                                    score: review.aspectReviews[aspect]!.score,
+                                    scale: 40,
+                                  ),
+                                ],
                               ),
                               const Divider(
                                 color: Colors.black,
@@ -81,10 +91,6 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                                     style: const TextStyle(fontSize: 20),
                                   ),
                                 ),
-                              ),
-                              ScoreIndicator(
-                                score: review.aspectReviews[aspect]!.score,
-                                scale: 72,
                               ),
                             ],
                           ),

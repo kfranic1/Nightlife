@@ -2,14 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
+import 'package:nightlife/model/club.dart';
+import 'package:nightlife/widgets/column_with_title.dart';
+import 'package:nightlife/widgets/contact_display.dart';
+import 'package:nightlife/widgets/day_of_week_display.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
 import 'package:provider/provider.dart';
-
-import '../../../model/club.dart';
-import '../../../widgets/column_with_title.dart';
-import '../../../widgets/contact_display.dart';
-import '../../../widgets/day_of_week_display.dart';
-import '../social_media_links.dart';
 
 class ClubInfo extends StatelessWidget {
   const ClubInfo({super.key});
@@ -56,7 +54,6 @@ class ClubInfo extends StatelessWidget {
                       .map((dayOfWeek) => DayOfWeekDisplay(day: club.workHours[dayOfWeek]!, dayName: dayOfWeek.name.toUpperCase()))
                       .toList(),
             ),
-            SocialMediaLinks(club: club),
           ],
         ),
       ),
