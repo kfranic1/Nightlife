@@ -20,7 +20,7 @@ class ContactDisplay extends StatelessWidget {
           onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
           leading: Icon(contact.icon),
           title: Text(data),
-          dense: true,
+          //dense: true,
         ),
       ),
     );
