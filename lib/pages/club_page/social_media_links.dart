@@ -3,24 +3,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/extensions/social_media_extension.dart';
 import 'package:nightlife/model/club.dart';
+import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialMediaLinks extends StatelessWidget {
-  const SocialMediaLinks({
-    super.key,
-    required this.club,
-  });
-
-  final Club club;
+  const SocialMediaLinks({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Map<SocialMedia, String?> socialMedia = context.read<Club>().socialMedia;
     return Wrap(
       spacing: 16,
       children: SocialMedia.values
-          .where((socialMedia) => club.socialMedia[socialMedia] != null)
-          .map((socialMedia) => SocialMediaButton(socialMedia: socialMedia, data: club.socialMedia[socialMedia]!))
+          .where((media) => socialMedia[media] != null)
+          .map((media) => SocialMediaButton(socialMedia: media, data: socialMedia[media]!))
           .toList(),
     );
   }
@@ -43,7 +40,7 @@ class SocialMediaButton extends StatelessWidget {
         focusColor: Colors.transparent,
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        iconSize: 40,
+        iconSize: 32,
         onPressed: () async => await launchUrl(Uri.parse(data)),
         icon: FaIcon(socialMedia.icon),
       ),
