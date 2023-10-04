@@ -36,11 +36,10 @@ class ClubInfo extends StatelessWidget {
               title: "Location",
               children: [
                 DecoratedContainer(
-                  child: Row(
-                    children: [
-                      const SizedBox.square(dimension: 50, child: Icon(Icons.location_on)),
-                      Text(club.location),
-                    ],
+                  child: ListTile(
+                    leading:
+                      const Icon(Icons.location_on),
+                      title: Text(club.location),
                   ),
                 ),
               ],
