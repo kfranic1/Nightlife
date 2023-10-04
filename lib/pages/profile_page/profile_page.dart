@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flag/flag_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:nightlife/model/person.dart';
 import 'package:nightlife/pages/profile_page/subpages/auth_page.dart';
 import 'package:nightlife/services/auth_service.dart';
 import 'package:nightlife/widgets/language_icon_button.dart';
@@ -11,14 +11,14 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User? user = context.watch<User?>();
+    Person? user = context.watch<Person?>();
     return Scaffold(
       body: Builder(builder: (context) {
         if (user == null) return const AuthPage();
         return Center(
           child: Column(
             children: [
-              Text(user.displayName ?? ''),
+              Text(user.name),
               if (context.read<AuthService>().hasUser)
                 IconButton(
                   onPressed: () => context.read<AuthService>().signOut(),

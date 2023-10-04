@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/day_of_week.dart';
+import 'package:nightlife/enums/role.dart';
 import 'package:nightlife/enums/social_media.dart';
+import 'package:nightlife/model/person.dart';
 import 'package:nightlife/model/work_day.dart';
-import 'package:nightlife/pages/admin_page/admin_login.dart';
 import 'package:nightlife/pages/admin_page/review_page/review_edit_page.dart';
 import 'package:provider/provider.dart';
 
@@ -45,47 +45,54 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = context.watch<User?>();
-    if (user == null) return const AdminLogin();
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ClubDropdown(
-            club: _club,
-            clubs: clubs,
-            onChanged: (Club? club) => setState(() => _club = club!),
-          ),
-        ),
-        const Divider(height: 2, thickness: 2, color: Colors.black),
-        Provider.value(
-          value: _club,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: Builder(
+        builder: (context) {
+          Person? user = context.watch<Person?>();
+          if (user == null) return const Center(child: Text("Please log in"));
+          if (user.role != Role.admin) return const Center(child: Text("Unauthorized access"));
+          return ListView(
             children: [
-              Expanded(
-                child: FocusScope(
-                  node: FocusScopeNode(),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ClubEditPage(),
-                  ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ClubDropdown(
+                  club: _club,
+                  clubs: clubs,
+                  onChanged: (Club? club) => setState(() => _club = club!),
                 ),
               ),
-              Expanded(
-                child: FocusScope(
-                  node: FocusScopeNode(),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ReviewEditPage(),
-                  ),
+              const Divider(height: 2, thickness: 2, color: Colors.black),
+              Provider.value(
+                value: _club,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: FocusScope(
+                        node: FocusScopeNode(),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: ClubEditPage(),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: FocusScope(
+                        node: FocusScopeNode(),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: ReviewEditPage(),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              const SizedBox(height: 40)
             ],
-          ),
-        ),
-        const SizedBox(height: 40)
-      ],
+          );
+        },
+      ),
     );
   }
 }
