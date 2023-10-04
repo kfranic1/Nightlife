@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/language.dart';
+import 'package:nightlife/model/person.dart';
 import 'package:nightlife/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/html/seo_controller.dart';
@@ -36,7 +36,7 @@ class Nightlife extends StatelessWidget {
           ChangeNotifierProvider<CustomRouterDelegate>(create: (context) => CustomRouterDelegate()),
           ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
           Provider<AuthService>(create: (context) => AuthService()),
-          StreamProvider<User?>(
+          StreamProvider<Person?>(
             create: (context) => context.read<AuthService>().authStateChanges,
             initialData: null,
           ),
