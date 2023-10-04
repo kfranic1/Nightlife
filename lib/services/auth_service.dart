@@ -1,9 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nightlife/model/person.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Stream<User?> get authStateChanges => _auth.userChanges();
+  Stream<Person?> get authStateChanges => _auth.userChanges().asyncMap((firebaseUser) async {
+        if (firebaseUser != null) {
+          return await Person.person(firebaseUser.uid);
+        } else
+          return null;
+      });
 
   bool get hasUser => _auth.currentUser != null;
 
@@ -12,9 +18,10 @@ class AuthService {
   }
 
   Future<void> signUp({required String email, required String password, required String name}) async {
-    await _auth
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((userCredential) async => await userCredential.user!.updateDisplayName(name));
+    await _auth.createUserWithEmailAndPassword(email: email, password: password).then((userCredential) async {
+      await Person.createPerson(userCredential.user!.uid, name: name);
+      await userCredential.user!.updateDisplayName(name);
+    });
   }
 
   Future<void> signInWithGoogle() async => await _signInWithProvider(GoogleAuthProvider());
