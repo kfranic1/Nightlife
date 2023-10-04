@@ -4,7 +4,7 @@ import 'package:nightlife/pages/profile_page/profile_action_button.dart';
 import 'package:nightlife/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
-import 'input_field.dart';
+import '../input_field.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key, required this.login});
