@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/pages/profile_page/login_page.dart';
-import 'package:nightlife/pages/profile_page/signup_page.dart';
+import 'package:nightlife/pages/profile_page/subpages/login_page.dart';
+import 'package:nightlife/pages/profile_page/subpages/signup_page.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
