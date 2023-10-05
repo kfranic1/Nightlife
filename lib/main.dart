@@ -49,7 +49,7 @@ class Nightlife extends StatelessWidget {
                 if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: primaryColor));
                 return MaterialApp.router(
                   scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
-                  title: 'Nightlife Zagreb',
+                  title: 'Nightlife Zagreb - Find the best clubs in Zagreb',
                   debugShowCheckedModeBanner: false,
                   routeInformationParser: context.read<CustomRouteInformationParser>(),
                   routerDelegate: context.read<CustomRouterDelegate>(),
