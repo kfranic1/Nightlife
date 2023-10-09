@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/model/club.dart';
@@ -6,10 +8,11 @@ import 'package:nightlife/pages/club_page/club_page.dart';
 import 'package:nightlife/pages/error_page.dart';
 import 'package:nightlife/pages/home_page.dart';
 import 'package:nightlife/pages/profile_page/profile_page.dart';
+import 'package:nightlife/pages/profile_page/subpages/login_page.dart';
+import 'package:nightlife/pages/profile_page/subpages/signup_page.dart';
 import 'package:nightlife/routing/configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 import 'package:provider/provider.dart';
-
 
 class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNotifier, PopNavigatorRouterDelegateMixin<Configuration> implements Routes {
   Configuration _configuration = Configuration.home();
@@ -44,6 +47,10 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
               );
             },
           ))
+        else if (_configuration.isLogin)
+          const MaterialPage(child: LoginPage())
+        else if (_configuration.isSignup)
+          const MaterialPage(child: SignUpPage())
         else
           const MaterialPage(child: ErrorPage())
       ],
@@ -72,4 +79,12 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
 
   @override
   void goToProfile() => setNewRoutePath(Configuration.other(Routes.profile));
+
+  @override
+  void goToLogin() => setNewRoutePath(Configuration.login());
+
+  @override
+  void goToSignup() => setNewRoutePath(Configuration.signup());
+
+  void goBack() => html.window.history.back();
 }

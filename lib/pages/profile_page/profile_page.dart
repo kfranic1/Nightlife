@@ -1,7 +1,7 @@
 import 'package:flag/flag_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/model/person.dart';
-import 'package:nightlife/pages/profile_page/subpages/auth_page.dart';
+import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/services/auth_service.dart';
 import 'package:nightlife/widgets/language_icon_button.dart';
 import 'package:provider/provider.dart';
@@ -14,11 +14,16 @@ class ProfilePage extends StatelessWidget {
     Person? user = context.watch<Person?>();
     return Scaffold(
       body: Builder(builder: (context) {
-        if (user == null) return const AuthPage();
         return Center(
           child: Column(
             children: [
-              Text(user.name),
+              if (user != null)
+                Text(user.name)
+              else
+                TextButton(
+                  onPressed: () => context.read<CustomRouterDelegate>().goToLogin(),
+                  child: const Text("Log in"),
+                ),
               if (context.read<AuthService>().hasUser)
                 IconButton(
                   onPressed: () => context.read<AuthService>().signOut(),
