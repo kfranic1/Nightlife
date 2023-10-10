@@ -27,4 +27,8 @@ class Person {
   static Future createPerson(String uid, {required String name, Role role = Role.user}) async {
     await FirestoreService.userCollection.doc(uid).set({'name': name, 'role': role.name, 'favourites': []});
   }
+
+  Future updateName(String newName) async{
+    await FirestoreService.userCollection.doc(id).update({"name" : newName});
+  }
 }
