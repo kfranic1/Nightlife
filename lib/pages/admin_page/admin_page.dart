@@ -32,6 +32,7 @@ class _AdminPageState extends State<AdminPage> {
     reviewData: null,
     imageUrl: '',
     workHours: {for (var element in DayOfWeek.values) element: WorkDay(hours: '', typeOfMusic: [])},
+    favoriteCount: 0,
   );
 
   late List<Club> clubs;

@@ -6,7 +6,7 @@ class AuthService {
 
   Stream<Person?> get authStateChanges => _auth.userChanges().asyncMap((firebaseUser) async {
         if (firebaseUser != null) {
-          return await Person.person(firebaseUser.uid);
+          return await Person(firebaseUser.uid).self();
         } else
           return null;
       });
