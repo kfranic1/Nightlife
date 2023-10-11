@@ -19,12 +19,15 @@ class Club {
   Map<SocialMedia, String?> socialMedia;
   ReviewData? _reviewData;
   Map<DayOfWeek, WorkDay> workHours;
+  int favoriteCount;
 
   bool get hasReview => _reviewData != null;
   double get score => _reviewData == null ? 0 : _reviewData!.score;
   DateTime? get reviewDate => _reviewData?.date;
 
   List<TypeOfMusic> get typeOfMusic => workHours.values.map((value) => value.typeOfMusic).toList().expand((element) => element).toSet().toList();
+
+  DocumentReference get clubReference => FirestoreService.clubCollection.doc(id);
 
   Club({
     required this.id,
@@ -37,6 +40,7 @@ class Club {
     required ReviewData? reviewData,
     required this.imageUrl,
     required this.workHours,
+    required this.favoriteCount,
   }) : _reviewData = reviewData;
 
   // Convert a Club object into a Map to store in Firestore
@@ -51,6 +55,7 @@ class Club {
       'reviewData': _reviewData == null ? null : _reviewData!.toMap(),
       'imageUrl': imageUrl,
       'workHours': workHours.map((key, value) => MapEntry(key.name, value.toMap())),
+      'favoriteCount': favoriteCount,
     };
   }
 
@@ -77,6 +82,7 @@ class Club {
             DayOfWeek.values.firstWhere((element) => element.name == key),
             WorkDay.fromMap(value),
           )),
+      favoriteCount: data['favoriteCount'],
     );
   }
 
