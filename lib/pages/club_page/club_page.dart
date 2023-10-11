@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nested_scroll_views/material.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/model/club.dart';
@@ -11,6 +10,7 @@ import 'package:nightlife/pages/club_page/club_subpages/review_display.dart';
 import 'package:nightlife/pages/club_page/social_media_links.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_image.dart';
+import 'package:nightlife/widgets/club_like_button.dart';
 import 'package:nightlife/widgets/seo_text.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
@@ -55,12 +55,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
               color: Colors.black,
             ),
           ),
-          actions: const [
-            IconButton(
-              icon: Icon(FontAwesomeIcons.heart),
-              onPressed: null,
-            )
-          ],
+          actions: [ClubLikeButton(club: club)],
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -107,10 +102,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
 }
 
 class TabBarElement extends StatelessWidget {
-  const TabBarElement(
-    this.text, {
-    super.key,
-  });
+  const TabBarElement(this.text, {super.key});
 
   final String text;
 
