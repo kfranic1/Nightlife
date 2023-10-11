@@ -86,5 +86,13 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   @override
   void goToSignup() => setNewRoutePath(Configuration.signup());
 
-  void goBack() => html.window.history.back();
+  void goBack() {
+    html.window.history.back();
+    _configurationsStack.removeLast();
+  }
+
+  void handleLogin() {
+    while (_configurationsStack.last.isLogin || _configurationsStack.last.isSignup) goBack();
+    goToProfile();
+  }
 }
