@@ -8,7 +8,7 @@ class ProfileActionButton extends StatelessWidget {
   final Icon? icon;
   final Text? label;
   final Color backgroundColor;
-  final void Function()? action;
+  final Future<String?> Function() action;
   final double width;
 
   @override
@@ -16,7 +16,14 @@ class ProfileActionButton extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: action,
+        onTap: () async {
+          String? message = await action();
+          if (message != null && context.mounted)
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 2),
+            ));
+        },
         child: Container(
           width: width,
           height: 40,
