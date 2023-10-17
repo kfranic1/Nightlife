@@ -1,96 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/role.dart';
-import 'package:nightlife/enums/social_media.dart';
+import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/person.dart';
-import 'package:nightlife/model/work_day.dart';
-import 'package:nightlife/pages/admin_page/review_page/review_edit_page.dart';
+import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:provider/provider.dart';
 
-import '../../enums/contact.dart';
-import '../../helpers/club_list.dart';
-import '../../model/club.dart';
-import '../../widgets/club_dropdown.dart';
 import 'club_edit_page.dart';
 
-class AdminPage extends StatefulWidget {
+class AdminPage extends StatelessWidget {
   const AdminPage({super.key});
-
-  @override
-  State<AdminPage> createState() => _AdminPageState();
-}
-
-class _AdminPageState extends State<AdminPage> {
-  Club _club = Club(
-    id: '',
-    name: 'New Club',
-    descriptionHr: '',
-    descriptionEn: '',
-    location: '',
-    contacts: {for (var element in Contact.values) element: null},
-    socialMedia: {for (var element in SocialMedia.values) element: null},
-    reviewData: null,
-    imageUrl: '',
-    workHours: {for (var element in DayOfWeek.values) element: WorkDay(hours: '', typeOfMusic: [])},
-    favoriteCount: 0,
-  );
-
-  late List<Club> clubs;
-  @override
-  void initState() {
-    super.initState();
-    clubs = List.from(context.read<ClubList>().clubs);
-    clubs.sort((a, b) => a.name.compareTo(b.name));
-    clubs.add(_club);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.read<CustomRouterDelegate>().goBack(),
+          color: Colors.black,
+          splashRadius: 0.1,
+        ),
+        title: Text(
+          context.read<Club>().name,
+          style: const TextStyle(color: Colors.black),
+        ),
+      ),
       body: Builder(
         builder: (context) {
           Person? user = context.watch<Person?>();
           if (user == null) return const Center(child: Text("Please log in"));
           if (user.role != Role.admin) return const Center(child: Text("Unauthorized access"));
-          return ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClubDropdown(
-                  club: _club,
-                  clubs: clubs,
-                  onChanged: (Club? club) => setState(() => _club = club!),
-                ),
-              ),
-              const Divider(height: 2, thickness: 2, color: Colors.black),
-              Provider.value(
-                value: _club,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: FocusScope(
-                        node: FocusScopeNode(),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: ClubEditPage(),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: FocusScope(
-                        node: FocusScopeNode(),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: ReviewEditPage(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 40)
-            ],
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: ClubEditPage(),
           );
         },
       ),

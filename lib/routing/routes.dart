@@ -11,4 +11,5 @@ abstract class Routes {
   void goToProfile() {}
   void goToLogin(){}
   void goToSignup(){}
+  void goToAdmin(String clubName){}
 }
