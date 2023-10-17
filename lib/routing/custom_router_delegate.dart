@@ -1,72 +1,35 @@
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/club_list.dart';
-import 'package:nightlife/model/club.dart';
-import 'package:nightlife/pages/admin_page/admin_page.dart';
-import 'package:nightlife/pages/club_page/club_page.dart';
-import 'package:nightlife/pages/error_page.dart';
-import 'package:nightlife/pages/home_page.dart';
-import 'package:nightlife/pages/profile_page/profile_page.dart';
-import 'package:nightlife/pages/profile_page/subpages/login_page.dart';
-import 'package:nightlife/pages/profile_page/subpages/signup_page.dart';
-import 'package:nightlife/routing/configuraiton.dart';
+import 'package:nightlife/routing/route_configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
-import 'package:provider/provider.dart';
 
-class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNotifier, PopNavigatorRouterDelegateMixin<Configuration> implements Routes {
-  Configuration _configuration = Configuration.home();
+import 'configurations/admin_configuration.dart';
+import 'configurations/club_configuration.dart';
+import 'configurations/home_configuration.dart';
+import 'configurations/login_configuration.dart';
+import 'configurations/profile_configuration.dart';
+import 'configurations/signup_configuration.dart';
 
+class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteConfiguration>
+    implements Routes {
   @override
   GlobalKey<NavigatorState> get navigatorKey => GlobalKey<NavigatorState>();
 
   @override
-  Configuration get currentConfiguration => _configuration;
+  RouteConfiguration get currentConfiguration => _configurationsStack.last;
 
-  final List<Configuration> _configurationsStack = [Configuration.home()];
+  final List<RouteConfiguration> _configurationsStack = [HomeConfiguration()];
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
-      pages: [
-        if (_configuration.isHomePage)
-          const MaterialPage(child: HomePage())
-        else if (_configuration.isAdmin)
-          MaterialPage(child: Builder(
-            builder: (context) {
-              Club? club = context.read<ClubList>().findClubByName(_configuration.info!);
-              if (club == null) return const ErrorPage();
-              return Provider.value(
-                value: club,
-                child: const AdminPage(),
-              );
-            },
-          ))
-        else if (_configuration.isProfile)
-          const MaterialPage(child: ProfilePage())
-        else if (_configuration.isClub)
-          MaterialPage(child: Builder(
-            builder: (context) {
-              Club? club = context.read<ClubList>().findClubByName(_configuration.info!);
-              if (club == null) return const ErrorPage();
-              return Provider.value(
-                value: club,
-                child: const ClubPage(),
-              );
-            },
-          ))
-        else if (_configuration.isLogin)
-          const MaterialPage(child: LoginPage())
-        else if (_configuration.isSignup)
-          const MaterialPage(child: SignUpPage())
-        else
-          const MaterialPage(child: ErrorPage())
-      ],
+      pages: [currentConfiguration.page(context)],
       onPopPage: (route, result) {
         if (!route.didPop(result)) return false;
         if (_configurationsStack.length > 1) _configurationsStack.removeLast();
-        _configuration = _configurationsStack.last;
         notifyListeners();
         return true;
       },
@@ -74,36 +37,31 @@ class CustomRouterDelegate extends RouterDelegate<Configuration> with ChangeNoti
   }
 
   @override
-  Future<void> setNewRoutePath(Configuration configuration) async {
+  Future<void> setNewRoutePath(RouteConfiguration configuration) async {
     _configurationsStack.add(configuration);
-    _configuration = configuration;
     notifyListeners();
   }
 
   @override
-  void goToHome() => setNewRoutePath(Configuration.home());
+  void goToHome() => setNewRoutePath(HomeConfiguration());
 
   @override
-  void goToClub(String clubName) => setNewRoutePath(Configuration.club(clubName));
-  @override
-  void goToAdmin(String clubName) => setNewRoutePath(Configuration.admin(clubName));
+  void goToClub(String clubName) => setNewRoutePath(ClubConfiguration(clubName));
 
   @override
-  void goToProfile() => setNewRoutePath(Configuration.profile());
+  void goToAdmin(String clubName) => setNewRoutePath(AdminConfiguration(clubName));
 
   @override
-  void goToLogin() => setNewRoutePath(Configuration.login());
+  void goToProfile() => setNewRoutePath(ProfileConfiguration());
 
   @override
-  void goToSignup() => setNewRoutePath(Configuration.signup());
+  void goToLogin() => setNewRoutePath(LoginConfiguration());
+
+  @override
+  void goToSignup() => setNewRoutePath(SignupConfiguration());
 
   void goBack() {
     html.window.history.back();
     _configurationsStack.removeLast();
-  }
-
-  void handleLogin() {
-    while (_configurationsStack.last.isLogin || _configurationsStack.last.isSignup) goBack();
-    goToProfile();
   }
 }
