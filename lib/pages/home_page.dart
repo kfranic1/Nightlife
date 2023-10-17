@@ -3,6 +3,7 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
+import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -37,14 +38,21 @@ class HomePage extends StatelessWidget {
             height: 1.0,
           ),
         ),
-        actions: const [
+        actions: [
           IconButton(
+            onPressed: () => context.read<CustomRouterDelegate>().goToProfile(),
+            icon: const Icon(
+              Icons.person,
+              color: Colors.black,
+            ),
+          ),
+          const IconButton(
             onPressed: null,
-            icon: Icon(
+            icon: FaIcon(
               FontAwesomeIcons.instagram,
               color: Colors.black,
             ),
-          )
+          ),
         ],
       ),
       body: Padding(
