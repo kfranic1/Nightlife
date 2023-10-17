@@ -42,7 +42,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => context.read<CustomRouterDelegate>().goToHome(),
+            onPressed: () => context.read<CustomRouterDelegate>().goBack(),
             color: Colors.black,
             splashRadius: 0.1,
           ),

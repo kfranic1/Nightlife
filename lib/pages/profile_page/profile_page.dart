@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.read<CustomRouterDelegate>().goBack(),
+          onPressed: () => context.read<CustomRouterDelegate>().goToHome(),
           color: Colors.black,
           splashRadius: 0.1,
         ),
