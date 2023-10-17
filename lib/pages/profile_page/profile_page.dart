@@ -1,5 +1,7 @@
 import 'package:flag/flag_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:nightlife/enums/role.dart';
+import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/model/person.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/services/auth_service.dart';
@@ -58,6 +60,14 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             const Expanded(child: SizedBox()),
+            if (user?.role == Role.admin)
+              ElevatedButton(
+                onPressed: () => context
+                    .read<CustomRouterDelegate>()
+                    .goToAdmin(context.read<ClubList>().clubs.firstWhere((element) => element.id == user!.adminAccess).name),
+                child: const Text("Admin Panel"),
+              ),
+            const SizedBox(height: 20),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -6,11 +6,12 @@ class Person {
   String id;
   late String name;
   late Role role;
+  late String? adminAccess;
   late Set<String> favourites;
 
   Person(this.id);
 
-  Person._complete(this.id, {required this.name, required this.role, required this.favourites});
+  Person._complete(this.id, {required this.name, required this.role, required this.favourites, required this.adminAccess});
 
   DocumentReference get personReference => FirestoreService.userCollection.doc(id);
 
@@ -21,6 +22,7 @@ class Person {
       name: data['name'],
       role: Role.values.firstWhere((element) => element.name == data['role']),
       favourites: Set<String>.from(data['favourites']),
+      adminAccess: data['adminAccess'],
     );
   }
 

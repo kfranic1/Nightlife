@@ -8,9 +8,11 @@ class Configuration {
       : path = null,
         info = null;
 
-  Configuration.other(this.path) : info = null;
+  Configuration.profile() : path = Routes.profile, info = null;
 
   Configuration.club(this.info) : path = Routes.club;
+
+  Configuration.admin(this.info) : path = Routes.admin;
 
   Configuration.login()
       : path = Routes.login,
