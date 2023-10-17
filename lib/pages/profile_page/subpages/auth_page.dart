@@ -57,7 +57,7 @@ class _AuthPageState extends State<AuthPage> {
           stream: auth.authStateChanges,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) => router.handleLogin());
+              WidgetsBinding.instance.addPostFrameCallback((_) => router.goToProfile());
               return const SizedBox.shrink();
             }
             return Center(
