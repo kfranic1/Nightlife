@@ -32,7 +32,6 @@ class Nightlife extends StatelessWidget {
       tree: WidgetTree(context: context),
       child: MultiProvider(
         providers: [
-          Provider<CustomRouteInformationParser>(create: (context) => CustomRouteInformationParser()),
           ChangeNotifierProvider<CustomRouterDelegate>(create: (context) => CustomRouterDelegate()),
           ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
           Provider<AuthService>(create: (context) => AuthService()),
@@ -51,7 +50,7 @@ class Nightlife extends StatelessWidget {
                   scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
                   title: 'Nightlife Zagreb - Find the best clubs in Zagreb',
                   debugShowCheckedModeBanner: false,
-                  routeInformationParser: context.read<CustomRouteInformationParser>(),
+                  routeInformationParser: CustomRouteInformationParser(),
                   routerDelegate: context.read<CustomRouterDelegate>(),
                   backButtonDispatcher: RootBackButtonDispatcher(),
                   theme: ThemeData(
