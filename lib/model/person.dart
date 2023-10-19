@@ -22,7 +22,7 @@ class Person {
       doc.id,
       name: data['name'],
       favourites: Set<String>.from(data['favourites']),
-      adminData: AdminData.fromMap(data['adminData']),
+      adminData: data['adminData'] == null ? null : AdminData.fromMap(data['adminData']),
     );
   }
 
