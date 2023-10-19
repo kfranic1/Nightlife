@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/enums/role.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/person.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
@@ -12,6 +11,7 @@ class AdminPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Club club = context.read<Club>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -21,7 +21,7 @@ class AdminPage extends StatelessWidget {
           splashRadius: 0.1,
         ),
         title: Text(
-          context.read<Club>().name,
+          club.name,
           style: const TextStyle(color: Colors.black),
         ),
       ),
@@ -29,7 +29,8 @@ class AdminPage extends StatelessWidget {
         builder: (context) {
           Person? user = context.watch<Person?>();
           if (user == null) return const Center(child: Text("Please log in"));
-          if (user.role != Role.admin) return const Center(child: Text("Unauthorized access"));
+          if (!user.isAdmin) return const Center(child: Text("Unauthorized access"));
+          if (user.adminData!.clubId != club.id) return const Center(child: Text("You do not have access to this club"));
           return const Padding(
             padding: EdgeInsets.all(8.0),
             child: ClubEditPage(),
