@@ -40,13 +40,14 @@ class _UsernameState extends State<Username> {
           style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           decoration: const InputDecoration(border: InputBorder.none),
         ),
-        ElevatedButton(
-          onPressed: () async {
-            if (_isEditing) await user.updateName(_controller.text);
-            setState(() => _isEditing = !_isEditing);
-          },
-          child: Text(_isEditing ? 'Save' : 'Edit'),
-        )
+        if (user.adminData == null)
+          ElevatedButton(
+            onPressed: () async {
+              if (_isEditing) await user.updateName(_controller.text);
+              setState(() => _isEditing = !_isEditing);
+            },
+            child: Text(_isEditing ? 'Save' : 'Edit'),
+          )
       ],
     );
   }

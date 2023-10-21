@@ -12,6 +12,7 @@ import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_image.dart';
 import 'package:nightlife/widgets/club_like_button.dart';
 import 'package:nightlife/widgets/seo_text.dart';
+import 'package:nightlife/widgets/tab_bar_element.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
 
@@ -95,25 +96,6 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
               const SocialMediaLinks(),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class TabBarElement extends StatelessWidget {
-  const TabBarElement(this.text, {super.key});
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      child: Center(
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 12),
         ),
       ),
     );
