@@ -3,9 +3,9 @@ import 'package:nightlife/enums/contact.dart';
 import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/enums/type_of_music.dart';
+import 'package:nightlife/helpers/collections_list.dart';
 import 'package:nightlife/model/review_data.dart';
 import 'package:nightlife/model/work_day.dart';
-import 'package:nightlife/services/firestore_service.dart';
 
 class Club {
   String id;
@@ -25,8 +25,6 @@ class Club {
   DateTime? get reviewDate => _reviewData?.date;
 
   List<TypeOfMusic> get typeOfMusic => workHours.values.map((value) => value.typeOfMusic).toList().expand((element) => element).toSet().toList();
-
-  DocumentReference get clubReference => FirestoreService.clubCollection.doc(id);
 
   Club({
     required this.id,
@@ -86,15 +84,19 @@ class Club {
   }
 
   static Future<void> createClub(Club club) async {
-    await FirestoreService.clubCollection.add(club.toMap());
+    await CollectionList.clubCollection.add(club.toMap());
   }
 
   static Future<void> updateClub(Club club) async {
-    await FirestoreService.clubCollection.doc(club.id).update(club.toMap());
+    await CollectionList.clubCollection.doc(club.id).update(club.toMap());
   }
 
   static Future<Club> getClub(String clubId) async {
-    DocumentSnapshot doc = await FirestoreService.clubCollection.doc(clubId).get();
+    DocumentSnapshot doc = await CollectionList.clubCollection.doc(clubId).get();
     return Club.fromDocument(doc);
+  }
+
+  static Future<List<Club>> getClubs() async {
+    return (await CollectionList.clubCollection.get().then((value) => value.docs.map((e) => Club.fromDocument((e))))).toList();
   }
 }
