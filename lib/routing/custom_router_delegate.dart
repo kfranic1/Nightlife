@@ -1,15 +1,15 @@
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
+import 'package:nightlife/routing/configurations/admin_configuration.dart';
+import 'package:nightlife/routing/configurations/club_configuration.dart';
+import 'package:nightlife/routing/configurations/home_configuration.dart';
+import 'package:nightlife/routing/configurations/login_configuration.dart';
+import 'package:nightlife/routing/configurations/profile_configuration.dart';
+import 'package:nightlife/routing/configurations/signup_configuration.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 
-import 'configurations/admin_configuration.dart';
-import 'configurations/club_configuration.dart';
-import 'configurations/home_configuration.dart';
-import 'configurations/login_configuration.dart';
-import 'configurations/profile_configuration.dart';
-import 'configurations/signup_configuration.dart';
 
 class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteConfiguration>

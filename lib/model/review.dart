@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nightlife/enums/aspect.dart';
+import 'package:nightlife/model/aspect_review.dart';
 import 'package:nightlife/model/review_data.dart';
 import 'package:nightlife/services/firestore_service.dart';
-
-import '../enums/aspect.dart';
-import 'aspect_review.dart';
 
 class Review {
   String clubId;
