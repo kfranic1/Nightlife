@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../enums/contact.dart';
+import 'package:nightlife/enums/contact.dart';
 
 extension ContactExtension on Contact {
   IconData get icon {

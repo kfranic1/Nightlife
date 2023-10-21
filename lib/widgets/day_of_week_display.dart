@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
+import 'package:nightlife/model/work_day.dart';
 
-import '../model/work_day.dart';
 
 class DayOfWeekDisplay extends StatelessWidget {
   const DayOfWeekDisplay({

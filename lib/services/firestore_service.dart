@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../model/club.dart';
+import 'package:nightlife/model/club.dart';
 
 abstract class FirestoreService {
   static CollectionReference<Map<String, dynamic>> clubCollection = FirebaseFirestore.instance.collection("clubs");

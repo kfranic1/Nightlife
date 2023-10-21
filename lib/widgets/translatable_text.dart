@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nightlife/language.dart';
 import 'package:provider/provider.dart';
 
-import '../language.dart';
 
 class TranslatableText extends StatelessWidget {
   final String textHr;

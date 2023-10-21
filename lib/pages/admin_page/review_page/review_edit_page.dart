@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
+import 'package:nightlife/helpers/constants.dart';
+import 'package:nightlife/model/club.dart';
+import 'package:nightlife/model/review.dart';
+import 'package:nightlife/pages/admin_page/form_button.dart';
+import 'package:nightlife/pages/admin_page/review_page/review_field.dart';
 import 'package:provider/provider.dart';
-
-import '../../../helpers/constants.dart';
-import '../../../model/club.dart';
-import '../../../model/review.dart';
-import '../form_button.dart';
-import 'review_field.dart';
 
 class ReviewEditPage extends StatefulWidget {
   const ReviewEditPage({super.key});
