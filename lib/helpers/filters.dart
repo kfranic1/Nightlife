@@ -1,4 +1,4 @@
-import '../model/club.dart';
+import 'package:nightlife/model/club.dart';
 
 abstract class BaseFilter {
   String get name;

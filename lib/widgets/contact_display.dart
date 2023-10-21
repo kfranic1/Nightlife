@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nightlife/enums/contact.dart';
 import 'package:nightlife/extensions/contact_extension.dart';
+import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../enums/contact.dart';
-import '../helpers/decorated_container.dart';
 
 class ContactDisplay extends StatelessWidget {
   const ContactDisplay({super.key, required this.data, required this.contact});

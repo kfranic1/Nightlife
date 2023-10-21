@@ -1,5 +1,5 @@
-import '../helpers/constants.dart';
-import '../model/review.dart';
+import 'package:nightlife/helpers/constants.dart';
+import 'package:nightlife/model/review.dart';
 
 extension ReviewExtension on Review? {
   String get reviewDateDescription {

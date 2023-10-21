@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/enums/role.dart';
 import 'package:nightlife/model/administration.dart';
 import 'package:nightlife/model/club.dart';
+import 'package:nightlife/model/user_info.dart';
 import 'package:nightlife/widgets/add_member.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/user_info.dart';
 
 class AdministrationPage extends StatefulWidget {
   const AdministrationPage({super.key});

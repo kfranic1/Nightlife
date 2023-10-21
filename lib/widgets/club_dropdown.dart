@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/decorated_container.dart';
-
-import '../model/club.dart';
+import 'package:nightlife/model/club.dart';
 
 class ClubDropdown extends StatelessWidget {
   const ClubDropdown({

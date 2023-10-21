@@ -5,9 +5,8 @@ import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_tile.dart';
+import 'package:nightlife/widgets/filter.dart';
 import 'package:provider/provider.dart';
-
-import '../widgets/filter.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

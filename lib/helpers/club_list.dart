@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/helpers/filters.dart';
+import 'package:nightlife/model/club.dart';
 import 'package:nightlife/services/firestore_service.dart';
-
-import '../enums/type_of_music.dart';
-import '../model/club.dart';
 
 class ClubList extends ChangeNotifier {
   List<Club> _clubs = [];
