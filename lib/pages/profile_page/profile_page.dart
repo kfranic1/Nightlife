@@ -59,7 +59,7 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             const Expanded(child: SizedBox()),
-            if (user != null && user.isAdmin)
+            if (user != null && user.hasAdminAccess)
               ElevatedButton(
                 onPressed: () => context
                     .read<CustomRouterDelegate>()

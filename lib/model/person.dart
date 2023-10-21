@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nightlife/enums/role.dart';
 import 'package:nightlife/model/admin_data.dart';
 import 'package:nightlife/services/firestore_service.dart';
 
@@ -8,7 +9,8 @@ class Person {
   late AdminData? adminData;
   late Set<String> favourites;
 
-  bool get isAdmin => adminData != null;
+  bool get hasAdminAccess => adminData != null;
+  bool get isAdmin => hasAdminAccess && adminData!.role == Role.admin;
 
   Person(this.id);
 
@@ -38,5 +40,9 @@ class Person {
 
   Future updateName(String newName) async {
     await personReference.update({"name": newName});
+  }
+
+  static Future<Person?> tryGet(String id) async {
+    return await FirestoreService.userCollection.doc(id).get().then((value) => !value.exists ? null : Person.fromDoc(value));
   }
 }
