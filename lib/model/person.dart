@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/role.dart';
+import 'package:nightlife/helpers/collections_list.dart';
 import 'package:nightlife/model/admin_data.dart';
-import 'package:nightlife/services/firestore_service.dart';
 
 class Person {
   String id;
@@ -16,8 +16,6 @@ class Person {
 
   Person._complete(this.id, {required this.name, required this.adminData, required this.favourites});
 
-  DocumentReference get personReference => FirestoreService.userCollection.doc(id);
-
   factory Person.fromDoc(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Person._complete(
@@ -28,10 +26,10 @@ class Person {
     );
   }
 
-  Future<Person> self() => personReference.get().then((value) => Person.fromDoc(value));
+  Future<Person> self() => CollectionList.userCollection.doc(id).get().then((value) => Person.fromDoc(value));
 
   static Future createPerson(String uid, {required String name, AdminData? adminData}) async {
-    await FirestoreService.userCollection.doc(uid).set({
+    await CollectionList.userCollection.doc(uid).set({
       'name': name,
       'favourites': [],
       "adminData": adminData,
@@ -39,10 +37,10 @@ class Person {
   }
 
   Future updateName(String newName) async {
-    await personReference.update({"name": newName});
+    await CollectionList.userCollection.doc(id).update({"name": newName});
   }
 
   static Future<Person?> tryGet(String id) async {
-    return await FirestoreService.userCollection.doc(id).get().then((value) => !value.exists ? null : Person.fromDoc(value));
+    return await CollectionList.userCollection.doc(id).get().then((value) => !value.exists ? null : Person.fromDoc(value));
   }
 }

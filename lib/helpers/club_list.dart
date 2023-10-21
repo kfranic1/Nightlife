@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/helpers/filters.dart';
 import 'package:nightlife/model/club.dart';
-import 'package:nightlife/services/firestore_service.dart';
 
 class ClubList extends ChangeNotifier {
   List<Club> _clubs = [];
@@ -13,7 +12,7 @@ class ClubList extends ChangeNotifier {
   BaseFilter _filter = BaseFilter.filters.first;
 
   Future setup() async {
-    await FirestoreService.getClubs().then((value) {
+    await Club.getClubs().then((value) {
       _clubs = value;
       _clubs.shuffle();
       _filteredClubs = List.from(_clubs);

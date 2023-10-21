@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/aspect.dart';
+import 'package:nightlife/helpers/collections_list.dart';
 import 'package:nightlife/model/aspect_review.dart';
 import 'package:nightlife/model/review_data.dart';
-import 'package:nightlife/services/firestore_service.dart';
 
 class Review {
   String clubId;
@@ -46,13 +46,16 @@ class Review {
   }
 
   Future<void> setReview() async {
-    await FirestoreService.reviewCollection.doc(clubId).set(toMap());
-    await FirestoreService.clubCollection.doc(clubId).update({'reviewData': ReviewData(score, date).toMap()});
+    await FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.set(CollectionList.reviewCollection.doc(clubId), toMap());
+      transaction.update(CollectionList.clubCollection.doc(clubId), {'reviewData': ReviewData(score, date).toMap()});
+    }).catchError((error) {
+      print("Transaction failed: $error");
+    });
   }
 
   static Future<Review> getReview(String reviewId) async {
     //Consider caching
-    DocumentSnapshot doc = await FirestoreService.reviewCollection.doc(reviewId).get();
-    return Review.fromDocument(doc);
+    return Review.fromDocument(await CollectionList.reviewCollection.doc(reviewId).get());
   }
 }
