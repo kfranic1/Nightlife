@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/person.dart';
+import 'package:nightlife/pages/admin_page/administration_page.dart';
+import 'package:nightlife/pages/admin_page/club_edit_page.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
+import 'package:nightlife/services/auth_service.dart';
+import 'package:nightlife/widgets/tab_bar_element.dart';
 import 'package:provider/provider.dart';
 
-import 'club_edit_page.dart';
-
-class AdminPage extends StatelessWidget {
+class AdminPage extends StatefulWidget {
   const AdminPage({super.key});
+
+  @override
+  State<AdminPage> createState() => _AdminPageState();
+}
+
+class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
+  late TabController tabController;
 
   @override
   Widget build(BuildContext context) {
     Club club = context.read<Club>();
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => context.read<CustomRouterDelegate>().goBack(),
@@ -21,19 +32,62 @@ class AdminPage extends StatelessWidget {
           splashRadius: 0.1,
         ),
         title: Text(
-          club.name,
+          "${club.name} - Dashboard",
           style: const TextStyle(color: Colors.black),
         ),
       ),
-      body: Builder(
-        builder: (context) {
-          Person? user = context.watch<Person?>();
+      body: StreamBuilder<Person?>(
+        stream: context.read<AuthService>().authStateChanges,
+        builder: (context, snapshot) {
+          Person? user = snapshot.data;
           if (user == null) return const Center(child: Text("Please log in"));
-          if (!user.isAdmin) return const Center(child: Text("Unauthorized access"));
+          if (!user.hasAdminAccess) return const Center(child: Text("Unauthorized access"));
           if (user.adminData!.clubId != club.id) return const Center(child: Text("You do not have access to this club"));
-          return const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ClubEditPage(),
+
+          List<TabBarElement> tabs = [];
+          List<Widget> tabViews = [];
+
+          tabs.add(const TabBarElement("Reservations"));
+          tabViews.add(const SizedBox());
+
+          if (user.isAdmin) {
+            tabs.addAll([
+              const TabBarElement("Organization"),
+              const TabBarElement("Club Data Edit"),
+            ]);
+            tabViews.addAll(const [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: AdministrationPage(),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ClubEditPage(),
+              ),
+            ]);
+          }
+
+          tabController = TabController(length: tabs.length, vsync: this);
+
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                TabBar(
+                  controller: tabController,
+                  labelPadding: EdgeInsets.zero,
+                  unselectedLabelColor: Colors.black,
+                  labelColor: primaryColor,
+                  tabs: tabs,
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: tabViews,
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),
