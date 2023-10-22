@@ -37,11 +37,10 @@ class _AddMemberState extends State<AddMember> {
             decoration: InputDecoration(
               labelText: "user id",
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-              suffix: loadingMember
-                  ? const LinearProgressIndicator()
-                  : TextButton(
-                      child: const Text("Load"),
-                      onPressed: () async {
+              suffix: TextButton(
+                onPressed: loadingMember
+                    ? null
+                    : () async {
                         if (_key.currentState?.validate() == false) return;
                         setState(() => loadingMember = true);
                         member = await Person.tryGet(_controller.text);
@@ -52,12 +51,13 @@ class _AddMemberState extends State<AddMember> {
                           ));
                         setState(() => loadingMember = false);
                       },
-                    ),
+                child: const Text("Load"),
+              ),
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value!.isEmpty) return "ID can't be empty";
-              if (administration.members.containsKey(value)) return "This user is already added.";
+              if (administration.members.contains(value)) return "This user is already added.";
               return null;
             },
           ),
@@ -74,20 +74,36 @@ class _AddMemberState extends State<AddMember> {
             ),
           ),
           if (member != null)
-            Row(
-              children: [
-                Text(member!.name),
-                TextButton(
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
                   onPressed: () {
-                    administration.addMember(member!, context.read<Club>(), role);
+                    administration.addMember(
+                      userId: member!.id,
+                      clubId: context.read<Club>().id,
+                      clubName: context.read<Club>().name,
+                      role: role,
+                    );
                     setState(() {
                       member = null;
                       _controller.clear();
                     });
                   },
-                  child: const Text("Add member"),
-                )
-              ],
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        const TextSpan(text: "Add member "),
+                        TextSpan(text: member!.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                        const TextSpan(text: "\nwith role "),
+                        TextSpan(text: role.toString(), style: const TextStyle(fontWeight: FontWeight.bold)),
+                      ],
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
             ),
         ],
       ),

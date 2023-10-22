@@ -2,13 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nightlife/enums/role.dart';
 import 'package:nightlife/helpers/collections_list.dart';
 import 'package:nightlife/model/admin_data.dart';
-import 'package:nightlife/model/club.dart';
-import 'package:nightlife/model/person.dart';
-import 'package:nightlife/model/user_info.dart';
 
 class Administration {
   late final String administrationId;
-  late final Map<String, UserInfo> members;
+  late final List<String> members;
 
   Administration(this.administrationId);
 
@@ -17,27 +14,20 @@ class Administration {
   Administration.fromDocument(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     administrationId = doc.id;
-    members = (data['members'] as Map<String, dynamic>).map((key, value) => MapEntry(key, UserInfo.fromMap(value)));
+    members = List<String>.from(data['members']);
   }
 
-  static Future<Administration> getAdministration(String administrationId) async {
-    return Administration.fromDocument(await CollectionList.administrationCollection.doc(administrationId).get());
-  }
-
-  Future<void> addMember(Person person, Club club, Role role) async {
+  Future<void> addMember({required String userId, required String clubId, required String clubName, required Role role}) async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.update(CollectionList.administrationCollection.doc(administrationId), {
-        "members.${person.id}": UserInfo(
-          username: person.name,
-          role: role,
-        ).toMap()
+        "members": FieldValue.arrayUnion([userId])
       });
 
-      transaction.update(CollectionList.userCollection.doc(person.id), {
+      transaction.update(CollectionList.userCollection.doc(userId), {
         'adminData': AdminData(
           role: role,
-          clubId: club.id,
-          clubName: club.name,
+          clubId: clubId,
+          clubName: clubName,
         ).toMap()
       });
     });
@@ -45,7 +35,9 @@ class Administration {
 
   Future<void> removeMember(String userId) async {
     await FirebaseFirestore.instance.runTransaction((transaction) async {
-      transaction.update(CollectionList.administrationCollection.doc(administrationId), {"members.$userId": FieldValue.delete()});
+      transaction.update(CollectionList.administrationCollection.doc(administrationId), {
+        "members": FieldValue.arrayRemove([userId])
+      });
       transaction.update(CollectionList.userCollection.doc(userId), {'adminData': null});
     });
   }
