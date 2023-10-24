@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/widgets/column_with_title.dart';
 import 'package:nightlife/widgets/contact_display.dart';
@@ -35,7 +34,7 @@ class ClubInfo extends StatelessWidget {
               width: width,
               title: "Location",
               children: [
-                DecoratedContainer(
+                Container(
                   child: ListTile(
                     leading:
                       const Icon(Icons.location_on),

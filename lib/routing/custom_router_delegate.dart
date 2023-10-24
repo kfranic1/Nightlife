@@ -10,7 +10,6 @@ import 'package:nightlife/routing/configurations/signup_configuration.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 
-
 class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteConfiguration>
     implements Routes {

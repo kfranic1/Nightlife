@@ -38,7 +38,11 @@ class _UsernameState extends State<Username> {
           controller: _controller,
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          decoration: const InputDecoration(border: InputBorder.none),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
+          ),
         ),
         if (user.adminData == null)
           ElevatedButton(

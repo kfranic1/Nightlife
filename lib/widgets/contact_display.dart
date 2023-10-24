@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/contact.dart';
 import 'package:nightlife/extensions/contact_extension.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 class ContactDisplay extends StatelessWidget {
   const ContactDisplay({super.key, required this.data, required this.contact});
@@ -15,12 +13,10 @@ class ContactDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: DecoratedContainer(
-        child: ListTile(
-          onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
-          leading: Icon(contact.icon),
-          title: Text(data),
-        ),
+      child: ListTile(
+        onTap: () async => await launchUrl(Uri.parse("${contact.action}$data")),
+        leading: Icon(contact.icon),
+        title: Text(data),
       ),
     );
   }

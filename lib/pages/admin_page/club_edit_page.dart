@@ -6,7 +6,6 @@ import 'package:nightlife/extensions/contact_extension.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/extensions/social_media_extension.dart';
 import 'package:nightlife/helpers/club_text_field.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/work_day.dart';
 import 'package:nightlife/pages/admin_page/form_button.dart';
@@ -98,7 +97,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: DecoratedContainer(
+              child: Container(
                 padding: const EdgeInsets.all(8.0),
                 child: ExpansionTile(
                   maintainState: true,
@@ -107,7 +106,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
                     WorkDay day = _club.workHours[dayOfWeek]!;
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: DecoratedContainer(
+                      child: Container(
                         child: Column(
                           children: [
                             Row(

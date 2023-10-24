@@ -3,7 +3,6 @@ import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/filters.dart';
-import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/widgets/dropdown_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -33,16 +32,17 @@ class _FilterState extends State<Filter> {
   @override
   Widget build(BuildContext context) {
     ClubList clubs = context.watch<ClubList>();
-    return Column(
+    return ExpansionTile(
+      title: const Text("Filter"),
+      childrenPadding: const EdgeInsets.all(8),
       children: [
         SizedBox(
-          height: 48,
+          height: 40,
           child: TextField(
             controller: _searchController,
             decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search),
               labelText: 'Search',
-              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: primaryColor)),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0), borderSide: const BorderSide(color: primaryColor)),
               suffixIcon: IconButton(
                 icon: const Icon(Icons.clear),
                 onPressed: () => _searchController.clear(),
@@ -84,7 +84,7 @@ class _FilterState extends State<Filter> {
           ],
         ),
         const Divider(
-          color: Colors.black,
+          color: Colors.white,
           height: 24,
           thickness: 1,
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 
 class DropdownFilter<T> extends StatelessWidget {
   const DropdownFilter({
@@ -19,13 +18,18 @@ class DropdownFilter<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedContainer(
+    return Container(
+      height: 40,
       padding: const EdgeInsets.only(left: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        border: Border.all(color: Colors.white),
+      ),
       child: Row(
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 13),
+            style: Theme.of(context).textTheme.labelSmall,
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -47,12 +51,13 @@ class DropdownFilter<T> extends StatelessWidget {
                         onPressed: onClear,
                         splashRadius: 20,
                       ),
+                dropdownColor: Colors.black,
                 items: items.entries
                     .map((entry) => DropdownMenuItem<T>(
                           value: entry.key,
                           child: Text(
                             entry.value,
-                            style: TextStyle(fontSize: 13, color: Theme.of(context).primaryColor),
+                            style: TextStyle(color: Theme.of(context).primaryColor),
                           ),
                         ))
                     .toList(),

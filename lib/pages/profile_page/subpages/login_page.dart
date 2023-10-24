@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
     return const AuthPage(
       isLogin: true,
       title: "Log In",
-      message: "Welcome back",
+      message: "Welcome Back",
       swapQuestion: "Don't have a profile? ",
       swapAction: "Sign Up",
     );

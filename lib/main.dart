@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlife/helpers/club_list.dart';
-import 'package:nightlife/helpers/primary_swatch.dart';
+import 'package:nightlife/helpers/theme_data.dart';
 import 'package:nightlife/language.dart';
 import 'package:nightlife/model/person.dart';
 import 'package:nightlife/other/custom_scroll_behavior.dart';
@@ -13,7 +14,6 @@ import 'package:provider/provider.dart';
 import 'package:seo/html/seo_controller.dart';
 import 'package:seo/html/tree/widget_tree.dart';
 import 'package:url_strategy/url_strategy.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,9 +43,9 @@ class Nightlife extends StatelessWidget {
         ],
         child: Builder(builder: (context) {
           return FutureBuilder(
-              future: context.read<ClubList>().setup(),
+              future: context.read<ClubList>().setup().then((value) async => await GoogleFonts.pendingFonts([GoogleFonts.baloo2(), GoogleFonts.gochiHand()])),
               builder: (context, snapshot) {
-                if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: primaryColor));
+                if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator(color: Colors.black));
                 return MaterialApp.router(
                   scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
                   title: 'Nightlife Zagreb - Find the best clubs in Zagreb',
@@ -53,12 +53,7 @@ class Nightlife extends StatelessWidget {
                   routeInformationParser: CustomRouteInformationParser(),
                   routerDelegate: context.read<CustomRouterDelegate>(),
                   backButtonDispatcher: RootBackButtonDispatcher(),
-                  theme: ThemeData(
-                    fontFamily: 'Roboto',
-                    primarySwatch: primarySwatch,
-                    appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
-                    //brightness: Brightness.dark,
-                  ),
+                  theme: themeData,
                 );
               });
         }),
