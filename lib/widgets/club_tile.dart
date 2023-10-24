@@ -6,7 +6,6 @@ import 'package:nightlife/widgets/seo_text.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
 
-
 class ClubTile extends StatelessWidget {
   final Club club;
 
@@ -16,7 +15,7 @@ class ClubTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        height: 220,
+        height: 240,
         width: 152,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -31,18 +30,14 @@ class ClubTile extends StatelessWidget {
                   club.name,
                   textTagStyle: TextTagStyle.h1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                const SizedBox(height: 4),
                 SEOText(
                   club.location,
                   textTagStyle: TextTagStyle.h2,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 12),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),

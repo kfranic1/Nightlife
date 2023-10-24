@@ -27,7 +27,6 @@ class InputField extends StatelessWidget {
           child: _icon,
         ),
         labelText: _labelText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
       ),
       controller: _controller,
     );

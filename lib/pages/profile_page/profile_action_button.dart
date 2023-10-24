@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileActionButton extends StatelessWidget {
   const ProfileActionButton({super.key, required this.action, this.icon, this.label, this.backgroundColor = Colors.black, this.width = 150})
@@ -32,7 +31,7 @@ class ProfileActionButton extends StatelessWidget {
             border: Border.all(color: Colors.black),
             color: backgroundColor,
           ),
-          child: label == null ? const Icon(FontAwesomeIcons.google) : Center(child: label!),
+          child: label == null ? icon : Center(child: label!),
         ),
       ),
     );

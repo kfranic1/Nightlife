@@ -25,88 +25,85 @@ class _AddMemberState extends State<AddMember> {
   @override
   Widget build(BuildContext context) {
     administration = context.watch<Administration>();
-    return Theme(
-      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-      child: ExpansionTile(
-        title: const Text("Add user"),
-        childrenPadding: const EdgeInsets.all(8),
-        children: [
-          TextFormField(
-            key: _key,
-            controller: _controller,
-            decoration: InputDecoration(
-              labelText: "user id",
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
-              suffix: TextButton(
-                onPressed: loadingMember
-                    ? null
-                    : () async {
-                        if (_key.currentState?.validate() == false) return;
-                        setState(() => loadingMember = true);
-                        member = await Person.tryGet(_controller.text);
-                        if (member == null && context.mounted)
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text('A user with this ID doesn\'t exist'),
-                            duration: Duration(seconds: 2),
-                          ));
-                        setState(() => loadingMember = false);
-                      },
-                child: const Text("Load"),
-              ),
-            ),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (value) {
-              if (value!.isEmpty) return "ID can't be empty";
-              if (administration.members.contains(value)) return "This user is already added.";
-              return null;
-            },
-          ),
-          const SizedBox(height: 10),
-          DropdownFilter<Role>(
-            label: "Role",
-            value: role,
-            onChanged: (Role? role) => setState(() => this.role = role!),
-            onClear: null,
-            items: Map.fromIterable(
-              Role.values.toList(),
-              key: (element) => element,
-              value: (element) => element.toString(),
+    return ExpansionTile(
+      title: const Text("Add user"),
+      childrenPadding: const EdgeInsets.all(8),
+      children: [
+        TextFormField(
+          key: _key,
+          controller: _controller,
+          decoration: InputDecoration(
+            labelText: "user id",
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+            suffix: TextButton(
+              onPressed: loadingMember
+                  ? null
+                  : () async {
+                      if (_key.currentState?.validate() == false) return;
+                      setState(() => loadingMember = true);
+                      member = await Person.tryGet(_controller.text);
+                      if (member == null && context.mounted)
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('A user with this ID doesn\'t exist'),
+                          duration: Duration(seconds: 2),
+                        ));
+                      setState(() => loadingMember = false);
+                    },
+              child: const Text("Load"),
             ),
           ),
-          if (member != null)
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    administration.addMember(
-                      userId: member!.id,
-                      clubId: context.read<Club>().id,
-                      clubName: context.read<Club>().name,
-                      role: role,
-                    );
-                    setState(() {
-                      member = null;
-                      _controller.clear();
-                    });
-                  },
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        const TextSpan(text: "Add member "),
-                        TextSpan(text: member!.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        const TextSpan(text: "\nwith role "),
-                        TextSpan(text: role.toString(), style: const TextStyle(fontWeight: FontWeight.bold)),
-                      ],
-                      style: const TextStyle(color: Colors.white),
-                    ),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) {
+            if (value!.isEmpty) return "ID can't be empty";
+            if (administration.members.contains(value)) return "This user is already added.";
+            return null;
+          },
+        ),
+        const SizedBox(height: 10),
+        DropdownFilter<Role>(
+          label: "Role",
+          value: role,
+          onChanged: (Role? role) => setState(() => this.role = role!),
+          onClear: null,
+          items: Map.fromIterable(
+            Role.values.toList(),
+            key: (element) => element,
+            value: (element) => element.toString(),
+          ),
+        ),
+        if (member != null)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  administration.addMember(
+                    userId: member!.id,
+                    clubId: context.read<Club>().id,
+                    clubName: context.read<Club>().name,
+                    role: role,
+                  );
+                  setState(() {
+                    member = null;
+                    _controller.clear();
+                  });
+                },
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(text: "Add member "),
+                      TextSpan(text: member!.name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                      const TextSpan(text: "\nwith role "),
+                      TextSpan(text: role.toString(), style: const TextStyle(fontWeight: FontWeight.bold)),
+                    ],
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }

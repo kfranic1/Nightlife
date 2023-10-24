@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/enums/aspect.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/extensions/review_extension.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/review.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
@@ -57,7 +56,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
                       controller: _controller,
                       itemBuilder: (context, index) {
                         Aspect aspect = aspects[index];
-                        return DecoratedContainer(
+                        return Container(
                           padding: const EdgeInsets.all(8),
                           child: Column(
                             children: [
