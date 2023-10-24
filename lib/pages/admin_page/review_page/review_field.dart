@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/aspect.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/review.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 
@@ -21,7 +20,7 @@ class _ReviewFieldState extends State<ReviewField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: DecoratedContainer(
+      child: Container(
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/club.dart';
 
 class ClubDropdown extends StatelessWidget {
@@ -16,7 +15,7 @@ class ClubDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedContainer(
+    return Container(
       padding: const EdgeInsets.only(left: 8),
       child: DropdownButton<Club>(
         value: club,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/decorated_container.dart';
 import 'package:nightlife/model/work_day.dart';
 
 
@@ -15,8 +14,7 @@ class DayOfWeekDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedContainer(
-      child: Row(
+    return Row(
         children: [
           Expanded(
             child: Padding(
@@ -44,7 +42,6 @@ class DayOfWeekDisplay extends StatelessWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }
