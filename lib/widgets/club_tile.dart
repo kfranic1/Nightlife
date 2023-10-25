@@ -7,12 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';
 
 class ClubTile extends StatelessWidget {
-  final Club club;
-
-  const ClubTile({super.key, required this.club});
+  const ClubTile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Club club = context.read<Club>();
     return Center(
       child: SizedBox(
         height: 240,
@@ -24,7 +23,7 @@ class ClubTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox.square(child: ClubImage(club: club)),
+                const SizedBox.square(child: ClubImage()),
                 const SizedBox(height: 4),
                 SEOText(
                   club.name,

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/enums/aspect.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/extensions/review_extension.dart';
+import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/review.dart';
 import 'package:nightlife/widgets/score_indicator.dart';
 import 'package:nightlife/widgets/translatable_text.dart';
+import 'package:provider/provider.dart';
 
 class ReviewDisplay extends StatefulWidget {
-  const ReviewDisplay({super.key, required this.reviewId});
-
-  final String reviewId;
+  const ReviewDisplay({super.key});
 
   @override
   State<ReviewDisplay> createState() => _ReviewDisplayState();
@@ -20,7 +20,7 @@ class ReviewDisplay extends StatefulWidget {
 class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveClientMixin<ReviewDisplay> {
   final PageController _controller = PageController();
   int _currentPage = 0;
-  late Future<Review> reviewFuture;
+  late final Future<Review?> reviewFuture;
   List<Aspect> aspects = List<Aspect>.from(Aspect.values).rearrange((p0, p1) => p0.index.compareTo(p1.index));
 
   @override
@@ -29,7 +29,7 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
   @override
   void initState() {
     super.initState();
-    reviewFuture = Review.getReview(widget.reviewId);
+    reviewFuture = Review.tryGetReview(context.read<Club>().id);
   }
 
   @override
@@ -42,10 +42,11 @@ class _ReviewDisplayState extends State<ReviewDisplay> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     return Center(
-      child: FutureBuilder<Review>(
+      child: FutureBuilder<Review?>(
           future: reviewFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) return const CircularProgressIndicator();
+            if (!snapshot.hasData) return const Center(child: Text("This club has not yet been reviewed."));
             Review review = snapshot.data!;
             return SizedBox(
               width: min(400, MediaQuery.of(context).size.width - 20),

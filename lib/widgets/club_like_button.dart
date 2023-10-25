@@ -5,9 +5,7 @@ import 'package:nightlife/model/person.dart';
 import 'package:provider/provider.dart';
 
 class ClubLikeButton extends StatefulWidget {
-  const ClubLikeButton({super.key, required this.club});
-
-  final Club club;
+  const ClubLikeButton({super.key});
 
   @override
   State<ClubLikeButton> createState() => _ClubLikeButtonState();
@@ -17,15 +15,15 @@ class _ClubLikeButtonState extends State<ClubLikeButton> {
   @override
   Widget build(BuildContext context) {
     Person? user = context.watch<Person?>();
+    Club club = context.read<Club>();
     return IconButton(
-      //label: Text(widget.club.favoriteCount.toString()),
-      icon: (user == null || !user.favourites.contains(widget.club.id))
+      icon: (user == null || !user.favourites.contains(club.id))
           ? const Icon(Icons.favorite_border, color: Colors.grey)
           : const Icon(Icons.favorite, color: Colors.red),
       onPressed: user == null
           ? null
           : () async {
-              await user.handleFavourite(widget.club);
+              await user.handleFavourite(club.id);
               setState(() {});
             },
     );
