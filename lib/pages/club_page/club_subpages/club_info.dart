@@ -34,12 +34,10 @@ class ClubInfo extends StatelessWidget {
               width: width,
               title: "Location",
               children: [
-                Container(
-                  child: ListTile(
-                    leading:
-                      const Icon(Icons.location_on),
-                      title: Text(club.location),
-                  ),
+                ListTile(
+                  leading:
+                    const Icon(Icons.location_on),
+                    title: Text(club.location),
                 ),
               ],
             ),

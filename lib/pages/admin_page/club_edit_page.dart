@@ -106,55 +106,53 @@ class _ClubEditPageState extends State<ClubEditPage> {
                     WorkDay day = _club.workHours[dayOfWeek]!;
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(width: 80, child: Text(dayOfWeek.name)),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  width: 200,
-                                  child: ClubTextField(
-                                    initialValue: day.hours,
-                                    labelText: "hh:mm - hh:mm",
-                                    onChanged: (value) => day.hours = value,
-                                    validate: true,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        if (day.typeOfMusic.isNotEmpty) return "Missing working hours";
-                                        return null;
-                                      }
-                                      if (!timePattern.hasMatch(value)) return "The time is not in correct format";
-                                      if (day.typeOfMusic.isEmpty) return "Select at least one genre";
-                                      if (day.typeOfMusic.length > 3) return "Select at most 3 genres";
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 80, child: Text(dayOfWeek.name)),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                width: 200,
+                                child: ClubTextField(
+                                  initialValue: day.hours,
+                                  labelText: "hh:mm - hh:mm",
+                                  onChanged: (value) => day.hours = value,
+                                  validate: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      if (day.typeOfMusic.isNotEmpty) return "Missing working hours";
                                       return null;
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ExpansionTile(
-                              title: Text("Types of music (${day.typeOfMusic.join(', ')})"),
-                              children: TypeOfMusic.values.toList().rearrange((p0, p1) => p0.name.compareTo(p1.name)).map((type) {
-                                return CheckboxListTile(
-                                  controlAffinity: ListTileControlAffinity.leading,
-                                  title: Text(type.toString()),
-                                  value: day.typeOfMusic.contains(type),
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      if (value!) {
-                                        day.typeOfMusic.add(type);
-                                      } else {
-                                        day.typeOfMusic.remove(type);
-                                      }
-                                    });
+                                    }
+                                    if (!timePattern.hasMatch(value)) return "The time is not in correct format";
+                                    if (day.typeOfMusic.isEmpty) return "Select at least one genre";
+                                    if (day.typeOfMusic.length > 3) return "Select at most 3 genres";
+                                    return null;
                                   },
-                                );
-                              }).toList(),
-                            ),
-                          ],
-                        ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text("Types of music (${day.typeOfMusic.join(', ')})"),
+                            children: TypeOfMusic.values.toList().rearrange((p0, p1) => p0.name.compareTo(p1.name)).map((type) {
+                              return CheckboxListTile(
+                                controlAffinity: ListTileControlAffinity.leading,
+                                title: Text(type.toString()),
+                                value: day.typeOfMusic.contains(type),
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    if (value!) {
+                                      day.typeOfMusic.add(type);
+                                    } else {
+                                      day.typeOfMusic.remove(type);
+                                    }
+                                  });
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ],
                       ),
                     );
                   }).toList(),
