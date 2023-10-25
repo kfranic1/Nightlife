@@ -54,8 +54,9 @@ class Review {
     });
   }
 
-  static Future<Review> getReview(String reviewId) async {
-    //Consider caching
-    return Review.fromDocument(await CollectionList.reviewCollection.doc(reviewId).get());
+  static Future<Review?> tryGetReview(String reviewId) async {
+    DocumentSnapshot doc = await CollectionList.reviewCollection.doc(reviewId).get();
+    if (doc.exists) return Review.fromDocument(doc);
+    return null;
   }
 }

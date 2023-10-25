@@ -45,15 +45,14 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 12),
                 const Filter(),
                 const SizedBox(height: 12),
-                clubList.filteredClubs.isEmpty
-                    ? const SizedBox()
-                    : LayoutGrid(
-                        columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 152.px),
-                        rowSizes: List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
-                        gridFit: GridFit.loose,
-                        columnGap: 20,
-                        children: clubList.filteredClubs.map((e) => ClubTile(club: e)).toList(),
-                      )
+                if (clubList.filteredClubs.isNotEmpty)
+                  LayoutGrid(
+                    columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 152.px),
+                    rowSizes: List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
+                    gridFit: GridFit.loose,
+                    columnGap: 20,
+                    children: clubList.filteredClubs.map((club) => Provider.value(value: club, child: const ClubTile())).toList(),
+                  )
               ],
             ),
           ),

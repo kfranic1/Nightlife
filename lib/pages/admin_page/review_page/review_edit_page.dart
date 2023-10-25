@@ -26,7 +26,7 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
     _club = context.watch<Club>();
     if (_club.id.isEmpty) return const SizedBox();
     return FutureBuilder(
-        future: _club.hasReview ? Review.getReview(_club.id) : Future.value(Review.empty(_club.id)),
+        future: _club.hasReview ? Review.tryGetReview(_club.id) : Future.value(Review.empty(_club.id)),
         builder: (context, snapshot) {
           if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator());
           _review = snapshot.data as Review;

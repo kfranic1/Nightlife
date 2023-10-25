@@ -50,7 +50,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
             club.name,
             textTagStyle: TextTagStyle.h1,
           ),
-          actions: [ClubLikeButton(club: club)],
+          actions: const [ClubLikeButton()],
         ),
         extendBodyBehindAppBar: true,
         body: GradientBackground(
@@ -58,9 +58,9 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                SizedBox.square(
+                const SizedBox.square(
                   dimension: 156,
-                  child: ClubImage(club: club),
+                  child: ClubImage(),
                 ),
                 SizedBox(
                   height: 50,
@@ -78,10 +78,10 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                 Expanded(
                   child: NestedTabBarView(
                     controller: tabController,
-                    children: [
-                      const ClubInfo(),
-                      const ReservationDisplay(),
-                      if (club.hasReview) ReviewDisplay(reviewId: club.id) else const Center(child: Text("This club has not yet been reviewed.")),
+                    children: const [
+                      ClubInfo(),
+                      ReservationDisplay(),
+                      ReviewDisplay(),
                     ],
                   ),
                 ),
