@@ -37,7 +37,7 @@ class Person {
   }
 
   Future updateName(String newName) async {
-    await CollectionList.userCollection.doc(id).update({"name": newName});
+    await CollectionList.userCollection.doc(id).update({"name": name = newName});
   }
 
   static Future<Person?> tryGet(String id) async {

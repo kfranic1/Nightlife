@@ -19,8 +19,14 @@ class _AdminPageState extends State<AdminPage> with TickerProviderStateMixin {
   late TabController tabController;
 
   @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Club club = context.read<Club>();
+    Club club = context.watch<Club>();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

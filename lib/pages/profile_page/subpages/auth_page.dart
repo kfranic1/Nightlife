@@ -34,6 +34,14 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _password = TextEditingController();
 
   @override
+  void dispose() {
+    _name.dispose();
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     AuthService auth = context.read<AuthService>();
     CustomRouterDelegate router = context.read<CustomRouterDelegate>();

@@ -14,12 +14,12 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  final TextEditingController _searchController = TextEditingController();
+  late final TextEditingController _searchController;
 
   @override
   void initState() {
     super.initState();
-    _searchController.text = context.read<ClubList>().filterText;
+    _searchController = TextEditingController(text: context.read<ClubList>().filterText);
     _searchController.addListener(() => context.read<ClubList>().updateText(_searchController.text));
   }
 
