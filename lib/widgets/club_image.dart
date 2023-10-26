@@ -12,7 +12,7 @@ class ClubImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Club club = context.read<Club>();
+    final Club club = context.watch<Club>();
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: AspectRatio(

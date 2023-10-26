@@ -16,15 +16,20 @@ class AddMember extends StatefulWidget {
 class _AddMemberState extends State<AddMember> {
   final TextEditingController _controller = TextEditingController();
   final GlobalKey<FormFieldState> _key = GlobalKey<FormFieldState>();
-  late Administration administration;
 
   Role role = Role.ambasador;
   Person? member;
   bool loadingMember = false;
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    administration = context.watch<Administration>();
+    final Administration administration = context.watch<Administration>();
     return ExpansionTile(
       title: const Text("Add user"),
       childrenPadding: const EdgeInsets.all(8),
