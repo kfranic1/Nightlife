@@ -23,12 +23,12 @@ class ClubPage extends StatefulWidget {
 }
 
 class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin {
-  late final TabController tabController;
+  late final TabController tabController = TabController(length: 3, vsync: this);
 
   @override
-  void initState() {
-    tabController = TabController(length: 3, vsync: this);
-    super.initState();
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   @override

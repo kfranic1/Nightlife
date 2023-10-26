@@ -11,7 +11,7 @@ class ClubTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Club club = context.read<Club>();
+    final Club club = context.watch<Club>();
     return Center(
       child: SizedBox(
         height: 240,
