@@ -34,3 +34,22 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NIGHTLIFE_ZAGREB }}'
           channelId: live
           projectId: nightlife-zagreb
+  reset-develop:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Git Configuration
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<github-actions-bot@example.com>"
+
+      - name: Reset Develop to Main
+        run: |
+          git checkout develop
+          git reset --hard main
+          git push --force origin develop
