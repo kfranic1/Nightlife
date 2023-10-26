@@ -7,7 +7,7 @@ import 'package:nightlife/widgets/dropdown_filter.dart';
 import 'package:provider/provider.dart';
 
 class Filter extends StatefulWidget {
-  const Filter({Key? key}) : super(key: key);
+  const Filter({super.key});
 
   @override
   State<Filter> createState() => _FilterState();

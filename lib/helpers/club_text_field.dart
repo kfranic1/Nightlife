@@ -10,7 +10,7 @@ class ClubTextField extends StatefulWidget {
   final int? maxLines;
 
   const ClubTextField({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.initialValue,
     this.icon,
@@ -18,7 +18,7 @@ class ClubTextField extends StatefulWidget {
     this.validate = false,
     this.validator = defaultValidator,
     this.maxLines = 1,
-  }) : super(key: key);
+  });
 
   @override
   State<ClubTextField> createState() => _ClubTextFieldState();

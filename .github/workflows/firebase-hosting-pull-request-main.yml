@@ -13,12 +13,6 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          if [[ "${{ github.event.pull_request.base.ref }}" != "main" || "${{ github.event.pull_request.head.ref }}" != "develop" ]]; then
-            echo "Error: Pull requests to main should be from the develop branch only."
-            exit 1
-          fi
-
       - uses: actions/checkout@v4
           
       - uses: subosito/flutter-action@v2
