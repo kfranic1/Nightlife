@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/model/club.dart';
+import 'package:nightlife/pages/google_maps_page/google_maps_preview.dart';
 import 'package:nightlife/widgets/column_with_title.dart';
 import 'package:nightlife/widgets/contact_display.dart';
 import 'package:nightlife/widgets/day_of_week_display.dart';
@@ -30,14 +31,14 @@ class ClubInfo extends StatelessWidget {
                   maxLines: null,
                 ),
               ),*/
+            const GoogleMapsPreview(),
             ColumnWithTitle(
               width: width,
               title: "Location",
               children: [
                 ListTile(
-                  leading:
-                    const Icon(Icons.location_on),
-                    title: Text(club.location),
+                  leading: const Icon(Icons.location_on),
+                  title: Text(club.location.name),
                 ),
               ],
             ),
