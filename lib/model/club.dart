@@ -4,6 +4,7 @@ import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/social_media.dart';
 import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/helpers/collections_list.dart';
+import 'package:nightlife/model/location.dart';
 import 'package:nightlife/model/review_data.dart';
 import 'package:nightlife/model/work_day.dart';
 
@@ -12,7 +13,7 @@ class Club {
   String name;
   String descriptionHr;
   String descriptionEn;
-  String location;
+  Location location;
   String imageUrl;
   Map<Contact, String?> contacts;
   Map<SocialMedia, String?> socialMedia;
@@ -46,7 +47,7 @@ class Club {
       'name': name,
       'descriptionHr': descriptionHr,
       'descriptionEn': descriptionEn,
-      'location': location,
+      'location': location.toMap(),
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
       'socialMedia': socialMedia.map((key, value) => MapEntry(key.name, value)),
       'reviewData': _reviewData == null ? null : _reviewData!.toMap(),
@@ -64,7 +65,7 @@ class Club {
       name: data['name'],
       descriptionHr: data['descriptionHr'],
       descriptionEn: data['descriptionEn'],
-      location: data['location'],
+      location: Location.fromMap(data['location']),
       contacts: (data['contacts'] as Map<String, dynamic>).map((key, value) => MapEntry(
             Contact.values.firstWhere((e) => e.name == key),
             value,

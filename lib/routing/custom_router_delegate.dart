@@ -5,6 +5,7 @@ import 'package:nightlife/routing/configurations/admin_configuration.dart';
 import 'package:nightlife/routing/configurations/club_configuration.dart';
 import 'package:nightlife/routing/configurations/home_configuration.dart';
 import 'package:nightlife/routing/configurations/login_configuration.dart';
+import 'package:nightlife/routing/configurations/maps_configuration.dart';
 import 'package:nightlife/routing/configurations/profile_configuration.dart';
 import 'package:nightlife/routing/configurations/signup_configuration.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
@@ -58,6 +59,9 @@ class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
 
   @override
   void goToSignup() => setNewRoutePath(SignupConfiguration());
+
+  @override
+  void goToMaps() => setNewRoutePath(MapsConfiguration());
 
   void goBack() {
     html.window.history.back();
