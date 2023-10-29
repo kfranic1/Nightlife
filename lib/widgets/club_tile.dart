@@ -32,7 +32,7 @@ class ClubTile extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SEOText(
-                  club.location,
+                  club.location.name,
                   textTagStyle: TextTagStyle.h2,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

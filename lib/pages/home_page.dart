@@ -33,7 +33,11 @@ class HomePage extends StatelessWidget {
           IconButton(
             onPressed: () => context.read<CustomRouterDelegate>().goToProfile(),
             icon: const Icon(Icons.person),
-          )
+          ),
+          IconButton(
+            onPressed: () => context.read<CustomRouterDelegate>().goToMaps(),
+            icon: const Icon(Icons.pin_drop),
+          ),
         ],
       ),
       body: GradientBackground(

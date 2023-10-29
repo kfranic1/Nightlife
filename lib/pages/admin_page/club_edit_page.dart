@@ -53,8 +53,8 @@ class _ClubEditPageState extends State<ClubEditPage> {
             ),
             ClubTextField(
               labelText: 'Address',
-              initialValue: _club.location,
-              onChanged: (value) => _club.location = value,
+              initialValue: _club.location.name,
+              onChanged: null,
               validate: true,
               icon: const Icon(Icons.location_pin),
             ),
