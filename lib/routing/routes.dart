@@ -5,7 +5,6 @@ abstract class Routes {
   static const String profile = "profile";
   static const String login = "login";
   static const String signup = "signup";
-  static const String maps = "maps";
 
   void goToHome() {}
   void goToClub(String clubName) {}
@@ -13,5 +12,4 @@ abstract class Routes {
   void goToLogin(){}
   void goToSignup(){}
   void goToAdmin(String clubName){}
-  void goToMaps(){}
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nightlife/enums/type_of_music.dart';
+import 'package:nightlife/extensions/geopoint_extension.dart';
 import 'package:nightlife/helpers/filters.dart';
 import 'package:nightlife/model/club.dart';
 
@@ -52,4 +54,9 @@ class ClubList extends ChangeNotifier {
     if (!clubs.any((club) => club.name == name)) return null;
     return _clubs.firstWhere((club) => club.name == name);
   }
+
+  LatLng get clubCenter => LatLng(
+        clubs.map((club) => club.location.pin.latLng.latitude).reduce((a, b) => a + b) / clubs.length,
+        clubs.map((club) => club.location.pin.latLng.longitude).reduce((a, b) => a + b) / clubs.length,
+      );
 }

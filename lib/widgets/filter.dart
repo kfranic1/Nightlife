@@ -3,7 +3,6 @@ import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/filters.dart';
-import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/dropdown_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -36,12 +35,7 @@ class _FilterState extends State<Filter> {
     return ExpansionTile(
       title: const Text("Filter"),
       children: [
-        TextButton.icon(
-          label: const Text("Check the map"),
-          onPressed: () => context.read<CustomRouterDelegate>().goToMaps(),
-          icon: const Icon(Icons.pin_drop),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
         SizedBox(
           height: 40,
           child: TextField(
