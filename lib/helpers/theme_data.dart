@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 
 ThemeData themeData = ThemeData(
-  primaryColor: primaryColor,
-  primarySwatch: primarySwatch,
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.transparent,
     iconTheme: const IconThemeData(color: Colors.white),
@@ -17,7 +15,6 @@ ThemeData themeData = ThemeData(
     ),
     titleSpacing: 12,
   ),
-  brightness: Brightness.dark,
   textTheme: TextTheme(
     headlineLarge: GoogleFonts.gochiHand(fontSize: 32),
     titleLarge: GoogleFonts.baloo2(fontSize: 20, color: Colors.white),
@@ -59,4 +56,7 @@ ThemeData themeData = ThemeData(
     unselectedLabelColor: Colors.white,
     labelColor: primaryColor,
   ),
+  primaryColor: primaryColor,
+  colorScheme: ColorScheme.fromSwatch(primarySwatch: primarySwatch, brightness: Brightness.dark),
+  useMaterial3: true,
 );
