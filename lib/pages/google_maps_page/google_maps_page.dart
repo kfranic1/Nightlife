@@ -50,7 +50,9 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leadingWidth: 0,
+        automaticallyImplyLeading: false,
         title: TextButton(
+          style: TextButton.styleFrom(padding: EdgeInsets.zero),
           onPressed: () => context.read<CustomRouterDelegate>().goToHome(),
           child: GradientText(
             'NIGHTLIFE ZAGREB',
@@ -59,19 +61,8 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
               Color.fromARGB(255, 0, 255, 255),
               Color.fromARGB(255, 255, 0, 255),
             ],
-            overflow: TextOverflow.visible,
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () => context.read<CustomRouterDelegate>().goToProfile(),
-            icon: const Icon(Icons.person),
-          ),
-          IconButton(
-            onPressed: () => context.read<CustomRouterDelegate>().goToMaps(),
-            icon: const Icon(Icons.pin_drop),
-          ),
-        ],
       ),
       body: Center(
         child: Stack(

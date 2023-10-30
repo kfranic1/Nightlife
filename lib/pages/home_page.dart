@@ -19,6 +19,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         leadingWidth: 0,
         title: GradientText(
           'NIGHTLIFE ZAGREB',
@@ -34,10 +35,6 @@ class HomePage extends StatelessWidget {
             onPressed: () => context.read<CustomRouterDelegate>().goToProfile(),
             icon: const Icon(Icons.person),
           ),
-          IconButton(
-            onPressed: () => context.read<CustomRouterDelegate>().goToMaps(),
-            icon: const Icon(Icons.pin_drop),
-          ),
         ],
       ),
       body: GradientBackground(
@@ -46,7 +43,6 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 12),
                 const Filter(),
                 const SizedBox(height: 12),
                 if (clubList.filteredClubs.isNotEmpty)
