@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nightlife/extensions/geopoint_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
+import 'package:nightlife/helpers/constants.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/google_maps_page/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,6 @@ class GoogleMapsPage extends StatefulWidget {
 class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAliveClientMixin {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   late Map<Club, ScreenCoordinate> clubPoints;
-  double markerRadius = 25;
 
   Future<void> _updateMarkers(List<Club> clubs) async {
     GoogleMapController controller = await _controller.future;
@@ -39,6 +39,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAlive
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    double markerRadius = MediaQuery.of(context).size.width < kWidthWeb ? 25 : 40;
     List<Club> clubs = context.watch<ClubList>().filteredClubs;
     return Stack(
       children: [
@@ -68,9 +69,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAlive
           Positioned(
             left: clubPoints[club]!.x - markerRadius,
             top: clubPoints[club]!.y - 2.8 * markerRadius,
-            child: CustomMarker(
-              imageUrl: club.imageUrl,
-              radius: markerRadius,
+            child: GestureDetector(
+              onTap: () => context.read<ClubList>().bringForward(club),
+              child: CustomMarker(
+                imageUrl: club.imageUrl,
+                radius: markerRadius,
+              ),
             ),
           ),
       ],
