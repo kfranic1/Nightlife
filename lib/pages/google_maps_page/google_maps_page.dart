@@ -40,7 +40,6 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAlive
   Widget build(BuildContext context) {
     super.build(context);
     List<Club> clubs = context.watch<ClubList>().filteredClubs;
-    print(clubs.length);
     return Stack(
       children: [
         GoogleMap(
