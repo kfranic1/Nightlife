@@ -56,8 +56,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              const Filter(),
-              const SizedBox(height: 8),
               TabBar(
                 controller: controller,
                 tabs: const [
@@ -65,7 +63,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   Center(child: Text("MAP")),
                 ],
               ),
-              const SizedBox(height: 8),
+              const Filter(),
               Expanded(
                 child: TabBarView(
                   physics: const NeverScrollableScrollPhysics(),
