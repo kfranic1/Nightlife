@@ -4,5 +4,11 @@ extension ListExtension<T> on List<T> {
     return this;
   }
 
-  T? get firstOrNull => length == 0 ? null : first;
+  T? get firstOrNull => isEmpty ? null : first;
+
+  void move(T element, int index) {
+    if (index < 0 || index >= length || !contains(element)) return;
+    remove(element);
+    insert(index, element);
+  }
 }
