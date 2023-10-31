@@ -22,7 +22,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
+    controller.addListener(() => setState(() {}));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -66,23 +73,22 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               const Filter(),
               Expanded(
                 child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: controller.index == 0 ? const AlwaysScrollableScrollPhysics() : const NeverScrollableScrollPhysics(),
                   controller: controller,
                   children: [
-                    SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          if (clubList.filteredClubs.isNotEmpty)
-                            LayoutGrid(
-                              columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 152.px),
-                              rowSizes: List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
-                              gridFit: GridFit.loose,
-                              columnGap: 20,
-                              children: clubList.filteredClubs.map((club) => Provider.value(value: club, child: const ClubTile())).toList(),
+                    clubList.filteredClubs.isEmpty
+                        ? Container()
+                        : SingleChildScrollView(
+                            child: Center(
+                              child: LayoutGrid(
+                                columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 152.px),
+                                rowSizes: List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
+                                gridFit: GridFit.loose,
+                                columnGap: 20,
+                                children: clubList.filteredClubs.map((club) => Provider.value(value: club, child: const ClubTile())).toList(),
+                              ),
                             ),
-                        ],
-                      ),
-                    ),
+                          ),
                     const GoogleMapsPage(),
                   ],
                 ),
