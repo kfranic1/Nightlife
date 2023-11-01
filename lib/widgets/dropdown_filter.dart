@@ -49,7 +49,6 @@ class DropdownFilter<T> extends StatelessWidget {
                     : IconButton(
                         icon: const Icon(Icons.clear),
                         onPressed: onClear,
-                        splashRadius: 20,
                       ),
                 dropdownColor: Colors.black,
                 items: items.entries
