@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/pages/google_maps_page/google_maps_page.dart';
-import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_tile.dart';
 import 'package:nightlife/widgets/custom_material_page.dart';
 import 'package:nightlife/widgets/filter.dart';
@@ -51,12 +50,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ],
           overflow: TextOverflow.visible,
         ),
-        actions: [
-          IconButton(
-            onPressed: () => context.read<CustomRouterDelegate>().goToProfile(),
-            icon: const Icon(Icons.person),
-          ),
-        ],
       ),
       body: GradientBackground(
         child: Padding(

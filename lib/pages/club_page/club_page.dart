@@ -5,11 +5,8 @@ import 'package:nested_scroll_views/material.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/club_page/club_subpages/club_info.dart';
 import 'package:nightlife/pages/club_page/club_subpages/reservation_display.dart';
-import 'package:nightlife/pages/club_page/club_subpages/review_display.dart';
-import 'package:nightlife/pages/club_page/social_media_links.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_image.dart';
-import 'package:nightlife/widgets/club_like_button.dart';
 import 'package:nightlife/widgets/custom_material_page.dart';
 import 'package:nightlife/widgets/seo_text.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +20,7 @@ class ClubPage extends StatefulWidget {
 }
 
 class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin {
-  late final TabController tabController = TabController(length: 3, vsync: this);
+  late final TabController tabController = TabController(length: 2, vsync: this);
 
   @override
   void dispose() {
@@ -50,7 +47,6 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
             club.name,
             textTagStyle: TextTagStyle.h1,
           ),
-          actions: const [ClubLikeButton()],
         ),
         extendBodyBehindAppBar: true,
         body: GradientBackground(
@@ -68,9 +64,8 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                   child: TabBar(
                     controller: tabController,
                     tabs: const [
-                      Text("DETAILS"),
-                      Text("RESERVATIONS"),
-                      Text("REVIEW"),
+                      Center(child: Text("DETAILS")),
+                      Center(child: Text("CONTACTS")),
                     ],
                   ),
                 ),
@@ -81,12 +76,9 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                     children: const [
                       ClubInfo(),
                       ReservationDisplay(),
-                      ReviewDisplay(),
                     ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                const SocialMediaLinks(),
               ],
             ),
           ),

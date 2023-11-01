@@ -5,7 +5,6 @@ import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/google_maps_page/google_maps_preview.dart';
 import 'package:nightlife/widgets/column_with_title.dart';
-import 'package:nightlife/widgets/contact_display.dart';
 import 'package:nightlife/widgets/day_of_week_display.dart';
 import 'package:provider/provider.dart';
 
@@ -41,16 +40,6 @@ class ClubInfo extends StatelessWidget {
                   title: Text(club.location.name),
                 ),
               ],
-            ),
-            ColumnWithTitle(
-              width: width,
-              title: "Contacts",
-              children: club.contacts.keys
-                  .where((key) => club.contacts[key] != null)
-                  .toList()
-                  .rearrange((p0, p1) => p0.index.compareTo(p1.index))
-                  .map((key) => ContactDisplay(data: club.contacts[key]!, contact: key))
-                  .toList(),
             ),
             ColumnWithTitle(
               width: width,
