@@ -48,8 +48,8 @@ class ClubList extends ChangeNotifier {
     _applyFilter();
   }
 
-  void updateShowOpenTonightOnly(bool value) {
-    _showOpenTonightOnly = value;
+  void updateShowOpenTonightOnly() {
+    _showOpenTonightOnly = !_showOpenTonightOnly;
     _applyFilter();
   }
 
@@ -77,7 +77,7 @@ class ClubList extends ChangeNotifier {
         clubs.map((club) => club.location.pin.latLng.longitude).reduce((a, b) => a + b) / clubs.length,
       );
 
-  void bringForward(Club club){
+  void bringForward(Club club) {
     _filteredClubs.move(club, _filteredClubs.length - 1);
     notifyListeners();
   }
