@@ -4,12 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/theme_data.dart';
 import 'package:nightlife/language.dart';
-import 'package:nightlife/model/person.dart';
 import 'package:nightlife/other/custom_scroll_behavior.dart';
 import 'package:nightlife/other/firebase_options.dart';
 import 'package:nightlife/routing/custom_route_information_parser.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
-import 'package:nightlife/services/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/html/seo_controller.dart';
 import 'package:seo/html/tree/widget_tree.dart';
@@ -34,11 +32,11 @@ class Nightlife extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<CustomRouterDelegate>(create: (context) => CustomRouterDelegate()),
           ChangeNotifierProvider<ClubList>(create: (context) => ClubList()),
-          Provider<AuthService>(create: (context) => AuthService()),
+          /*Provider<AuthService>(create: (context) => AuthService()),
           StreamProvider<Person?>(
             create: (context) => context.read<AuthService>().authStateChanges,
             initialData: null,
-          ),
+          ),*/
           ChangeNotifierProvider(create: (context) => Language()),
         ],
         child: Builder(builder: (context) {
