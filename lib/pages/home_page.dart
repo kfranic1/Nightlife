@@ -60,15 +60,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       body: GradientBackground(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(bottom: 8.0, left: 8, right: 8),
           child: Column(
             children: [
-              TabBar(
-                controller: controller,
-                tabs: const [
-                  Center(child: Text("CLUBS")),
-                  Center(child: Text("MAP")),
-                ],
+              SizedBox(
+                height: 50,
+                child: TabBar(
+                  controller: controller,
+                  tabs: const [
+                    Center(child: Text("CLUBS")),
+                    Center(child: Text("MAP")),
+                  ],
+                ),
               ),
               const Filter(),
               Expanded(
