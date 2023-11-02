@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/type_of_music.dart';
-import 'package:nightlife/extensions/geopoint_extension.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/model/club.dart';
 
@@ -73,8 +72,8 @@ class ClubList extends ChangeNotifier {
   }
 
   LatLng get clubCenter => LatLng(
-        clubs.map((club) => club.location.pin.latLng.latitude).reduce((a, b) => a + b) / clubs.length,
-        clubs.map((club) => club.location.pin.latLng.longitude).reduce((a, b) => a + b) / clubs.length,
+        clubs.map((club) => club.location.pin.latitude).reduce((a, b) => a + b) / clubs.length,
+        clubs.map((club) => club.location.pin.longitude).reduce((a, b) => a + b) / clubs.length,
       );
 
   void bringForward(Club club) {

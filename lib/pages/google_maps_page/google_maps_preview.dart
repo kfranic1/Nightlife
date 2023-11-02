@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nightlife/extensions/geopoint_extension.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/google_maps_page/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class _GoogleMapsPreviewState extends State<GoogleMapsPreview> {
             padding: const EdgeInsets.only(bottom: 100.0),
             mapType: MapType.normal,
             initialCameraPosition: CameraPosition(
-              target: club.location.pin.latLng,
+              target: club.location.pin,
               zoom: 14.8,
             ),
             onMapCreated: (GoogleMapController controller) async {
