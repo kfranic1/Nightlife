@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nightlife/extensions/geopoint_extension.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/constants.dart';
 import 'package:nightlife/model/club.dart';
@@ -24,15 +23,19 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAlive
   Future<void> _updateMarkers(List<Club> clubs) async {
     GoogleMapController controller = await _controller.future;
 
-    Future.wait(List.generate(
-      clubs.length,
-      (i) => controller.getScreenCoordinate(clubs[i].location.pin.latLng).then((coord) => clubPoints[clubs[i]] = coord),
-    )).then((_) => setState(() {}));
+    await Future.wait(clubs.map(
+      (club) async => clubPoints[club] = await controller.getScreenCoordinate(club.location.pin),
+    ));
+    if (mounted) setState(() {});
   }
 
   @override
   void initState() {
-    clubPoints = Map.fromIterable(context.read<ClubList>().clubs, key: (element) => element, value: (element) => const ScreenCoordinate(x: 0, y: 0));
+    clubPoints = Map.fromIterable(
+      context.read<ClubList>().clubs,
+      key: (element) => element,
+      value: (element) => const ScreenCoordinate(x: 0, y: 0),
+    );
     super.initState();
   }
 
