@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     ClubList clubList = context.watch<ClubList>();
-    double height = 250;
+    double height = 218;
     double width = 180;
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -52,45 +52,53 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ),
       ),
       body: GradientBackground(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 8.0, left: 8, right: 8),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-                child: TabBar(
-                  controller: controller,
-                  tabs: const [
-                    Center(child: Text("CLUBS")),
-                    Center(child: Text("MAP")),
-                  ],
-                ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 50,
+              child: TabBar(
+                controller: controller,
+                tabs: const [
+                  Center(child: Text("CLUBS")),
+                  Center(child: Text("MAP")),
+                ],
               ),
-              const Filter(),
-              Expanded(
-                child: TabBarView(
-                  physics: controller.index == 0 ? const AlwaysScrollableScrollPhysics() : const NeverScrollableScrollPhysics(),
-                  controller: controller,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
                   children: [
-                    clubList.filteredClubs.isEmpty
-                        ? Container()
-                        : SingleChildScrollView(
-                            child: Center(
-                              child: LayoutGrid(
-                                columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 152.px),
-                                rowSizes: List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
-                                gridFit: GridFit.loose,
-                                columnGap: 20,
-                                children: clubList.filteredClubs.map((club) => Provider.value(value: club, child: const ClubTile())).toList(),
-                              ),
-                            ),
-                          ),
-                    const GoogleMapsPage(),
+                    const Filter(),
+                    Expanded(
+                      child: TabBarView(
+                        physics: controller.index == 0 ? const AlwaysScrollableScrollPhysics() : const NeverScrollableScrollPhysics(),
+                        controller: controller,
+                        children: [
+                          clubList.filteredClubs.isEmpty
+                              ? const SizedBox()
+                              : SingleChildScrollView(
+                                  child: Center(
+                                    child: LayoutGrid(
+                                      columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 148.px),
+                                      rowSizes:
+                                          List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
+                                      gridFit: GridFit.loose,
+                                      columnGap: 16,
+                                      rowGap: 16,
+                                      children: clubList.filteredClubs.map((club) => Provider.value(value: club, child: const ClubTile())).toList(),
+                                    ),
+                                  ),
+                                ),
+                          const GoogleMapsPage(),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

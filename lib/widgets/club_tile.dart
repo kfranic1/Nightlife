@@ -14,8 +14,8 @@ class ClubTile extends StatelessWidget {
     final Club club = context.watch<Club>();
     return Center(
       child: SizedBox(
-        height: 240,
-        width: 152,
+        height: 218,
+        width: 148,
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
