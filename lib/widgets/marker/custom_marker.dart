@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
-import 'package:nightlife/pages/google_maps_page/marker/concave_triangle.dart';
+import 'package:nightlife/widgets/marker/concave_triangle.dart';
 
 ///
 /// Custom GoogleMaps Marker

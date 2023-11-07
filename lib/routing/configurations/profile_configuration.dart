@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/pages/error_page.dart';
+import 'package:nightlife/pages/error_page/error_page.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
 

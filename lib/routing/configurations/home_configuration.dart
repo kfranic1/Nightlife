@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/pages/home_page.dart';
+import 'package:nightlife/pages/home_page/home_page.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
 
 class HomeConfiguration extends RouteConfiguration {
