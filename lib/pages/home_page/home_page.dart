@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_layout_grid/flutter_layout_grid.dart';
-import 'package:nightlife/helpers/club_list.dart';
-import 'package:nightlife/pages/google_maps_page/google_maps_page.dart';
-import 'package:nightlife/widgets/club_tile.dart';
+import 'package:nightlife/pages/home_page/subpages/google_maps_page.dart';
+import 'package:nightlife/pages/home_page/subpages/club_grid_view.dart';
 import 'package:nightlife/widgets/custom_material_page.dart';
 import 'package:nightlife/widgets/filter.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,9 +30,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    ClubList clubList = context.watch<ClubList>();
-    double height = 218;
-    double width = 180;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -74,23 +68,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: TabBarView(
                         physics: controller.index == 0 ? const AlwaysScrollableScrollPhysics() : const NeverScrollableScrollPhysics(),
                         controller: controller,
-                        children: [
-                          clubList.filteredClubs.isEmpty
-                              ? const SizedBox()
-                              : SingleChildScrollView(
-                                  child: Center(
-                                    child: LayoutGrid(
-                                      columnSizes: List.filled((MediaQuery.of(context).size.width / width).floor(), 148.px),
-                                      rowSizes:
-                                          List.filled((clubList.filteredClubs.length / (MediaQuery.of(context).size.width / width).floor()).ceil(), height.px),
-                                      gridFit: GridFit.loose,
-                                      columnGap: 16,
-                                      rowGap: 16,
-                                      children: clubList.filteredClubs.map((club) => Provider.value(value: club, child: const ClubTile())).toList(),
-                                    ),
-                                  ),
-                                ),
-                          const GoogleMapsPage(),
+                        children: const [
+                          ClubGridView(),
+                          GoogleMapsView(),
                         ],
                       ),
                     ),

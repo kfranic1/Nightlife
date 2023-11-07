@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nightlife/model/club.dart';
-import 'package:nightlife/pages/google_maps_page/marker/custom_marker.dart';
+import 'package:nightlife/widgets/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
 
 class GoogleMapsPreview extends StatefulWidget {

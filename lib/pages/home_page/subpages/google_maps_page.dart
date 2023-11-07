@@ -4,17 +4,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/constants.dart';
 import 'package:nightlife/model/club.dart';
-import 'package:nightlife/pages/google_maps_page/marker/custom_marker.dart';
+import 'package:nightlife/widgets/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
 
-class GoogleMapsPage extends StatefulWidget {
-  const GoogleMapsPage({super.key});
+class GoogleMapsView extends StatefulWidget {
+  const GoogleMapsView({super.key});
 
   @override
-  State<GoogleMapsPage> createState() => _GoogleMapsPageState();
+  State<GoogleMapsView> createState() => _GoogleMapsViewState();
 }
 
-class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAliveClientMixin {
+class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAliveClientMixin {
   late final GoogleMapController _controller;
   late Map<Club, ScreenCoordinate> clubPoints;
 
