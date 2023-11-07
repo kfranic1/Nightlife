@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,8 +13,6 @@ class GoogleMapsPreview extends StatefulWidget {
 }
 
 class _GoogleMapsPreviewState extends State<GoogleMapsPreview> {
-  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-
   @override
   Widget build(BuildContext context) {
     final club = context.read<Club>();
@@ -35,10 +31,7 @@ class _GoogleMapsPreviewState extends State<GoogleMapsPreview> {
               target: club.location.pin,
               zoom: 14.8,
             ),
-            onMapCreated: (GoogleMapController controller) async {
-              _controller.complete(controller);
-              await controller.setMapStyle(await rootBundle.loadString('assets/maps/map_style.txt'));
-            },
+            onMapCreated: (GoogleMapController controller) async => await controller.setMapStyle(await rootBundle.loadString('assets/maps/map_style.txt')),
             zoomControlsEnabled: false,
             scrollGesturesEnabled: false,
             rotateGesturesEnabled: false,

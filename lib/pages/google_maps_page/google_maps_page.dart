@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -17,14 +15,12 @@ class GoogleMapsPage extends StatefulWidget {
 }
 
 class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAliveClientMixin {
-  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+  late final GoogleMapController _controller;
   late Map<Club, ScreenCoordinate> clubPoints;
 
   Future<void> _updateMarkers(List<Club> clubs) async {
-    GoogleMapController controller = await _controller.future;
-
     await Future.wait(clubs.map(
-      (club) async => clubPoints[club] = await controller.getScreenCoordinate(club.location.pin),
+      (club) async => clubPoints[club] = await _controller.getScreenCoordinate(club.location.pin),
     ));
     if (mounted) setState(() {});
   }
@@ -37,6 +33,12 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAlive
       value: (element) => const ScreenCoordinate(x: 0, y: 0),
     );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,7 +56,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> with AutomaticKeepAlive
             zoom: 14,
           ),
           onMapCreated: (GoogleMapController controller) async {
-            _controller.complete(controller);
+            _controller = controller;
             await controller.setMapStyle(await rootBundle.loadString('assets/maps/map_style.txt'));
             await _updateMarkers(clubs);
           },
