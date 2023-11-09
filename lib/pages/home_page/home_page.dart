@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/pages/home_page/subpages/google_maps_page.dart';
 import 'package:nightlife/pages/home_page/subpages/club_grid_view.dart';
+import 'package:nightlife/pages/home_page/subpages/google_maps_page.dart';
 import 'package:nightlife/widgets/custom_material_page.dart';
 import 'package:nightlife/widgets/filter.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   void initState() {
     controller = TabController(length: 2, vsync: this);
-    controller.addListener(() => setState(() {}));
     super.initState();
   }
 
@@ -66,7 +65,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     const Filter(),
                     Expanded(
                       child: TabBarView(
-                        physics: controller.index == 0 ? const AlwaysScrollableScrollPhysics() : const NeverScrollableScrollPhysics(),
                         controller: controller,
                         children: const [
                           ClubGridView(),

@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/constants.dart';
+import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/model/club.dart';
+import 'package:nightlife/model/selected_club.dart';
+import 'package:nightlife/widgets/map_navigation.dart';
 import 'package:nightlife/widgets/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
 
@@ -15,75 +20,115 @@ class GoogleMapsView extends StatefulWidget {
 }
 
 class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAliveClientMixin {
-  late final GoogleMapController _controller;
-  late Map<Club, ScreenCoordinate> clubPoints;
+  final Completer<GoogleMapController> _controller = Completer();
+  final SelectedClub _selectedClub = SelectedClub();
+  late final Map<Club, ScreenCoordinate> clubPoints;
+  late final ClubList clubList;
 
-  Future<void> _updateMarkers(List<Club> clubs) async {
-    await Future.wait(clubs.map(
-      (club) async => clubPoints[club] = await _controller.getScreenCoordinate(club.location.pin),
-    ));
-    if (mounted) setState(() {});
-  }
+  List<Club> get _displayClubs => clubList.filteredClubs;
+  Club? get _club => _selectedClub.club;
 
   @override
   void initState() {
+    clubList = context.read<ClubList>();
     clubPoints = Map.fromIterable(
-      context.read<ClubList>().clubs,
+      clubList.clubs,
       key: (element) => element,
       value: (element) => const ScreenCoordinate(x: 0, y: 0),
     );
+
+    _selectedClub.addListener(onSelectedClubUpdated);
+    _selectedClub.select(_displayClubs.lastOrNull);
+
+    clubList.addListener(onClubListUpdated);
+
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _selectedClub.removeListener(onSelectedClubUpdated);
+
+    clubList.removeListener(onClubListUpdated);
+
     super.dispose();
+  }
+
+  void onClubListUpdated() {
+    if (!_displayClubs.contains(_club))
+      _selectedClub.select(_displayClubs.lastOrNull);
+    else
+      _selectedClub.select(_club);
+  }
+
+  void onSelectedClubUpdated() async {
+    GoogleMapController controller = await _controller.future;
+    controller.moveCamera(CameraUpdate.newLatLng(_club!.location.pin));
+    _updateMarkers();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     double markerRadius = MediaQuery.of(context).size.width < kWidthWeb ? 25 : 40;
-    List<Club> clubs = context.watch<ClubList>().filteredClubs;
-    return Stack(
+    return Column(
       children: [
-        GoogleMap(
-          padding: const EdgeInsets.only(bottom: 100.0),
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: context.read<ClubList>().clubCenter,
-            zoom: 14,
-          ),
-          onMapCreated: (GoogleMapController controller) async {
-            _controller = controller;
-            await controller.setMapStyle(await rootBundle.loadString('assets/maps/map_style.txt'));
-            await _updateMarkers(clubs);
-          },
-          onCameraMove: (_) async => await _updateMarkers(clubs),
-          onCameraIdle: () async => await _updateMarkers(clubs),
-          zoomControlsEnabled: true,
-          scrollGesturesEnabled: true,
-          rotateGesturesEnabled: false,
-          tiltGesturesEnabled: false,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
-          mapToolbarEnabled: false,
-        ),
-        for (Club club in clubs)
-          Positioned(
-            left: clubPoints[club]!.x - markerRadius,
-            top: clubPoints[club]!.y - 2.8 * markerRadius,
-            child: GestureDetector(
-              onTap: () => context.read<ClubList>().bringForward(club),
-              child: CustomMarker(
-                imageUrl: club.imageUrl,
-                radius: markerRadius,
+        Expanded(
+          child: Stack(
+            children: [
+              GestureDetector(
+                onHorizontalDragUpdate: (_) {},
+                child: GoogleMap(
+                  padding: const EdgeInsets.only(bottom: 100.0),
+                  mapType: MapType.normal,
+                  initialCameraPosition: CameraPosition(
+                    target: _club != null ? _club!.location.pin : clubList.clubCenter,
+                    zoom: 14,
+                  ),
+                  onMapCreated: (GoogleMapController controller) async {
+                    _controller.complete(controller);
+                    controller.setMapStyle(await rootBundle.loadString('assets/maps/map_style.txt'));
+                    _updateMarkers();
+                  },
+                  onCameraMove: (_) => _updateMarkers(),
+                  onCameraIdle: () => _updateMarkers(),
+                  zoomControlsEnabled: true,
+                  scrollGesturesEnabled: true,
+                  rotateGesturesEnabled: false,
+                  tiltGesturesEnabled: false,
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  mapToolbarEnabled: false,
+                ),
               ),
-            ),
+              for (Club club in List.from(_displayClubs)..sort((a, b) => _club == a ? 1 : 0))
+                Positioned(
+                  left: clubPoints[club]!.x - markerRadius,
+                  top: clubPoints[club]!.y - 2.8 * markerRadius,
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (_) {},
+                    onTap: () => _selectedClub.select(club),
+                    child: CustomMarker(
+                      imageUrl: club.imageUrl,
+                      radius: markerRadius,
+                      color: club == _club ? primaryColor : Colors.grey,
+                    ),
+                  ),
+                ),
+            ],
           ),
+        ),
+        MapNavigation(selectedClub: _selectedClub),
       ],
     );
+  }
+
+  Future<void> _updateMarkers() async {
+    GoogleMapController controller = await _controller.future;
+    await Future.wait(_displayClubs.map(
+      (club) async => clubPoints[club] = await controller.getScreenCoordinate(club.location.pin),
+    ));
+    if (mounted) setState(() {});
   }
 
   @override
