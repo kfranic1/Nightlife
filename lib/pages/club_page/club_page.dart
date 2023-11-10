@@ -7,7 +7,7 @@ import 'package:nightlife/pages/club_page/club_subpages/club_info.dart';
 import 'package:nightlife/pages/club_page/club_subpages/reservation_display.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_image.dart';
-import 'package:nightlife/widgets/custom_material_page.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:nightlife/widgets/seo_text.dart';
 import 'package:provider/provider.dart';
 import 'package:seo/seo.dart';

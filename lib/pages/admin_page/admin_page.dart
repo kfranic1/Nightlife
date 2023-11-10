@@ -5,7 +5,7 @@ import 'package:nightlife/pages/admin_page/administration_page.dart';
 import 'package:nightlife/pages/admin_page/club_edit_page.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/services/auth_service.dart';
-import 'package:nightlife/widgets/custom_material_page.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:provider/provider.dart';
 
 class AdminPage extends StatefulWidget {

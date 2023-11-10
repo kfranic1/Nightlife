@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/pages/home_page/subpages/club_grid_view.dart';
 import 'package:nightlife/pages/home_page/subpages/google_maps_page.dart';
-import 'package:nightlife/widgets/custom_material_page.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:nightlife/widgets/filter.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
