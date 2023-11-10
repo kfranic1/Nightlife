@@ -5,7 +5,7 @@ import 'package:nightlife/pages/profile_page/input_field.dart';
 import 'package:nightlife/pages/profile_page/profile_action_button.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/services/auth_service.dart';
-import 'package:nightlife/widgets/custom_material_page.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends StatefulWidget {

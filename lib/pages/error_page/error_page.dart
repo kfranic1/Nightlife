@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/widgets/custom_material_page.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});

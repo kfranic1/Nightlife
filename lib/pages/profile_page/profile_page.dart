@@ -5,7 +5,7 @@ import 'package:nightlife/model/person.dart';
 import 'package:nightlife/pages/profile_page/username.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/services/auth_service.dart';
-import 'package:nightlife/widgets/custom_material_page.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:nightlife/widgets/language_icon_button.dart';
 import 'package:provider/provider.dart';
 
