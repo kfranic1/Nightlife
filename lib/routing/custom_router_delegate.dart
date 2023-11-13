@@ -1,6 +1,8 @@
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/routing/configurations/admin_configuration.dart';
 import 'package:nightlife/routing/configurations/club_configuration.dart';
 import 'package:nightlife/routing/configurations/home_configuration.dart';
@@ -9,6 +11,10 @@ import 'package:nightlife/routing/configurations/profile_configuration.dart';
 import 'package:nightlife/routing/configurations/signup_configuration.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
+import 'package:provider/provider.dart';
+import 'package:seo/html/seo_controller.dart';
+import 'package:seo/html/tree/widget_tree.dart';
 
 class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteConfiguration>
@@ -23,15 +29,32 @@ class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      pages: [currentConfiguration.page(context)],
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) return false;
-        if (_configurationsStack.length > 1) _configurationsStack.removeLast();
-        notifyListeners();
-        return true;
-      },
+    return Scaffold(
+      body: GradientBackground(
+        child: SeoController(
+          enabled: true,
+          tree: WidgetTree(context: context),
+          child: FutureBuilder(
+            future: context.read<ClubList>().setup().then((value) async => await GoogleFonts.pendingFonts([
+                  GoogleFonts.baloo2(),
+                  GoogleFonts.gochiHand(),
+                ])),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) return const Center(child: CircularProgressIndicator());
+              return Navigator(
+                key: navigatorKey,
+                pages: [currentConfiguration.page(context)],
+                onPopPage: (route, result) {
+                  if (!route.didPop(result)) return false;
+                  if (_configurationsStack.length > 1) _configurationsStack.removeLast();
+                  notifyListeners();
+                  return true;
+                },
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 
