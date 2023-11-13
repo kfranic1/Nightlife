@@ -12,14 +12,17 @@ class ClubImage extends StatelessWidget {
     final Club club = context.watch<Club>();
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: Seo.image(
-        alt: "Nightlife Zagreb - ${club.name}",
-        src: club.imageUrl,
-        child: CachedNetworkImage(
-          imageUrl: club.imageUrl,
-          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-          fit: BoxFit.cover,
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: Seo.image(
+          alt: "Nightlife Zagreb - ${club.name}",
+          src: club.imageUrl,
+          child: CachedNetworkImage(
+            imageUrl: club.imageUrl,
+            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
