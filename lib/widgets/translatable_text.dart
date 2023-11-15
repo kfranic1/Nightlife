@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nightlife/language.dart';
 import 'package:provider/provider.dart';
 
-
 class TranslatableText extends StatelessWidget {
   final String textHr;
   final String textEn;
@@ -12,7 +11,6 @@ class TranslatableText extends StatelessWidget {
   final Locale? locale;
   final bool? softWrap;
   final TextOverflow? overflow;
-  final double? textScaleFactor;
   final int? maxLines;
   final String? semanticsLabel;
   final StrutStyle? strutStyle;
@@ -30,7 +28,6 @@ class TranslatableText extends StatelessWidget {
     this.locale,
     this.softWrap,
     this.overflow,
-    this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
     this.strutStyle,
@@ -52,7 +49,6 @@ class TranslatableText extends StatelessWidget {
           locale: locale,
           softWrap: softWrap,
           overflow: overflow,
-          textScaleFactor: textScaleFactor,
           maxLines: maxLines,
           semanticsLabel: semanticsLabel,
           strutStyle: strutStyle,

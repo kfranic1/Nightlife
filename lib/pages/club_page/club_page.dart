@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:nested_scroll_views/material.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/pages/club_page/club_subpages/club_info.dart';
 import 'package:nightlife/pages/club_page/club_subpages/reservation_display.dart';
@@ -71,7 +70,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                 ),
                 const SizedBox(height: 16),
                 Expanded(
-                  child: NestedTabBarView(
+                  child: TabBarView(
                     controller: tabController,
                     children: const [
                       ClubInfo(),
