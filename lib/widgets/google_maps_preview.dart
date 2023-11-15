@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -5,19 +7,14 @@ import 'package:nightlife/model/club.dart';
 import 'package:nightlife/widgets/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
 
-class GoogleMapsPreview extends StatefulWidget {
+class GoogleMapsPreview extends StatelessWidget {
   const GoogleMapsPreview({super.key});
 
-  @override
-  State<GoogleMapsPreview> createState() => _GoogleMapsPreviewState();
-}
-
-class _GoogleMapsPreviewState extends State<GoogleMapsPreview> {
   @override
   Widget build(BuildContext context) {
     final club = context.read<Club>();
     double height = 150;
-    double width = 400;
+    double width = min(400, MediaQuery.of(context).size.width - 16);
     double markerRadius = 25;
     return SizedBox(
       height: height,
