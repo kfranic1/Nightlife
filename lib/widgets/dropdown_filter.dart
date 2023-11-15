@@ -41,28 +41,30 @@ class DropdownFilter<T> extends StatelessWidget {
               ),
               child: DropdownButton<T?>(
                 value: value,
-                underline: Container(),
+                underline: const SizedBox(),
                 onChanged: onChanged,
-                isExpanded: true,
-                icon: onClear == null
-                    ? null
-                    : IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: onClear,
-                      ),
-                dropdownColor: Colors.black,
+                icon: const SizedBox(),
+                dropdownColor: Colors.black, //const Color.fromARGB(255, 19, 16, 45),
                 items: items.entries
                     .map((entry) => DropdownMenuItem<T>(
                           value: entry.key,
-                          child: Text(
-                            entry.value,
-                            style: TextStyle(color: Theme.of(context).primaryColor),
+                          child: Container(
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
+                            child: Text(
+                              entry.value,
+                              style: TextStyle(color: Theme.of(context).primaryColor),
+                            ),
                           ),
                         ))
                     .toList(),
               ),
             ),
           ),
+          if (onClear != null)
+            IconButton(
+              icon: const Icon(Icons.clear, color: Colors.white),
+              onPressed: onClear,
+            ),
         ],
       ),
     );
