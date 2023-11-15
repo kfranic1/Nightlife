@@ -60,7 +60,7 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                 ),
                 SizedBox(
                   height: 50,
-                  width: min(400, MediaQuery.of(context).size.width - 20),
+                  width: min(400, MediaQuery.of(context).size.width - 16),
                   child: TabBar(
                     controller: tabController,
                     tabs: const [
