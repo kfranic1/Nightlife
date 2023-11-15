@@ -50,7 +50,7 @@ class Club {
       'location': location.toMap(),
       'contacts': contacts.map((key, value) => MapEntry(key.name, value)),
       'socialMedia': socialMedia.map((key, value) => MapEntry(key.name, value)),
-      'reviewData': _reviewData == null ? null : _reviewData!.toMap(),
+      'reviewData': _reviewData?.toMap(),
       'imageUrl': imageUrl,
       'workHours': workHours.map((key, value) => MapEntry(key.name, value.toMap())),
       'favoriteCount': favoriteCount,

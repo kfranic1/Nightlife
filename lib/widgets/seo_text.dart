@@ -9,7 +9,6 @@ class SEOText extends StatelessWidget {
   final Locale? locale;
   final bool? softWrap;
   final TextOverflow? overflow;
-  final double? textScaleFactor;
   final int? maxLines;
   final String? semanticsLabel;
   final StrutStyle? strutStyle;
@@ -27,7 +26,6 @@ class SEOText extends StatelessWidget {
     this.locale,
     this.softWrap,
     this.overflow,
-    this.textScaleFactor,
     this.maxLines,
     this.semanticsLabel,
     this.strutStyle,
@@ -50,7 +48,6 @@ class SEOText extends StatelessWidget {
         locale: locale,
         softWrap: softWrap,
         overflow: overflow,
-        textScaleFactor: textScaleFactor,
         maxLines: maxLines,
         semanticsLabel: semanticsLabel,
         strutStyle: strutStyle,
