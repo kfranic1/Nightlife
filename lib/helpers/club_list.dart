@@ -9,6 +9,8 @@ class ClubList extends ChangeNotifier {
   List<Club> _filteredClubs = [];
   bool _showOpenTonightOnly = false;
 
+  bool isReady = false;
+
   String _filterText = "";
   TypeOfMusic? _typeOfMusic;
 
@@ -17,6 +19,7 @@ class ClubList extends ChangeNotifier {
       _clubs = value;
       _clubs.shuffle();
       _filteredClubs = List.from(_clubs);
+      isReady = true;
       _applyFilter();
     });
   }
