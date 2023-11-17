@@ -62,15 +62,16 @@ class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAlive
   }
 
   void onSelectedClubUpdated() async {
-    GoogleMapController controller = await _controller.future;
-    controller.moveCamera(CameraUpdate.newLatLng(_club!.location.pin));
+    if (_club != null) {
+      GoogleMapController controller = await _controller.future;
+      controller.moveCamera(CameraUpdate.newLatLng(_club!.location.pin));
+    }
     _updateMarkers();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    double markerRadius = MediaQuery.of(context).size.width < kWidthWeb ? 25 : 40;
     return Column(
       children: [
         Expanded(
@@ -101,25 +102,31 @@ class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAlive
                   mapToolbarEnabled: false,
                 ),
               ),
-              for (Club club in List.from(_displayClubs)..sort((a, b) => _club == a ? 1 : 0))
-                Positioned(
-                  left: clubPoints[club]!.x - markerRadius,
-                  top: clubPoints[club]!.y - 2.8 * markerRadius,
-                  child: GestureDetector(
-                    onHorizontalDragUpdate: (_) {},
-                    onTap: () => _selectedClub.select(club),
-                    child: CustomMarker(
-                      imageUrl: club.imageUrl,
-                      radius: markerRadius,
-                      color: club == _club ? primaryColor : Colors.grey,
-                    ),
-                  ),
-                ),
+              for (Club club in List.from(_displayClubs)..remove(_club)) clubPositioned(club, Colors.grey),
+              if (_club != null) clubPositioned(_club!, primaryColor),
             ],
           ),
         ),
         MapNavigation(selectedClub: _selectedClub),
       ],
+    );
+  }
+
+  Widget clubPositioned(Club club, Color color) {
+    double markerRadius = MediaQuery.of(context).size.width < kWidthWeb ? 25 : 40;
+
+    return Positioned(
+      left: clubPoints[club]!.x - markerRadius,
+      top: clubPoints[club]!.y - 2.8 * markerRadius,
+      child: GestureDetector(
+        onHorizontalDragUpdate: (_) {},
+        onTap: () => _selectedClub.select(club),
+        child: CustomMarker(
+          imageUrl: club.imageUrl,
+          radius: markerRadius,
+          color: color,
+        ),
+      ),
     );
   }
 
