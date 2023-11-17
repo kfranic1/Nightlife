@@ -1,3 +1,10 @@
+## 1.1.1+1
+
+- Fixed GoogleMaps overflowing on mobile
+- Updated UI for genre filter
+- Improved responsive design
+- Performace improvements
+
 ## 1.1.0+1
 
 - Added navigation to map
