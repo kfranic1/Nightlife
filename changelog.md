@@ -3,6 +3,7 @@
 - Fixed GoogleMaps overflowing on mobile
 - Updated UI for genre filter
 - Improved responsive design
+- Fixed title being cut off due to font
 - Performace improvements
 
 ## 1.1.0+1
