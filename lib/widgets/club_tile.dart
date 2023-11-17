@@ -12,35 +12,29 @@ class ClubTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Club club = context.watch<Club>();
-    return Center(
-      child: SizedBox(
-        height: 218,
-        width: 148,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => context.read<CustomRouterDelegate>().goToClub(club.name),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox.square(child: ClubImage()),
-                const SizedBox(height: 4),
-                SEOText(
-                  club.name,
-                  textTagStyle: TextTagStyle.h1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                SEOText(
-                  club.location.name,
-                  textTagStyle: TextTagStyle.h2,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ],
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => context.read<CustomRouterDelegate>().goToClub(club.name),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox.square(child: ClubImage()),
+            const SizedBox(height: 4),
+            SEOText(
+              club.name,
+              textTagStyle: TextTagStyle.h1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-          ),
+            SEOText(
+              club.location.name,
+              textTagStyle: TextTagStyle.h2,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/pages/home_page/subpages/club_grid_view.dart';
 import 'package:nightlife/pages/home_page/subpages/google_maps_page.dart';
-import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:nightlife/widgets/filter.dart';
+import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class HomePage extends StatefulWidget {
@@ -58,22 +58,28 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  children: [
-                    const Filter(),
-                    Expanded(
-                      child: TabBarView(
-                        controller: controller,
-                        children: const [
-                          ClubGridView(),
-                          GoogleMapsView(),
-                        ],
-                      ),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: Filter(),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: controller,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          child: ClubGridView(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          child: GoogleMapsView(),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -26,7 +26,7 @@ class MapNavigation extends StatelessWidget {
           Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             height: 80,
-            width: 216,
+            width: 192,
             child: ElevatedButton(
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
