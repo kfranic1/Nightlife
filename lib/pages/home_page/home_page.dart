@@ -35,13 +35,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         scrolledUnderElevation: 0,
         leadingWidth: 0,
         title: GradientText(
-          'NIGHTLIFE ZAGREB',
+          'NIGHTLIFE ZAGREB ',
           style: Theme.of(context).textTheme.headlineLarge,
           colors: const [
             Color.fromARGB(255, 0, 255, 255),
             Color.fromARGB(255, 255, 0, 255),
           ],
-          overflow: TextOverflow.visible,
         ),
       ),
       body: GradientBackground(
