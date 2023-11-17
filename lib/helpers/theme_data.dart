@@ -58,5 +58,4 @@ ThemeData themeData = ThemeData(
   ),
   primaryColor: primaryColor,
   colorScheme: ColorScheme.fromSwatch(primarySwatch: primarySwatch, brightness: Brightness.dark),
-  useMaterial3: true,
 );
