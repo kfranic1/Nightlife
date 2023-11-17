@@ -12,54 +12,57 @@ class MapNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Club> filteredClubs = context.select<ClubList, List<Club>>((value) => value.filteredClubs);
-    Club? club = selectedClub.club;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () => selectedClub.selectPrevious(filteredClubs),
-            icon: const Icon(Icons.keyboard_arrow_left),
-          ),
-          Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            height: 80,
-            width: 192,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      child: SizedBox(
+        height: 80,
+        child: Builder(builder: (context) {
+          List<Club> filteredClubs = context.select<ClubList, List<Club>>((value) => value.filteredClubs);
+          Club? club = selectedClub.club;
+          if (club == null) return const SizedBox();
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () => selectedClub.selectPrevious(filteredClubs),
+                icon: const Icon(Icons.keyboard_arrow_left),
+              ),
+              Container(
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                height: 80,
+                width: 192,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<CustomRouterDelegate>().goToClub(club.name);
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        club.name,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        club.location.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              onPressed: () {
-                if (club == null) return;
-                context.read<CustomRouterDelegate>().goToClub(club.name);
-              },
-              child: club == null
-                  ? const SizedBox()
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          club.name,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        Text(
-                          club.location.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-            ),
-          ),
-          IconButton(
-            onPressed: () => selectedClub.selectNext(filteredClubs),
-            icon: const Icon(Icons.keyboard_arrow_right),
-          ),
-        ],
+              IconButton(
+                onPressed: () => selectedClub.selectNext(filteredClubs),
+                icon: const Icon(Icons.keyboard_arrow_right),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
