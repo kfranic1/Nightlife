@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/widgets/marker/concave_triangle.dart';
@@ -27,11 +26,13 @@ class CustomMarker extends StatelessWidget {
             child: CircleAvatar(
               radius: radius - 3,
               child: ClipOval(
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  fit: BoxFit.cover,
+                child: Image.network(
+                  imageUrl,
+                  frameBuilder: (context, child, frame, wasSynchronouslyLoaded) => child,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(child: CircularProgressIndicator());
+                  },
                 ),
               ),
             ),
