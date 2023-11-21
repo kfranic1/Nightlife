@@ -1,3 +1,8 @@
+## 1.1.2+1
+
+- Update fonts and icons
+- Performance improvements
+
 ## 1.1.1+1
 
 - Fixed GoogleMaps overflowing on mobile
