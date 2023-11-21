@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 
 ThemeData themeData = ThemeData(
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
-    iconTheme: const IconThemeData(color: Colors.white),
-    actionsIconTheme: const IconThemeData(color: Colors.white),
+    iconTheme: IconThemeData(color: Colors.white),
+    actionsIconTheme: IconThemeData(color: Colors.white),
     elevation: 0,
-    titleTextStyle: GoogleFonts.baloo2(
-      fontSize: 24,
+    titleTextStyle: TextStyle(
+      fontSize: 20,
       fontWeight: FontWeight.bold,
       color: Colors.white,
     ),
     titleSpacing: 12,
   ),
-  textTheme: TextTheme(
-    headlineLarge: GoogleFonts.gochiHand(fontSize: 32),
-    titleLarge: GoogleFonts.baloo2(fontSize: 20, color: Colors.white),
-    titleMedium: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    labelSmall: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    //
-    bodyLarge: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    bodyMedium: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    bodySmall: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    displayLarge: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    displayMedium: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    displaySmall: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    headlineMedium: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    headlineSmall: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    titleSmall: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    labelMedium: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
-    labelLarge: GoogleFonts.baloo2(fontSize: 12, color: Colors.white),
+  fontFamily: 'Baloo2',
+  textTheme: const TextTheme(
+    headlineLarge: TextStyle(fontSize: 20, fontFamily: 'Michroma'),
+    titleLarge: TextStyle(fontSize: 20, color: Colors.white),
+    titleMedium: TextStyle(fontSize: 12, color: Colors.white),
+    labelSmall: TextStyle(fontSize: 12, color: Colors.white),
+    bodyLarge: TextStyle(fontSize: 12, color: Colors.white),
+    bodyMedium: TextStyle(fontSize: 12, color: Colors.white),
+    bodySmall: TextStyle(fontSize: 12, color: Colors.white),
+    displayLarge: TextStyle(fontSize: 12, color: Colors.white),
+    displayMedium: TextStyle(fontSize: 12, color: Colors.white),
+    displaySmall: TextStyle(fontSize: 12, color: Colors.white),
+    headlineMedium: TextStyle(fontSize: 12, color: Colors.white),
+    headlineSmall: TextStyle(fontSize: 12, color: Colors.white),
+    titleSmall: TextStyle(fontSize: 12, color: Colors.white),
+    labelMedium: TextStyle(fontSize: 12, color: Colors.white),
+    labelLarge: TextStyle(fontSize: 12, color: Colors.white),
   ),
   inputDecorationTheme: InputDecorationTheme(
     enabledBorder: OutlineInputBorder(
@@ -45,7 +44,7 @@ ThemeData themeData = ThemeData(
     iconColor: Colors.white,
     suffixIconColor: Colors.white,
     prefixIconColor: Colors.white,
-    labelStyle: GoogleFonts.baloo2(
+    labelStyle: const TextStyle(
       fontSize: 12,
       color: Colors.white,
     ),
