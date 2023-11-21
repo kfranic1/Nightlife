@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:provider/provider.dart';
@@ -17,11 +16,13 @@ class ClubImage extends StatelessWidget {
         child: Seo.image(
           alt: "Nightlife Zagreb - ${club.name}",
           src: club.imageUrl,
-          child: CachedNetworkImage(
-            imageUrl: club.imageUrl,
-            placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-            fit: BoxFit.cover,
+          child: Image.network(
+            club.imageUrl,
+            frameBuilder: (context, child, frame, wasSynchronouslyLoaded) => child,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return const Center(child: CircularProgressIndicator());
+            },
           ),
         ),
       ),
