@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/theme_data.dart';
 import 'package:nightlife/language.dart';
@@ -41,13 +40,7 @@ class Nightlife extends StatelessWidget {
         ],
         child: Builder(builder: (context) {
           return FutureBuilder(
-              future: Future.wait([
-                context.read<ClubList>().setup(),
-                GoogleFonts.pendingFonts([
-                  GoogleFonts.baloo2(),
-                  GoogleFonts.gochiHand(),
-                ]),
-              ]),
+              future: context.read<ClubList>().setup(),
               builder: (context, snapshot) {
                 return MaterialApp.router(
                   scrollBehavior: CustomScrollBehavior().copyWith(scrollbars: false),
