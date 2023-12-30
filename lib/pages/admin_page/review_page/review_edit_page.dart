@@ -78,7 +78,7 @@ class _ReviewEditPageState extends State<ReviewEditPage> {
                           action: () async {
                             if (_formKey.currentState!.validate()) {
                               _formKey.currentState!.save();
-                              await FormButton.tryAction(context, () async => await _review.setReview());
+                              _review.setReview();
                             }
                           },
                           label: "Save",
