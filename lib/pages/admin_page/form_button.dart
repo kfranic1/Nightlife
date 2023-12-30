@@ -12,8 +12,26 @@ class FormButton extends StatefulWidget {
 
   @override
   State<FormButton> createState() => _FormButtonState();
+}
 
-  static Future tryAction(BuildContext context, Future<void> Function() action) async {
+class _FormButtonState extends State<FormButton> {
+  bool loading = false;
+  @override
+  Widget build(BuildContext context) {
+    return loading
+        ? const Center(child: CircularProgressIndicator())
+        : ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: widget._color),
+            onPressed: () async {
+              setState(() => loading = true);
+              await _tryAction(context, widget._action);
+              setState(() => loading = false);
+            },
+            child: Text(widget._label),
+          );
+  }
+
+  Future _tryAction(BuildContext context, Future<void> Function() action) async {
     try {
       await action.call();
       if (context.mounted)
@@ -28,23 +46,5 @@ class FormButton extends StatefulWidget {
           duration: const Duration(seconds: 1),
         ));
     }
-  }
-}
-
-class _FormButtonState extends State<FormButton> {
-  bool loading = false;
-  @override
-  Widget build(BuildContext context) {
-    return loading
-        ? const Center(child: CircularProgressIndicator())
-        : ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: widget._color),
-            onPressed: () async {
-              setState(() => loading = true);
-              await FormButton.tryAction(context, widget._action);
-              setState(() => loading = false);
-            },
-            child: Text(widget._label),
-          );
   }
 }

@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/model/club.dart';
-import 'package:nightlife/widgets/google_maps_preview.dart';
 import 'package:nightlife/widgets/column_with_title.dart';
 import 'package:nightlife/widgets/day_of_week_display.dart';
+import 'package:nightlife/widgets/google_maps_preview.dart';
 import 'package:provider/provider.dart';
 
 class ClubMainInfo extends StatelessWidget {
@@ -36,6 +36,7 @@ class ClubMainInfo extends StatelessWidget {
               title: "Location",
               children: [
                 ListTile(
+                  onTap: () => club.location.openMap(),
                   leading: const Icon(Icons.location_on),
                   title: Text(club.location.name),
                 ),
