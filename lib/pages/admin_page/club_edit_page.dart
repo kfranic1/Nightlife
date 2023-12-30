@@ -8,6 +8,7 @@ import 'package:nightlife/extensions/social_media_extension.dart';
 import 'package:nightlife/helpers/club_text_field.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/work_day.dart';
+import 'package:nightlife/pages/admin_page/club_edit_location.dart';
 import 'package:nightlife/pages/admin_page/form_button.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    _club = context.read<Club>();
+    _club = context.watch<Club>();
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
@@ -51,13 +52,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
               onChanged: (value) => _club.descriptionEn = value,
               maxLines: null,
             ),
-            ClubTextField(
-              labelText: 'Address',
-              initialValue: _club.location.name,
-              onChanged: null,
-              validate: true,
-              icon: const Icon(Icons.location_pin),
-            ),
+            ClubEditLocation(club: _club),
             ClubTextField(
               labelText: 'Phone',
               initialValue: _club.contacts[Contact.phone] ?? '',
@@ -165,12 +160,10 @@ class _ClubEditPageState extends State<ClubEditPage> {
                 action: () async {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    await FormButton.tryAction(context, () async {
-                      if (_club.id.isEmpty)
-                        await Club.createClub(_club);
-                      else
-                        await Club.updateClub(_club);
-                    });
+                    if (_club.id.isEmpty)
+                      await Club.createClub(_club);
+                    else
+                      await Club.updateClub(_club);
                   }
                 },
                 label: "Save",
