@@ -8,8 +8,8 @@ import 'package:nightlife/widgets/column_with_title.dart';
 import 'package:nightlife/widgets/day_of_week_display.dart';
 import 'package:provider/provider.dart';
 
-class ClubInfo extends StatelessWidget {
-  const ClubInfo({super.key});
+class ClubMainInfo extends StatelessWidget {
+  const ClubMainInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
