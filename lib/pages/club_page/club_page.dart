@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:nightlife/model/club.dart';
-import 'package:nightlife/pages/club_page/club_subpages/club_info.dart';
-import 'package:nightlife/pages/club_page/club_subpages/reservation_display.dart';
+import 'package:nightlife/pages/club_page/club_subpages/club_main_info.dart';
+import 'package:nightlife/pages/club_page/club_subpages/club_contact_info.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/widgets/club_image.dart';
 import 'package:nightlife/widgets/gradient_background.dart';
@@ -73,8 +73,8 @@ class _ClubPageState extends State<ClubPage> with SingleTickerProviderStateMixin
                   child: TabBarView(
                     controller: tabController,
                     children: const [
-                      ClubInfo(),
-                      ReservationDisplay(),
+                      ClubMainInfo(),
+                      ClubContactInfo(),
                     ],
                   ),
                 ),

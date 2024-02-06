@@ -9,8 +9,8 @@ import 'package:nightlife/widgets/contact_display.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ReservationDisplay extends StatelessWidget {
-  const ReservationDisplay({super.key});
+class ClubContactInfo extends StatelessWidget {
+  const ClubContactInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
