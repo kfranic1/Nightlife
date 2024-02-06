@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:nightlife/extensions/list_extension.dart';
 import 'package:nightlife/extensions/social_media_extension.dart';
+import 'package:nightlife/extensions/string_extension.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/widgets/column_with_title.dart';
 import 'package:nightlife/widgets/contact_display.dart';
@@ -23,7 +24,7 @@ class ClubContactInfo extends StatelessWidget {
             width: min(400, MediaQuery.of(context).size.width - 20),
             title: "Contacts",
             children: club.contacts.keys
-                .where((key) => club.contacts[key] != null)
+                .where((key) => !club.contacts[key].isNullOrEmpty)
                 .toList()
                 .rearrange((p0, p1) => p0.index.compareTo(p1.index))
                 .map((key) => ContactDisplay(data: club.contacts[key]!, contact: key))
@@ -33,7 +34,7 @@ class ClubContactInfo extends StatelessWidget {
             width: min(400, MediaQuery.of(context).size.width - 20),
             title: "Social Media",
             children: club.socialMedia.keys
-                .where((key) => club.socialMedia[key] != null)
+                .where((key) => !club.socialMedia[key].isNullOrEmpty)
                 .toList()
                 .map(
                   (key) => MouseRegion(
