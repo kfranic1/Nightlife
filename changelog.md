@@ -1,3 +1,7 @@
+## 1.2.0+1
+- Clicking on location now redirects to Google Maps
+- Minor improvements
+
 ## 1.1.2+1
 
 - Update fonts and icons
