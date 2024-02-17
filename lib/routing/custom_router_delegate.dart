@@ -1,7 +1,6 @@
 import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/routing/configurations/admin_configuration.dart';
 import 'package:nightlife/routing/configurations/club_configuration.dart';
 import 'package:nightlife/routing/configurations/home_configuration.dart';
@@ -10,6 +9,7 @@ import 'package:nightlife/routing/configurations/profile_configuration.dart';
 import 'package:nightlife/routing/configurations/signup_configuration.dart';
 import 'package:nightlife/routing/route_configuraiton.dart';
 import 'package:nightlife/routing/routes.dart';
+import 'package:nightlife/services/club_data_service.dart';
 import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +26,7 @@ class CustomRouterDelegate extends RouterDelegate<RouteConfiguration>
 
   @override
   Widget build(BuildContext context) {
-    bool isReady = context.select<ClubList, bool>((value) => value.isReady);
+    bool isReady = context.select<ClubDataService, bool>((value) => value.isReady);
     if (!isReady) return const GradientBackground(child: Center(child: CircularProgressIndicator()));
     return Navigator(
       key: navigatorKey,

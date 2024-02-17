@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/club_list.dart';
+import 'package:nightlife/services/club_data_service.dart';
 import 'package:nightlife/widgets/club_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -10,9 +10,9 @@ class ClubGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ClubList clubList = context.watch<ClubList>();
+    ClubDataService clubDataService = context.watch<ClubDataService>();
 
-    return clubList.filteredClubs.isEmpty
+    return clubDataService.filteredClubs.isEmpty
         ? const SizedBox()
         : Center(
             child: GridView.builder(
@@ -22,9 +22,9 @@ class ClubGridView extends StatelessWidget {
                 mainAxisSpacing: 16,
                 childAspectRatio: 0.65,
               ),
-              itemCount: clubList.filteredClubs.length,
+              itemCount: clubDataService.filteredClubs.length,
               itemBuilder: (context, index) {
-                var club = clubList.filteredClubs[index];
+                var club = clubDataService.filteredClubs[index];
                 return Provider.value(value: club, child: const ClubTile());
               },
             ),

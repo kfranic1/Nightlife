@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/extensions/list_extension.dart';
-import 'package:nightlife/helpers/club_list.dart';
+import 'package:nightlife/services/club_data_service.dart';
 import 'package:nightlife/widgets/dropdown_filter.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +19,8 @@ class _FilterState extends State<Filter> {
   @override
   void initState() {
     super.initState();
-    _searchController = TextEditingController(text: context.read<ClubList>().filterText);
-    _searchController.addListener(() => context.read<ClubList>().updateText(_searchController.text));
+    _searchController = TextEditingController(text: context.read<ClubDataService>().filterText);
+    _searchController.addListener(() => context.read<ClubDataService>().updateText(_searchController.text));
   }
 
   @override
@@ -31,7 +31,7 @@ class _FilterState extends State<Filter> {
 
   @override
   Widget build(BuildContext context) {
-    ClubList clubList = context.watch<ClubList>();
+    ClubDataService clubDataService = context.watch<ClubDataService>();
     return Theme(
       data: Theme.of(context).copyWith(
         listTileTheme: const ListTileThemeData(
@@ -51,10 +51,10 @@ class _FilterState extends State<Filter> {
             ),
           ],
         ),
-        trailing: clubList.isFiltered
+        trailing: clubDataService.isFiltered
             ? TextButton(
                 onPressed: () {
-                  clubList.clearFiler();
+                  clubDataService.clearFiler();
                   _searchController.clear();
                 },
                 child: const Text("Clear filters"),
@@ -80,9 +80,9 @@ class _FilterState extends State<Filter> {
           const SizedBox(height: 8),
           DropdownFilter<TypeOfMusic?>(
             label: "GENRE",
-            value: clubList.typeOfMusic,
-            onChanged: (TypeOfMusic? type) => clubList.updateTypeOfMusic(type),
-            onClear: () => clubList.updateTypeOfMusic(null),
+            value: clubDataService.typeOfMusic,
+            onChanged: (TypeOfMusic? type) => clubDataService.updateTypeOfMusic(type),
+            onClear: () => clubDataService.updateTypeOfMusic(null),
             items: Map.fromIterable(
               TypeOfMusic.values.toList().rearrange((p0, p1) => p0.name.compareTo(p1.name)),
               key: (element) => element,
@@ -98,14 +98,14 @@ class _FilterState extends State<Filter> {
               border: Border.all(color: Colors.white),
             ),
             child: InkWell(
-              onTap: () => clubList.updateShowOpenTonightOnly(),
+              onTap: () => clubDataService.updateShowOpenTonightOnly(),
               child: Row(
                 children: [
                   const Text("OPEN TONIGHT"),
                   const Expanded(child: SizedBox()),
                   Checkbox(
-                    value: clubList.showOpenTonightOnly,
-                    onChanged: (bool? value) => clubList.updateShowOpenTonightOnly(),
+                    value: clubDataService.showOpenTonightOnly,
+                    onChanged: (bool? value) => clubDataService.updateShowOpenTonightOnly(),
                   ),
                 ],
               ),

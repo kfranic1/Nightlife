@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/selected_club.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
+import 'package:nightlife/services/club_data_service.dart';
 import 'package:provider/provider.dart';
 
 class MapNavigation extends StatelessWidget {
@@ -17,7 +17,7 @@ class MapNavigation extends StatelessWidget {
       child: SizedBox(
         height: 80,
         child: Builder(builder: (context) {
-          List<Club> filteredClubs = context.select<ClubList, List<Club>>((value) => value.filteredClubs);
+          List<Club> filteredClubs = context.select<ClubDataService, List<Club>>((value) => value.filteredClubs);
           Club? club = selectedClub.club;
           if (club == null) return const SizedBox();
           return Row(

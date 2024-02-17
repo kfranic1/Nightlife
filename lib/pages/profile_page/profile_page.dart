@@ -1,10 +1,10 @@
 import 'package:flag/flag_enum.dart';
 import 'package:flutter/material.dart';
-import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/model/person.dart';
 import 'package:nightlife/pages/profile_page/username.dart';
 import 'package:nightlife/routing/custom_router_delegate.dart';
 import 'package:nightlife/services/auth_service.dart';
+import 'package:nightlife/services/club_data_service.dart';
 import 'package:nightlife/widgets/gradient_background.dart';
 import 'package:nightlife/widgets/language_icon_button.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +58,7 @@ class ProfilePage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => context
                       .read<CustomRouterDelegate>()
-                      .goToAdmin(context.read<ClubList>().clubs.firstWhere((element) => element.id == user.adminData!.clubId).name),
+                      .goToAdmin(context.read<ClubDataService>().clubs.firstWhere((element) => element.id == user.adminData!.clubId).name),
                   child: Text("${user.adminData!.clubName} - Dashboard"),
                 ),
               const SizedBox(height: 20),

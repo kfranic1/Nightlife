@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nightlife/helpers/club_list.dart';
 import 'package:nightlife/helpers/constants.dart';
 import 'package:nightlife/helpers/primary_swatch.dart';
 import 'package:nightlife/model/club.dart';
 import 'package:nightlife/model/selected_club.dart';
+import 'package:nightlife/services/club_data_service.dart';
 import 'package:nightlife/widgets/map_navigation.dart';
 import 'package:nightlife/widgets/marker/custom_marker.dart';
 import 'package:provider/provider.dart';
@@ -23,16 +23,16 @@ class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAlive
   final Completer<GoogleMapController> _controller = Completer();
   final SelectedClub _selectedClub = SelectedClub();
   late final Map<Club, ScreenCoordinate> clubPoints;
-  late final ClubList clubList;
+  late final ClubDataService clubDataService;
 
-  List<Club> get _displayClubs => clubList.filteredClubs;
+  List<Club> get _displayClubs => clubDataService.filteredClubs;
   Club? get _club => _selectedClub.club;
 
   @override
   void initState() {
-    clubList = context.read<ClubList>();
+    clubDataService = context.read<ClubDataService>();
     clubPoints = Map.fromIterable(
-      clubList.clubs,
+      clubDataService.clubs,
       key: (element) => element,
       value: (element) => const ScreenCoordinate(x: 0, y: 0),
     );
@@ -40,7 +40,7 @@ class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAlive
     _selectedClub.addListener(onSelectedClubUpdated);
     _selectedClub.select(_displayClubs.lastOrNull);
 
-    clubList.addListener(onClubListUpdated);
+    clubDataService.addListener(onClubListUpdated);
 
     super.initState();
   }
@@ -49,7 +49,7 @@ class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAlive
   void dispose() {
     _selectedClub.removeListener(onSelectedClubUpdated);
 
-    clubList.removeListener(onClubListUpdated);
+    clubDataService.removeListener(onClubListUpdated);
 
     super.dispose();
   }
@@ -83,7 +83,7 @@ class _GoogleMapsViewState extends State<GoogleMapsView> with AutomaticKeepAlive
                   padding: const EdgeInsets.only(bottom: 100.0),
                   mapType: MapType.normal,
                   initialCameraPosition: CameraPosition(
-                    target: _club != null ? _club!.location.pin : clubList.clubCenter,
+                    target: _club != null ? _club!.location.pin : clubDataService.clubCenter,
                     zoom: 14,
                   ),
                   onMapCreated: (GoogleMapController controller) async {

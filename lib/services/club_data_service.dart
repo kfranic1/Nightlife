@@ -4,17 +4,18 @@ import 'package:nightlife/enums/day_of_week.dart';
 import 'package:nightlife/enums/type_of_music.dart';
 import 'package:nightlife/model/club.dart';
 
-class ClubList extends ChangeNotifier {
+class ClubDataService extends ChangeNotifier {
   List<Club> _clubs = [];
   List<Club> _filteredClubs = [];
-  bool _showOpenTonightOnly = false;
 
+  bool _showOpenTonightOnly = false;
   bool isReady = false;
 
   String _filterText = "";
   TypeOfMusic? _typeOfMusic;
 
   Future setup() async {
+    if (isReady) return;
     await Club.getClubs().then((value) {
       _clubs = value;
       _clubs.shuffle();
